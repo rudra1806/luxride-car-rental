@@ -1,139 +1,159 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
+import { MenuIcon, X, Search, User } from 'lucide-react';
 import Logo from '@/components/ui/logo';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { Menu as MenuIcon, X, User, LogOut } from 'lucide-react';
 
-const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const isMobile = useIsMobile();
+const Navbar: React.FC = () => {
   const [location] = useLocation();
   const { user, logoutMutation } = useAuth();
-
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  
+  // Handle scroll event to change navbar style
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
     };
-
+    
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
-
+  
   const handleLogout = () => {
     logoutMutation.mutate();
   };
-
+  
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
+  
+  // For homepage with transparent background on top
+  const navbarClasses = scrolled || location !== '/' 
+    ? 'bg-[#0C1323] shadow-lg' 
+    : 'bg-transparent';
 
-  const textColorClass = isScrolled ? 'text-white' : 'text-white';
+  const textColorClass = 'text-white';
 
+  const activeClass = (path: string) => {
+    return location === path 
+      ? 'text-[#F59E0B] font-medium' 
+      : `${textColorClass} hover:text-[#F59E0B]`;
+  };
+  
   return (
-    <header className="fixed top-0 w-full z-50">
-      <div className={`transition-all duration-300 ${isScrolled ? 'bg-[#0C1323]/95 shadow-md backdrop-blur-sm' : 'bg-gradient-to-b from-[#0C1323] to-transparent py-2'}`}>
-        <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-8">
-            <Link href="/">
-              <div className="cursor-pointer">
-                <Logo size={isMobile ? 'sm' : 'md'} color="#F59E0B" textColor="#FFFFFF" />
-              </div>
-            </Link>
-            
-            {/* Desktop Navigation */}
-            {!isMobile && (
-              <div className="hidden md:flex md:space-x-8">
-                <Link href="/">
-                  <div className="relative group">
-                    <a className={`py-2 px-1 ${textColorClass} hover:text-[#F59E0B] transition-colors duration-200`}>
-                      Home
-                    </a>
-                    <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-[#F59E0B] transition-all duration-300 group-hover:w-full ${location === '/' ? 'w-full' : 'w-0'}`}></span>
-                  </div>
-                </Link>
-                <Link href="/vehicles">
-                  <div className="relative group">
-                    <a className={`py-2 px-1 ${textColorClass} hover:text-[#F59E0B] transition-colors duration-200`}>
-                      Our Fleet
-                    </a>
-                    <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-[#F59E0B] transition-all duration-300 group-hover:w-full ${location === '/vehicles' ? 'w-full' : 'w-0'}`}></span>
-                  </div>
-                </Link>
-                <Link href="/about">
-                  <div className="relative group">
-                    <a className={`py-2 px-1 ${textColorClass} hover:text-[#F59E0B] transition-colors duration-200`}>
-                      About
-                    </a>
-                    <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-[#F59E0B] transition-all duration-300 group-hover:w-full ${location === '/about' ? 'w-full' : 'w-0'}`}></span>
-                  </div>
-                </Link>
-                <Link href="/contact">
-                  <div className="relative group">
-                    <a className={`py-2 px-1 ${textColorClass} hover:text-[#F59E0B] transition-colors duration-200`}>
-                      Contact
-                    </a>
-                    <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-[#F59E0B] transition-all duration-300 group-hover:w-full ${location === '/contact' ? 'w-full' : 'w-0'}`}></span>
-                  </div>
-                </Link>
-              </div>
-            )}
+    <header className={`fixed w-full z-50 transition-all duration-300 ${navbarClasses}`}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <nav className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <div className="flex items-center">
+            <Logo 
+              size="md"
+              color="#F59E0B"
+              textColor="#FFFFFF"
+            />
           </div>
           
-          <div className="flex items-center">
-            {!isMobile && (
+          {/* Desktop Navigation with Animated Underline */}
+          <div className="hidden md:flex items-center space-x-10">
+            <Link href="/">
+              <div className="relative group">
+                <a className={`${activeClass('/')} transition-colors duration-300 py-2`}>
+                  Home
+                </a>
+                <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-[#F59E0B] transition-all duration-300 group-hover:w-full 
+                  ${location === '/' ? 'w-full' : 'w-0'}`}></span>
+              </div>
+            </Link>
+            <Link href="/vehicles">
+              <div className="relative group">
+                <a className={`${activeClass('/vehicles')} transition-colors duration-300 py-2`}>
+                  Our Fleet
+                </a>
+                <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-[#F59E0B] transition-all duration-300 group-hover:w-full 
+                  ${location === '/vehicles' ? 'w-full' : 'w-0'}`}></span>
+              </div>
+            </Link>
+            <Link href="/about">
+              <div className="relative group">
+                <a className={`${activeClass('/about')} transition-colors duration-300 py-2`}>
+                  About
+                </a>
+                <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-[#F59E0B] transition-all duration-300 group-hover:w-full 
+                  ${location === '/about' ? 'w-full' : 'w-0'}`}></span>
+              </div>
+            </Link>
+            <Link href="/contact">
+              <div className="relative group">
+                <a className={`${activeClass('/contact')} transition-colors duration-300 py-2`}>
+                  Contact
+                </a>
+                <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-[#F59E0B] transition-all duration-300 group-hover:w-full 
+                  ${location === '/contact' ? 'w-full' : 'w-0'}`}></span>
+              </div>
+            </Link>
+          </div>
+          
+          {/* Right Side */}
+          <div className="flex items-center space-x-4">
+            {/* Search Icon */}
+            <button className={`${textColorClass} focus:outline-none hidden md:flex`}>
+              <Search className="h-5 w-5" />
+            </button>
+            
+            {/* User Section */}
+            {user ? (
               <div className="hidden md:flex items-center space-x-4">
-                {user ? (
-                  <div className="flex items-center space-x-4">
-                    {user.isAdmin && (
-                      <Link href="/admin">
-                        <a className={`${textColorClass} hover:text-[#F59E0B] transition-colors duration-200`}>
-                          Admin
-                        </a>
-                      </Link>
-                    )}
-                    <Link href="/dashboard">
-                      <a className={`${textColorClass} hover:text-[#F59E0B] transition-colors duration-200`}>
-                        <span className={`${textColorClass} font-medium`}>Account</span>
-                      </a>
-                    </Link>
-                    
-                    <Button 
-                      onClick={handleLogout} 
-                      variant="ghost" 
-                      className={`${textColorClass} hover:text-[#F59E0B] transition-colors duration-200`}
-                    >
-                      <LogOut className="h-4 w-4 mr-2" />
-                      Logout
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="flex items-center space-x-4">
-                    <Link href="/auth">
-                      <a className={`${textColorClass} hover:text-[#F59E0B] transition-colors duration-200`}>
-                        <span className={`${textColorClass} font-medium`}>Login</span>
-                      </a>
-                    </Link>
-                    
-                    <Link href="/auth?register=true">
-                      <a className={`${textColorClass} font-medium hover:text-[#F59E0B] transition-colors duration-200`}>
-                        <span className={`${textColorClass} font-medium`}>Register</span>
-                      </a>
-                    </Link>
-                    
-                    <Link href="/vehicles">
-                      <div className="relative group">
-                        <div className="absolute -inset-0.5 bg-gradient-to-r from-[#F59E0B] to-yellow-400 rounded-lg blur opacity-60 group-hover:opacity-100 transition duration-300 animate-pulse"></div>
-                        <a className="relative bg-[#F59E0B] hover:bg-[#F59E0B]/90 text-[#0C1323] font-semibold py-2 px-6 rounded transition-all duration-300 group-hover:tracking-wider overflow-hidden">
-                          Book Now
-                          <span className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine" />
-                        </a>
-                      </div>
-                    </Link>
-                  </div>
+                <Link href="/dashboard">
+                  <a className="flex items-center space-x-1">
+                    <User className={`h-5 w-5 ${textColorClass}`} />
+                    <span className={`${textColorClass} font-medium`}>Account</span>
+                  </a>
+                </Link>
+                
+                {user.isAdmin && (
+                  <Link href="/admin">
+                    <a className={`${textColorClass} hover:text-[#F59E0B] transition-colors font-medium`}>
+                      Admin
+                    </a>
+                  </Link>
                 )}
+                
+                <Button 
+                  onClick={handleLogout} 
+                  variant="ghost" 
+                  className={`${textColorClass} hover:text-[#F59E0B] transition-colors font-medium p-0`}
+                >
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <div className="hidden md:flex items-center space-x-4">
+                <Link href="/auth">
+                  <a className="flex items-center space-x-1">
+                    <User className={`h-5 w-5 ${textColorClass}`} />
+                    <span className={`${textColorClass} font-medium`}>Account</span>
+                  </a>
+                </Link>
+                
+                <Link href="/vehicles">
+                  <div className="relative group">
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#F59E0B] to-yellow-400 rounded-lg blur opacity-60 group-hover:opacity-100 transition duration-300 animate-pulse"></div>
+                    <a className="relative bg-[#F59E0B] hover:bg-[#F59E0B]/90 text-[#0C1323] font-semibold py-2 px-6 rounded transition-all duration-300 group-hover:tracking-wider overflow-hidden">
+                      Book Now
+                      <span className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine" />
+                    </a>
+                  </div>
+                </Link>
               </div>
             )}
             
