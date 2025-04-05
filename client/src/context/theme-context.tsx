@@ -8,33 +8,68 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    // Check for saved theme in localStorage
-    const savedTheme = localStorage.getItem('luxdrive-theme');
-    // Check for system preference if no saved theme
-    if (!savedTheme) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+// Ensure this runs on client only
+const getDefaultTheme = (): Theme => {
+  // Check if we're in the browser
+  if (typeof window !== 'undefined') {
+    const savedTheme = window.localStorage.getItem('luxdrive-theme') as Theme | null;
+    
+    if (savedTheme && (savedTheme === 'dark' || savedTheme === 'light')) {
+      return savedTheme;
     }
-    return (savedTheme as Theme) || 'light';
-  });
+    
+    // If no saved preference, use system preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+  }
+  
+  // Default to light if nothing else matches
+  return 'light';
+};
 
-  // Effect to apply theme to document
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setTheme] = useState<Theme>(getDefaultTheme);
+  const [mounted, setMounted] = useState(false);
+
+  // Ensure we only run this effect once on mount
   useEffect(() => {
+    setMounted(true);
+    
+    // Apply initial theme
+    const root = window.document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }, []);
+
+  // Apply theme whenever it changes
+  useEffect(() => {
+    if (!mounted) return;
+    
     const root = window.document.documentElement;
     
-    // Remove both classes and then add the current theme
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
     
     // Save to localStorage
     localStorage.setItem('luxdrive-theme', theme);
-  }, [theme]);
+  }, [theme, mounted]);
 
   // Toggle theme function
   const toggleTheme = () => {
     setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   };
+
+  // Prevent flash of unstyled content
+  if (!mounted) {
+    return <>{children}</>;
+  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

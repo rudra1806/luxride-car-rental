@@ -1,6 +1,4 @@
 import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import HomePage from "@/pages/home-page";
@@ -36,22 +34,20 @@ function Router() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <AuthProvider>
-          <CartProvider>
-            <div className="flex min-h-screen flex-col">
-              <Navbar />
-              <main className="flex-grow">
-                <Router />
-              </main>
-              <Footer />
-            </div>
-            <Toaster />
-          </CartProvider>
-        </AuthProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <CartProvider>
+          <div className="flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-grow">
+              <Router />
+            </main>
+            <Footer />
+          </div>
+          <Toaster />
+        </CartProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
