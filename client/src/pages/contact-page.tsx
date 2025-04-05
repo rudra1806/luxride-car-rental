@@ -180,9 +180,10 @@ const ContactPage = () => {
                   <div>
                     <h3 className="text-lg font-semibold text-[#0F172A]">Main Office</h3>
                     <p className="text-gray-600 mt-1">
-                      123 Luxury Drive<br />
-                      New York, NY 10001<br />
-                      United States
+                      Time Square Grande<br />
+                      PRL Colony, Thaltej<br />
+                      Ahmedabad, Gujarat 380059<br />
+                      India
                     </p>
                   </div>
                 </div>
@@ -196,8 +197,8 @@ const ContactPage = () => {
                   <div>
                     <h3 className="text-lg font-semibold text-[#0F172A]">Phone Numbers</h3>
                     <p className="text-gray-600 mt-1">
-                      Bookings: (800) 123-4567<br />
-                      Customer Support: (800) 987-6543
+                      Bookings: +91 79 4890 1234<br />
+                      Customer Support: +91 79 4890 5678
                     </p>
                   </div>
                 </div>
@@ -256,14 +257,15 @@ const ContactPage = () => {
               <div className="h-48 bg-gray-300 flex items-center justify-center">
                 <div className="text-gray-500 text-center px-4">
                   <MapPin className="h-10 w-10 mx-auto mb-2" />
-                  <p>Map placeholder - New York City</p>
+                  <p>Map placeholder - Ahmedabad</p>
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-[#0F172A] mb-2">New York City</h3>
+                <h3 className="text-xl font-bold text-[#0F172A] mb-2">Ahmedabad</h3>
                 <p className="text-gray-600 mb-4">
-                  123 Luxury Drive<br />
-                  New York, NY 10001
+                  Time Square Grande<br />
+                  PRL Colony, Thaltej<br />
+                  Gujarat 380059
                 </p>
                 <p className="text-sm text-[#EAB308] font-medium">Flagship Location</p>
               </div>
@@ -273,14 +275,14 @@ const ContactPage = () => {
               <div className="h-48 bg-gray-300 flex items-center justify-center">
                 <div className="text-gray-500 text-center px-4">
                   <MapPin className="h-10 w-10 mx-auto mb-2" />
-                  <p>Map placeholder - Los Angeles</p>
+                  <p>Map placeholder - Mumbai</p>
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-[#0F172A] mb-2">Los Angeles</h3>
+                <h3 className="text-xl font-bold text-[#0F172A] mb-2">Mumbai</h3>
                 <p className="text-gray-600 mb-4">
-                  456 Sunset Boulevard<br />
-                  Los Angeles, CA 90001
+                  Luxury Tower, Bandra<br />
+                  Mumbai, Maharashtra 400050
                 </p>
                 <p className="text-sm text-gray-500">West Coast Showroom</p>
               </div>
@@ -290,23 +292,23 @@ const ContactPage = () => {
               <div className="h-48 bg-gray-300 flex items-center justify-center">
                 <div className="text-gray-500 text-center px-4">
                   <MapPin className="h-10 w-10 mx-auto mb-2" />
-                  <p>Map placeholder - Miami</p>
+                  <p>Map placeholder - Delhi</p>
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-[#0F172A] mb-2">Miami</h3>
+                <h3 className="text-xl font-bold text-[#0F172A] mb-2">Delhi</h3>
                 <p className="text-gray-600 mb-4">
-                  789 Ocean Drive<br />
-                  Miami, FL 33139
+                  Connaught Place<br />
+                  New Delhi 110001
                 </p>
-                <p className="text-sm text-gray-500">South Beach Collection</p>
+                <p className="text-sm text-gray-500">North India Collection</p>
               </div>
             </div>
           </div>
           
           <div className="text-center mt-12">
             <p className="text-gray-600">
-              Can't visit in person? Call us at <span className="font-medium text-[#0F172A]">(800) 123-4567</span> for a virtual tour of our collection.
+              Can't visit in person? Call us at <span className="font-medium text-[#0F172A]">+91 79 4890 1234</span> for a virtual tour of our collection.
             </p>
           </div>
         </div>

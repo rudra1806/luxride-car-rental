@@ -21,12 +21,12 @@ const CarCard: React.FC<CarCardProps> = ({ car, onViewDetails }) => {
       <Card className="car-card group bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all">
         <div className="relative overflow-hidden h-64">
           <img 
-            src={car.imageUrl} 
+            src={car.image || '/placeholder-car.jpg'} 
             alt={car.name} 
             className="car-img w-full h-full object-cover"
           />
           <div className="absolute top-0 right-0 bg-[#D4AF37] text-[#0F1A2A] font-bold py-1 px-3 m-3 rounded">
-            ${car.dailyRate}<span className="text-xs font-normal">/day</span>
+            ₹{car.price}<span className="text-xs font-normal">/day</span>
           </div>
         </div>
         <div className="p-6">
@@ -41,7 +41,7 @@ const CarCard: React.FC<CarCardProps> = ({ car, onViewDetails }) => {
           <div className="grid grid-cols-3 gap-2 mb-6">
             <div className="flex flex-col items-center text-sm">
               <i className="fas fa-tachometer-alt mb-1 text-[#0F1A2A]"></i>
-              <span>{car.acceleration}s 0-60</span>
+              <span>{car.horsepower || '-'} HP</span>
             </div>
             <div className="flex flex-col items-center text-sm">
               <i className="fas fa-cog mb-1 text-[#0F1A2A]"></i>

@@ -68,7 +68,7 @@ const BookingForm = ({ car }: BookingFormProps) => {
   const defaultValues: Partial<BookingFormValues> = {
     pickupDate: new Date(),
     returnDate: addDays(new Date(), 1),
-    pickupLocation: 'Miami',
+    pickupLocation: 'Ahmedabad',
   };
 
   const form = useForm<BookingFormValues>({
@@ -185,11 +185,11 @@ const BookingForm = ({ car }: BookingFormProps) => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <span className="text-sm text-gray-500">Price per day</span>
-          <div className="text-3xl font-semibold text-[#0F172A]">${car.price}</div>
+          <div className="text-3xl font-semibold text-[#0F172A]">₹{car.price * 83}</div>
         </div>
         <div className="text-right">
           <span className="text-sm text-gray-500">Total for {days} day{days !== 1 ? 's' : ''}</span>
-          <div className="text-3xl font-semibold text-[#0F172A]">${car.price * days}</div>
+          <div className="text-3xl font-semibold text-[#0F172A]">₹{car.price * days * 83}</div>
         </div>
       </div>
       
@@ -208,10 +208,16 @@ const BookingForm = ({ car }: BookingFormProps) => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Miami">Miami</SelectItem>
-                    <SelectItem value="New York City">New York City</SelectItem>
-                    <SelectItem value="Los Angeles">Los Angeles</SelectItem>
-                    <SelectItem value="Chicago">Chicago</SelectItem>
+                    <SelectItem value="Ahmedabad">Ahmedabad (Time Square Grande)</SelectItem>
+                    <SelectItem value="Mumbai">Mumbai</SelectItem>
+                    <SelectItem value="Delhi">Delhi</SelectItem>
+                    <SelectItem value="Bangalore">Bangalore</SelectItem>
+                    <SelectItem value="Chennai">Chennai</SelectItem>
+                    <SelectItem value="Hyderabad">Hyderabad</SelectItem>
+                    <SelectItem value="Kolkata">Kolkata</SelectItem>
+                    <SelectItem value="Pune">Pune</SelectItem>
+                    <SelectItem value="Jaipur">Jaipur</SelectItem>
+                    <SelectItem value="Chandigarh">Chandigarh</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
