@@ -19,12 +19,15 @@ interface CarDetailModalProps {
 }
 
 const locations = [
-  "New York City",
-  "Los Angeles",
-  "Chicago",
-  "Miami",
-  "Las Vegas",
-  "San Francisco"
+  "Mumbai",
+  "Delhi",
+  "Bangalore",
+  "Ahmedabad",
+  "Chennai",
+  "Hyderabad",
+  "Kolkata",
+  "Pune",
+  "Jaipur"
 ];
 
 const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose }) => {
@@ -65,9 +68,9 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
     const baseRate = car.price * days;
     
     let extras = 0;
-    if (selectedExtras.insurance) extras += 25 * days;
-    if (selectedExtras.gps) extras += 10 * days;
-    if (selectedExtras.childSeat) extras += 5 * days;
+    if (selectedExtras.insurance) extras += 2000 * days;
+    if (selectedExtras.gps) extras += 800 * days;
+    if (selectedExtras.childSeat) extras += 400 * days;
     
     const taxesAndFees = (baseRate + extras) * 0.1; // 10% for taxes and fees
     
@@ -313,7 +316,7 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
                               }
                               className="h-4 w-4 text-[#D4AF37]"
                             />
-                            <label htmlFor="insurance" className="ml-2 text-sm">Premium Insurance (₹25/day)</label>
+                            <label htmlFor="insurance" className="ml-2 text-sm">Premium Insurance (₹2000/day)</label>
                           </div>
                           <div className="flex items-center">
                             <Checkbox 
@@ -324,7 +327,7 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
                               }
                               className="h-4 w-4 text-[#D4AF37]"
                             />
-                            <label htmlFor="gps" className="ml-2 text-sm">GPS Navigation (₹10/day)</label>
+                            <label htmlFor="gps" className="ml-2 text-sm">GPS Navigation (₹800/day)</label>
                           </div>
                           <div className="flex items-center">
                             <Checkbox 
@@ -335,7 +338,7 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
                               }
                               className="h-4 w-4 text-[#D4AF37]"
                             />
-                            <label htmlFor="child-seat" className="ml-2 text-sm">Child Seat (₹5/day)</label>
+                            <label htmlFor="child-seat" className="ml-2 text-sm">Child Seat (₹400/day)</label>
                           </div>
                         </div>
                       </div>
