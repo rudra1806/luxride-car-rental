@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/hooks/use-auth';
+import { useQuery } from '@tanstack/react-query';
+import { format } from 'date-fns';
 import BookingHistory from '@/components/dashboard/booking-history';
 import ProfileSection from '@/components/dashboard/profile-section';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -11,10 +13,32 @@ import {
   CardTitle 
 } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
+import { Booking, Car } from '@shared/schema';
+
+interface BookingWithCar extends Booking {
+  car?: Car;
+}
 
 const DashboardPage = () => {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading: authLoading } = useAuth();
   const [activeTab, setActiveTab] = useState('bookings');
+  
+  const { data: bookings, isLoading: bookingsLoading } = useQuery<BookingWithCar[]>({
+    queryKey: ['/api/bookings/user'],
+    enabled: !!user, // Only fetch bookings if user is logged in
+  });
+  
+  const isLoading = authLoading || bookingsLoading;
+  
+  // Count active bookings (those with status 'active' or 'pending')
+  const activeBookingsCount = bookings?.filter(
+    booking => booking.status === 'active' || booking.status === 'pending'
+  ).length || 0;
+  
+  // Find the next upcoming trip (soonest pickup date that's in the future)
+  const upcomingTrip = bookings?.filter(
+    booking => new Date(booking.pickupDate) >= new Date() && booking.status !== 'cancelled'
+  ).sort((a, b) => new Date(a.pickupDate).getTime() - new Date(b.pickupDate).getTime())[0];
 
   if (isLoading) {
     return (
@@ -72,7 +96,7 @@ const DashboardPage = () => {
                     <p className="text-gray-400 text-sm">Your current reservations</p>
                   </div>
                 </div>
-                <div className="text-3xl font-bold text-white">1</div>
+                <div className="text-3xl font-bold text-white">{activeBookingsCount}</div>
               </div>
               
               <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 transform transition-all hover:scale-105 hover:bg-white/10">
@@ -87,7 +111,13 @@ const DashboardPage = () => {
                     <p className="text-gray-400 text-sm">Upcoming reservation</p>
                   </div>
                 </div>
-                <div className="text-white">Apr 12 - Apr 18</div>
+                <div className="text-white">
+                  {upcomingTrip ? (
+                    `${format(new Date(upcomingTrip.pickupDate), 'MMM d')} - ${format(new Date(upcomingTrip.returnDate), 'MMM d, yyyy')}`
+                  ) : (
+                    'No upcoming trips'
+                  )}
+                </div>
               </div>
               
               <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 transform transition-all hover:scale-105 hover:bg-white/10">
@@ -102,7 +132,12 @@ const DashboardPage = () => {
                     <p className="text-gray-400 text-sm">Your loyalty status</p>
                   </div>
                 </div>
-                <div className="text-white">Gold Member</div>
+                <div className="text-white">
+                  {bookings && bookings.length >= 5 ? 'Platinum Member' : 
+                   bookings && bookings.length >= 3 ? 'Gold Member' : 
+                   bookings && bookings.length >= 1 ? 'Silver Member' : 
+                   'Bronze Member'}
+                </div>
               </div>
             </div>
           </div>
