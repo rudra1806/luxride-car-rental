@@ -465,7 +465,7 @@ const CarManagement = () => {
                   name="price"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Price per Day (₹)</FormLabel>
+                      <FormLabel>Price per Day ($)</FormLabel>
                       <FormControl>
                         <Input type="number" min="0" step="0.01" {...field} />
                       </FormControl>

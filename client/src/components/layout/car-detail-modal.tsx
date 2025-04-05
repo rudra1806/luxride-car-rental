@@ -313,7 +313,7 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
                               }
                               className="h-4 w-4 text-[#D4AF37]"
                             />
-                            <label htmlFor="insurance" className="ml-2 text-sm">Premium Insurance (₹2,075/day)</label>
+                            <label htmlFor="insurance" className="ml-2 text-sm">Premium Insurance ($25/day)</label>
                           </div>
                           <div className="flex items-center">
                             <Checkbox 
@@ -324,7 +324,7 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
                               }
                               className="h-4 w-4 text-[#D4AF37]"
                             />
-                            <label htmlFor="gps" className="ml-2 text-sm">GPS Navigation (₹830/day)</label>
+                            <label htmlFor="gps" className="ml-2 text-sm">GPS Navigation ($10/day)</label>
                           </div>
                           <div className="flex items-center">
                             <Checkbox 
@@ -335,7 +335,7 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
                               }
                               className="h-4 w-4 text-[#D4AF37]"
                             />
-                            <label htmlFor="child-seat" className="ml-2 text-sm">Child Seat (₹415/day)</label>
+                            <label htmlFor="child-seat" className="ml-2 text-sm">Child Seat ($5/day)</label>
                           </div>
                         </div>
                       </div>
@@ -343,19 +343,19 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
                       <div className="border-t border-gray-200 pt-4 mb-4">
                         <div className="flex justify-between mb-2">
                           <span>Base Rate ({differenceInDays(returnDate, pickupDate)} days)</span>
-                          <span className="font-medium">₹{(pricing.baseRate * 83).toFixed(2)}</span>
+                          <span className="font-medium">${pricing.baseRate.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between mb-2">
                           <span>Extras</span>
-                          <span className="font-medium">₹{(pricing.extras * 83).toFixed(2)}</span>
+                          <span className="font-medium">${pricing.extras.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between mb-2">
                           <span>Taxes & Fees</span>
-                          <span className="font-medium">₹{(pricing.taxesAndFees * 83).toFixed(2)}</span>
+                          <span className="font-medium">${pricing.taxesAndFees.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between mt-4 pt-4 border-t border-gray-200">
                           <span className="font-bold">Total</span>
-                          <span className="font-bold">₹{(pricing.total * 83).toFixed(2)}</span>
+                          <span className="font-bold">${pricing.total.toFixed(2)}</span>
                         </div>
                       </div>
                       

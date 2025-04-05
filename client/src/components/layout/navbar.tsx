@@ -2,38 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
-import { MenuIcon, X, Sun, Moon } from 'lucide-react';
+import { MenuIcon, X } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [location] = useLocation();
   const { user, logoutMutation } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    // Initialize based on localStorage or system preference
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('luxdrive-theme');
-      if (savedTheme === 'dark') return true;
-      if (savedTheme === 'light') return false;
-      
-      // System preference
-      return window.matchMedia && 
-        window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    return false;
-  });
-  
-  // Apply theme on mount and when changed
-  useEffect(() => {
-    const root = document.documentElement;
-    if (isDarkMode) {
-      root.classList.add('dark');
-      localStorage.setItem('luxdrive-theme', 'dark');
-    } else {
-      root.classList.remove('dark');
-      localStorage.setItem('luxdrive-theme', 'light');
-    }
-  }, [isDarkMode]);
   
   // Handle scroll event to change navbar style
   useEffect(() => {
@@ -59,10 +34,6 @@ const Navbar: React.FC = () => {
   
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
-  };
-  
-  const toggleTheme = () => {
-    setIsDarkMode(prev => !prev);
   };
   
   const navbarClasses = scrolled || location !== '/' 
@@ -98,27 +69,12 @@ const Navbar: React.FC = () => {
         </div>
         
         <div className="flex items-center space-x-4">
-          <div className="hidden md:block">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="rounded-full"
-              aria-label="Toggle theme"
-            >
-              {isDarkMode ? (
-                <Sun className="h-5 w-5 text-yellow-400 hover:text-[#EAB308]" />
-              ) : (
-                <Moon className="h-5 w-5 text-gray-700 hover:text-[#0F172A]" />
-              )}
-            </Button>
-          </div>
           {user ? (
             <>
               <Link href="/dashboard" className="hidden md:inline-block text-white hover:text-[#D4AF37] transition-colors font-medium">
                 Dashboard
               </Link>
-              {user.isAdmin && (
+              {user.role === 'admin' && (
                 <Link href="/admin" className="hidden md:inline-block text-white hover:text-[#D4AF37] transition-colors font-medium">
                   Admin
                 </Link>
@@ -176,28 +132,12 @@ const Navbar: React.FC = () => {
             </Link>
             
             <div className="pt-4 flex flex-col space-y-3">
-              <div className="flex items-center pb-2">
-                <span className="text-white mr-3">Theme:</span>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={toggleTheme}
-                  className="rounded-full"
-                  aria-label="Toggle theme"
-                >
-                  {isDarkMode ? (
-                    <Sun className="h-5 w-5 text-yellow-400 hover:text-[#EAB308]" />
-                  ) : (
-                    <Moon className="h-5 w-5 text-gray-700 hover:text-[#0F172A]" />
-                  )}
-                </Button>
-              </div>
               {user ? (
                 <>
                   <Link href="/dashboard" className="block text-white hover:text-[#D4AF37] font-medium py-2">
                     Dashboard
                   </Link>
-                  {user.isAdmin && (
+                  {user.role === 'admin' && (
                     <Link href="/admin" className="block text-white hover:text-[#D4AF37] font-medium py-2">
                       Admin
                     </Link>

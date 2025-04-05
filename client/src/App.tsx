@@ -1,4 +1,6 @@
 import { Switch, Route } from "wouter";
+import { queryClient } from "./lib/queryClient";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import HomePage from "@/pages/home-page";
@@ -12,8 +14,7 @@ import ContactPage from "@/pages/contact-page";
 import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthProvider } from "@/hooks/use-auth";
 import { CartProvider } from "@/context/cart-context";
-import { ThemeProvider } from "@/context/theme-context";
-import Navbar from "@/components/layout/navbar";
+import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 
 function Router() {
@@ -34,7 +35,7 @@ function Router() {
 
 function App() {
   return (
-    <ThemeProvider>
+    <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <CartProvider>
           <div className="flex min-h-screen flex-col">
@@ -47,7 +48,7 @@ function App() {
           <Toaster />
         </CartProvider>
       </AuthProvider>
-    </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 
