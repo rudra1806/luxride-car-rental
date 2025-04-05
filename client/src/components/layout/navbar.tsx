@@ -4,7 +4,6 @@ import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { MenuIcon, X, Search, User } from 'lucide-react';
 import Logo from '@/components/ui/logo';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar: React.FC = () => {
   const [location] = useLocation();
@@ -47,33 +46,8 @@ const Navbar: React.FC = () => {
 
   const activeClass = (path: string) => {
     return location === path 
-      ? 'text-[#F59E0B] font-medium nav-link active' 
-      : `${textColorClass} hover:text-[#F59E0B] nav-link`;
-  };
-  
-  // Animation variants for navbar items
-  const navItemVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { 
-        duration: 0.5,
-        ease: "easeOut" 
-      }
-    }
-  };
-
-  // Staggered animation for nav items
-  const navContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1
-      }
-    }
+      ? 'text-[#F59E0B] font-medium' 
+      : `${textColorClass} hover:text-[#F59E0B]`;
   };
   
   return (
@@ -90,41 +64,28 @@ const Navbar: React.FC = () => {
           </div>
           
           {/* Desktop Navigation */}
-          <motion.div 
-            className="hidden md:flex items-center space-x-10"
-            initial="hidden"
-            animate="visible"
-            variants={navContainerVariants}
-          >
-            <motion.div variants={navItemVariants}>
-              <Link href="/">
-                <a className={`${activeClass('/')} transition-colors duration-200`}>
-                  Home
-                </a>
-              </Link>
-            </motion.div>
-            <motion.div variants={navItemVariants}>
-              <Link href="/vehicles">
-                <a className={`${activeClass('/vehicles')} transition-colors duration-200`}>
-                  Our Fleet
-                </a>
-              </Link>
-            </motion.div>
-            <motion.div variants={navItemVariants}>
-              <Link href="/about">
-                <a className={`${activeClass('/about')} transition-colors duration-200`}>
-                  About
-                </a>
-              </Link>
-            </motion.div>
-            <motion.div variants={navItemVariants}>
-              <Link href="/contact">
-                <a className={`${activeClass('/contact')} transition-colors duration-200`}>
-                  Contact
-                </a>
-              </Link>
-            </motion.div>
-          </motion.div>
+          <div className="hidden md:flex items-center space-x-10">
+            <Link href="/">
+              <a className={`${activeClass('/')} transition-colors duration-200`}>
+                Home
+              </a>
+            </Link>
+            <Link href="/vehicles">
+              <a className={`${activeClass('/vehicles')} transition-colors duration-200`}>
+                Our Fleet
+              </a>
+            </Link>
+            <Link href="/about">
+              <a className={`${activeClass('/about')} transition-colors duration-200`}>
+                About
+              </a>
+            </Link>
+            <Link href="/contact">
+              <a className={`${activeClass('/contact')} transition-colors duration-200`}>
+                Contact
+              </a>
+            </Link>
+          </div>
           
           {/* Right Side */}
           <div className="flex items-center space-x-4">
@@ -193,108 +154,71 @@ const Navbar: React.FC = () => {
       </div>
       
       {/* Mobile Navigation */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div 
-            className="md:hidden bg-[#0C1323] border-t border-white/10 shadow-lg"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <motion.div 
-              className="container mx-auto px-4 py-3 space-y-2"
-              variants={navContainerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <motion.div variants={navItemVariants} className="stagger-item">
-                <Link href="/">
-                  <a className={`block py-2 ${location === '/' ? 'text-[#F59E0B] font-medium nav-link active' : 'text-white nav-link'}`}>
-                    Home
-                  </a>
-                </Link>
-              </motion.div>
-              <motion.div variants={navItemVariants} className="stagger-item">
-                <Link href="/vehicles">
-                  <a className={`block py-2 ${location === '/vehicles' ? 'text-[#F59E0B] font-medium nav-link active' : 'text-white nav-link'}`}>
-                    Our Fleet
-                  </a>
-                </Link>
-              </motion.div>
-              <motion.div variants={navItemVariants} className="stagger-item">
-                <Link href="/about">
-                  <a className={`block py-2 ${location === '/about' ? 'text-[#F59E0B] font-medium nav-link active' : 'text-white nav-link'}`}>
-                    About
-                  </a>
-                </Link>
-              </motion.div>
-              <motion.div variants={navItemVariants} className="stagger-item">
-                <Link href="/contact">
-                  <a className={`block py-2 ${location === '/contact' ? 'text-[#F59E0B] font-medium nav-link active' : 'text-white nav-link'}`}>
-                    Contact
-                  </a>
-                </Link>
-              </motion.div>
-              
-              <motion.div 
-                className="pt-2 border-t border-white/10"
-                variants={navItemVariants}
-              >
-                {user ? (
-                  <>
-                    <motion.div variants={navItemVariants} className="stagger-item">
-                      <Link href="/dashboard">
-                        <a className="block py-2 text-white nav-link">
-                          Account
-                        </a>
-                      </Link>
-                    </motion.div>
-                    {user.isAdmin && (
-                      <motion.div variants={navItemVariants} className="stagger-item">
-                        <Link href="/admin">
-                          <a className="block py-2 text-white nav-link">
-                            Admin
-                          </a>
-                        </Link>
-                      </motion.div>
-                    )}
-                    <motion.div variants={navItemVariants} className="stagger-item">
-                      <Button 
-                        onClick={handleLogout} 
-                        variant="ghost" 
-                        className="w-full justify-start p-0 h-auto text-white py-2 nav-link"
-                      >
-                        Logout
-                      </Button>
-                    </motion.div>
-                  </>
-                ) : (
-                  <motion.div 
-                    className="flex flex-col space-y-2"
-                    variants={navItemVariants}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-[#0C1323] border-t border-white/10 shadow-lg">
+          <div className="container mx-auto px-4 py-3 space-y-2">
+            <Link href="/">
+              <a className={`block py-2 ${location === '/' ? 'text-[#F59E0B] font-medium' : 'text-white'}`}>
+                Home
+              </a>
+            </Link>
+            <Link href="/vehicles">
+              <a className={`block py-2 ${location === '/vehicles' ? 'text-[#F59E0B] font-medium' : 'text-white'}`}>
+                Our Fleet
+              </a>
+            </Link>
+            <Link href="/about">
+              <a className={`block py-2 ${location === '/about' ? 'text-[#F59E0B] font-medium' : 'text-white'}`}>
+                About
+              </a>
+            </Link>
+            <Link href="/contact">
+              <a className={`block py-2 ${location === '/contact' ? 'text-[#F59E0B] font-medium' : 'text-white'}`}>
+                Contact
+              </a>
+            </Link>
+            
+            <div className="pt-2 border-t border-white/10">
+              {user ? (
+                <>
+                  <Link href="/dashboard">
+                    <a className="block py-2 text-white">
+                      Account
+                    </a>
+                  </Link>
+                  {user.isAdmin && (
+                    <Link href="/admin">
+                      <a className="block py-2 text-white">
+                        Admin
+                      </a>
+                    </Link>
+                  )}
+                  <Button 
+                    onClick={handleLogout} 
+                    variant="ghost" 
+                    className="w-full justify-start p-0 h-auto text-white py-2"
                   >
-                    <motion.div variants={navItemVariants} className="stagger-item">
-                      <Link href="/auth">
-                        <a className="block py-2 text-white nav-link">
-                          Sign In / Register
-                        </a>
-                      </Link>
-                    </motion.div>
-                    <motion.div variants={navItemVariants} className="stagger-item">
-                      <Link href="/vehicles">
-                        <a className="bg-[#F59E0B] text-[#0C1323] font-medium py-2 px-4 rounded text-center shine-effect">
-                          Book Now
-                        </a>
-                      </Link>
-                    </motion.div>
-                  </motion.div>
-                )}
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <div className="flex flex-col space-y-2">
+                  <Link href="/auth">
+                    <a className="block py-2 text-white">
+                      Sign In / Register
+                    </a>
+                  </Link>
+                  <Link href="/vehicles">
+                    <a className="bg-[#F59E0B] text-[#0C1323] font-medium py-2 px-4 rounded text-center">
+                      Book Now
+                    </a>
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
