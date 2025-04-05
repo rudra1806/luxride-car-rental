@@ -9,6 +9,8 @@ import VehiclesPage from "@/pages/vehicles-page";
 import VehicleDetailsPage from "@/pages/vehicle-details-page";
 import DashboardPage from "@/pages/dashboard-page";
 import AdminPage from "@/pages/admin-page";
+import AboutPage from "@/pages/about-page";
+import ContactPage from "@/pages/contact-page";
 import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthProvider } from "@/hooks/use-auth";
 import { CartProvider } from "@/context/cart-context";
@@ -22,6 +24,8 @@ function Router() {
       <Route path="/auth" component={AuthPage} />
       <Route path="/vehicles" component={VehiclesPage} />
       <Route path="/vehicles/:id" component={VehicleDetailsPage} />
+      <Route path="/about" component={AboutPage} />
+      <Route path="/contact" component={ContactPage} />
       <ProtectedRoute path="/dashboard" component={DashboardPage} />
       <ProtectedRoute path="/admin" component={AdminPage} />
       <Route component={NotFound} />

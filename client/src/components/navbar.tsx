@@ -54,10 +54,10 @@ const Navbar = () => {
               <Link href="/vehicles" className={`text-white hover:text-[#EAB308] px-3 py-2 text-sm font-medium transition-colors duration-200 ${location === '/vehicles' ? 'text-[#EAB308]' : ''}`}>
                 Vehicles
               </Link>
-              <Link href="#about" className="text-white hover:text-[#EAB308] px-3 py-2 text-sm font-medium transition-colors duration-200">
+              <Link href="/about" className={`text-white hover:text-[#EAB308] px-3 py-2 text-sm font-medium transition-colors duration-200 ${location === '/about' ? 'text-[#EAB308]' : ''}`}>
                 About
               </Link>
-              <Link href="#contact" className="text-white hover:text-[#EAB308] px-3 py-2 text-sm font-medium transition-colors duration-200">
+              <Link href="/contact" className={`text-white hover:text-[#EAB308] px-3 py-2 text-sm font-medium transition-colors duration-200 ${location === '/contact' ? 'text-[#EAB308]' : ''}`}>
                 Contact
               </Link>
             </div>
@@ -127,10 +127,10 @@ const Navbar = () => {
           <Link href="/vehicles" className="text-white hover:bg-[#0F172A] block px-3 py-2 rounded-md text-base font-medium" onClick={closeMobileMenu}>
             <Car className="inline mr-2 h-4 w-4" /> Vehicles
           </Link>
-          <Link href="#about" className="text-white hover:bg-[#0F172A] block px-3 py-2 rounded-md text-base font-medium" onClick={closeMobileMenu}>
+          <Link href="/about" className="text-white hover:bg-[#0F172A] block px-3 py-2 rounded-md text-base font-medium" onClick={closeMobileMenu}>
             <Info className="inline mr-2 h-4 w-4" /> About
           </Link>
-          <Link href="#contact" className="text-white hover:bg-[#0F172A] block px-3 py-2 rounded-md text-base font-medium" onClick={closeMobileMenu}>
+          <Link href="/contact" className="text-white hover:bg-[#0F172A] block px-3 py-2 rounded-md text-base font-medium" onClick={closeMobileMenu}>
             <Phone className="inline mr-2 h-4 w-4" /> Contact
           </Link>
           
