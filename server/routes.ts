@@ -2,41 +2,44 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth } from "./auth";
-import { insertBookingSchema, insertCarSchema, insertReviewSchema } from "@shared/schema";
 import { z } from "zod";
+import { insertBookingSchema, insertCarSchema, insertReviewSchema } from "@shared/schema";
+
+// Middleware to check if user is authenticated
+const isAuthenticated = (req: any, res: any, next: any) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.status(401).json({ message: "Unauthorized" });
+};
+
+// Middleware to check if user is an admin
+const isAdmin = (req: any, res: any, next: any) => {
+  if (req.isAuthenticated() && req.user.isAdmin) {
+    return next();
+  }
+  res.status(403).json({ message: "Forbidden" });
+};
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Set up authentication routes
+  // Setup authentication routes
   setupAuth(app);
 
-  // CAR ROUTES
-  
-  // Get all cars
+  // Cars routes
   app.get("/api/cars", async (req, res) => {
     try {
-      const type = req.query.type as string | undefined;
-      
-      if (type) {
-        const cars = await storage.getCarsByType(type);
-        res.json(cars);
-      } else {
-        const cars = await storage.getCars();
-        res.json(cars);
-      }
+      const cars = await storage.getAllCars();
+      res.json(cars);
     } catch (error) {
       res.status(500).json({ message: "Error fetching cars" });
     }
   });
 
-  // Get car by ID
   app.get("/api/cars/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      if (isNaN(id)) {
-        return res.status(400).json({ message: "Invalid car ID" });
-      }
-      
       const car = await storage.getCarById(id);
+      
       if (!car) {
         return res.status(404).json({ message: "Car not found" });
       }
@@ -47,15 +50,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Create car (admin only)
-  app.post("/api/cars", async (req, res) => {
+  app.get("/api/cars/type/:type", async (req, res) => {
     try {
-      if (!req.isAuthenticated() || req.user.role !== "admin") {
-        return res.status(403).json({ message: "Unauthorized" });
-      }
-      
-      const carData = insertCarSchema.parse(req.body);
-      const car = await storage.createCar(carData);
+      const type = req.params.type;
+      const cars = await storage.getCarsByType(type);
+      res.json(cars);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching cars by type" });
+    }
+  });
+
+  app.post("/api/cars", isAdmin, async (req, res) => {
+    try {
+      const validatedCar = insertCarSchema.parse(req.body);
+      const car = await storage.createCar(validatedCar);
       res.status(201).json(car);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -65,128 +73,93 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Update car (admin only)
-  app.put("/api/cars/:id", async (req, res) => {
+  app.put("/api/cars/:id", isAdmin, async (req, res) => {
     try {
-      if (!req.isAuthenticated() || req.user.role !== "admin") {
-        return res.status(403).json({ message: "Unauthorized" });
-      }
-      
       const id = parseInt(req.params.id);
-      if (isNaN(id)) {
-        return res.status(400).json({ message: "Invalid car ID" });
-      }
+      const updatedCar = await storage.updateCar(id, req.body);
       
-      const car = await storage.getCarById(id);
-      if (!car) {
+      if (!updatedCar) {
         return res.status(404).json({ message: "Car not found" });
       }
       
-      const updatedCar = await storage.updateCar(id, req.body);
       res.json(updatedCar);
     } catch (error) {
       res.status(500).json({ message: "Error updating car" });
     }
   });
 
-  // Delete car (admin only)
-  app.delete("/api/cars/:id", async (req, res) => {
+  app.delete("/api/cars/:id", isAdmin, async (req, res) => {
     try {
-      if (!req.isAuthenticated() || req.user.role !== "admin") {
-        return res.status(403).json({ message: "Unauthorized" });
-      }
-      
       const id = parseInt(req.params.id);
-      if (isNaN(id)) {
-        return res.status(400).json({ message: "Invalid car ID" });
-      }
+      const deleted = await storage.deleteCar(id);
       
-      const car = await storage.getCarById(id);
-      if (!car) {
+      if (!deleted) {
         return res.status(404).json({ message: "Car not found" });
       }
       
-      await storage.deleteCar(id);
       res.status(204).send();
     } catch (error) {
       res.status(500).json({ message: "Error deleting car" });
     }
   });
 
-  // BOOKING ROUTES
-  
-  // Get all bookings (admin only)
-  app.get("/api/bookings", async (req, res) => {
+  // Bookings routes
+  app.get("/api/bookings", isAdmin, async (req, res) => {
     try {
-      if (!req.isAuthenticated() || req.user.role !== "admin") {
-        return res.status(403).json({ message: "Unauthorized" });
-      }
-      
-      const bookings = await storage.getBookings();
+      const bookings = await storage.getAllBookings();
       res.json(bookings);
     } catch (error) {
       res.status(500).json({ message: "Error fetching bookings" });
     }
   });
 
-  // Get user's bookings
-  app.get("/api/user/bookings", async (req, res) => {
+  app.get("/api/bookings/user", isAuthenticated, async (req, res) => {
     try {
-      if (!req.isAuthenticated()) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
+      const userId = req.user!.id;
+      const bookings = await storage.getBookingsByUserId(userId);
       
-      const bookings = await storage.getBookingsByUser(req.user.id);
-      res.json(bookings);
+      // Get car details for each booking
+      const bookingsWithCarDetails = await Promise.all(
+        bookings.map(async (booking) => {
+          const car = await storage.getCarById(booking.carId);
+          return { ...booking, car };
+        })
+      );
+      
+      res.json(bookingsWithCarDetails);
     } catch (error) {
-      res.status(500).json({ message: "Error fetching bookings" });
+      res.status(500).json({ message: "Error fetching user bookings" });
     }
   });
 
-  // Create booking
-  app.post("/api/bookings", async (req, res) => {
+  app.post("/api/bookings", isAuthenticated, async (req, res) => {
     try {
-      if (!req.isAuthenticated()) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
+      const userId = req.user!.id;
+      const bookingData = { ...req.body, userId };
       
-      const bookingData = insertBookingSchema.parse({
-        ...req.body,
-        userId: req.user.id
-      });
+      const validatedBooking = insertBookingSchema.parse(bookingData);
       
-      // Check if car exists
-      const car = await storage.getCarById(bookingData.carId);
-      if (!car) {
-        return res.status(404).json({ message: "Car not found" });
-      }
+      // Check if car is available for the requested dates
+      const carBookings = await storage.getBookingsByCarId(validatedBooking.carId);
+      const requestedPickup = new Date(validatedBooking.pickupDate);
+      const requestedReturn = new Date(validatedBooking.returnDate);
       
-      // Check if car is available
-      if (!car.available) {
-        return res.status(400).json({ message: "Car is not available for booking" });
-      }
-      
-      // Check date conflicts
-      const carBookings = await storage.getBookingsByCar(bookingData.carId);
-      const pickupDate = new Date(bookingData.pickupDate);
-      const returnDate = new Date(bookingData.returnDate);
-      
-      const hasConflict = carBookings.some(booking => {
-        const existingPickup = new Date(booking.pickupDate);
-        const existingReturn = new Date(booking.returnDate);
+      const isOverlapping = carBookings.some(booking => {
+        const bookingPickup = new Date(booking.pickupDate);
+        const bookingReturn = new Date(booking.returnDate);
         
         return (
-          (pickupDate >= existingPickup && pickupDate <= existingReturn) ||
-          (returnDate >= existingPickup && returnDate <= existingReturn) ||
-          (pickupDate <= existingPickup && returnDate >= existingReturn)
+          (requestedPickup >= bookingPickup && requestedPickup <= bookingReturn) ||
+          (requestedReturn >= bookingPickup && requestedReturn <= bookingReturn) ||
+          (requestedPickup <= bookingPickup && requestedReturn >= bookingReturn)
         );
       });
       
-      if (hasConflict) {
-        return res.status(400).json({ message: "Selected dates are not available for this car" });
+      if (isOverlapping) {
+        return res.status(400).json({ message: "Car is not available for the selected dates" });
       }
       
-      const booking = await storage.createBooking(bookingData);
+      const booking = await storage.createBooking(validatedBooking);
       res.status(201).json(booking);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -196,81 +169,91 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Update booking status (admin only)
-  app.put("/api/bookings/:id/status", async (req, res) => {
+  app.put("/api/bookings/:id", isAuthenticated, async (req, res) => {
     try {
-      if (!req.isAuthenticated() || req.user.role !== "admin") {
-        return res.status(403).json({ message: "Unauthorized" });
-      }
-      
       const id = parseInt(req.params.id);
-      if (isNaN(id)) {
-        return res.status(400).json({ message: "Invalid booking ID" });
-      }
+      const userId = req.user!.id;
       
-      const { status } = req.body;
-      if (!status || !["pending", "confirmed", "completed", "cancelled"].includes(status)) {
-        return res.status(400).json({ message: "Invalid status" });
-      }
-      
+      // Get the booking to check ownership
       const booking = await storage.getBookingById(id);
+      
       if (!booking) {
         return res.status(404).json({ message: "Booking not found" });
       }
       
-      const updatedBooking = await storage.updateBooking(id, { status });
+      // Only allow admin or booking owner to update
+      if (booking.userId !== userId && !req.user!.isAdmin) {
+        return res.status(403).json({ message: "Forbidden - You do not own this booking" });
+      }
+      
+      const updatedBooking = await storage.updateBooking(id, req.body);
       res.json(updatedBooking);
     } catch (error) {
-      res.status(500).json({ message: "Error updating booking status" });
+      res.status(500).json({ message: "Error updating booking" });
     }
   });
 
-  // REVIEW ROUTES
-  
-  // Get car reviews
-  app.get("/api/cars/:id/reviews", async (req, res) => {
+  app.delete("/api/bookings/:id", isAuthenticated, async (req, res) => {
     try {
-      const carId = parseInt(req.params.id);
-      if (isNaN(carId)) {
-        return res.status(400).json({ message: "Invalid car ID" });
+      const id = parseInt(req.params.id);
+      const userId = req.user!.id;
+      
+      // Get the booking to check ownership
+      const booking = await storage.getBookingById(id);
+      
+      if (!booking) {
+        return res.status(404).json({ message: "Booking not found" });
       }
       
-      const reviews = await storage.getReviewsByCar(carId);
-      res.json(reviews);
+      // Only allow admin or booking owner to delete
+      if (booking.userId !== userId && !req.user!.isAdmin) {
+        return res.status(403).json({ message: "Forbidden - You do not own this booking" });
+      }
+      
+      const deleted = await storage.deleteBooking(id);
+      
+      if (!deleted) {
+        return res.status(404).json({ message: "Booking not found" });
+      }
+      
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ message: "Error deleting booking" });
+    }
+  });
+
+  // Reviews routes
+  app.get("/api/reviews/car/:carId", async (req, res) => {
+    try {
+      const carId = parseInt(req.params.carId);
+      const reviews = await storage.getReviewsByCarId(carId);
+      
+      // Get user details for each review (excluding password)
+      const reviewsWithUserDetails = await Promise.all(
+        reviews.map(async (review) => {
+          const user = await storage.getUser(review.userId);
+          if (user) {
+            const { password, ...userWithoutPassword } = user;
+            return { ...review, user: userWithoutPassword };
+          }
+          return review;
+        })
+      );
+      
+      res.json(reviewsWithUserDetails);
     } catch (error) {
       res.status(500).json({ message: "Error fetching reviews" });
     }
   });
 
-  // Add review
-  app.post("/api/reviews", async (req, res) => {
+  app.post("/api/reviews", isAuthenticated, async (req, res) => {
     try {
-      if (!req.isAuthenticated()) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
+      const userId = req.user!.id;
+      const reviewData = { ...req.body, userId };
       
-      const reviewData = insertReviewSchema.parse({
-        ...req.body,
-        userId: req.user.id
-      });
+      const validatedReview = insertReviewSchema.parse(reviewData);
+      const review = await storage.createReview(validatedReview);
       
-      // Check if car exists
-      const car = await storage.getCarById(reviewData.carId);
-      if (!car) {
-        return res.status(404).json({ message: "Car not found" });
-      }
-      
-      // Check if user has booked this car before
-      const userBookings = await storage.getBookingsByUser(req.user.id);
-      const hasBooked = userBookings.some(booking => 
-        booking.carId === reviewData.carId && booking.status === "completed"
-      );
-      
-      if (!hasBooked) {
-        return res.status(403).json({ message: "You can only review cars you have rented" });
-      }
-      
-      const review = await storage.createReview(reviewData);
       res.status(201).json(review);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -280,64 +263,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ADMIN USER MANAGEMENT ROUTES
-  
-  // Get all users (admin only)
-  app.get("/api/users", async (req, res) => {
+  // User profile routes
+  app.put("/api/user/profile", isAuthenticated, async (req, res) => {
     try {
-      if (!req.isAuthenticated() || req.user.role !== "admin") {
-        return res.status(403).json({ message: "Unauthorized" });
+      const userId = req.user!.id;
+      const { password, isAdmin, ...userData } = req.body; // Prevent updating password or admin status through this endpoint
+      
+      const updatedUser = await storage.updateUser(userId, userData);
+      
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
       }
       
-      const users = Array.from((await storage.getCars()).values());
-      
-      // Remove passwords from response
-      const sanitizedUsers = users.map(user => {
-        const { password, ...userWithoutPassword } = user;
-        return userWithoutPassword;
-      });
-      
-      res.json(sanitizedUsers);
+      // Don't send password in response
+      const { password: pwd, ...userWithoutPassword } = updatedUser;
+      res.json(userWithoutPassword);
     } catch (error) {
-      res.status(500).json({ message: "Error fetching users" });
+      res.status(500).json({ message: "Error updating profile" });
     }
   });
 
-  // Create admin user (if no users exist)
-  app.post("/api/setup-admin", async (req, res, next) => {
+  // Check car availability
+  app.post("/api/cars/check-availability", async (req, res) => {
     try {
-      const users = Array.from((await storage.getCars()).values());
+      const { carId, pickupDate, returnDate } = req.body;
       
-      // Only allow setup if no users exist
-      if (users.length > 0) {
-        return res.status(403).json({ message: "Admin already exists" });
-      }
-      
-      const { username, password, email, firstName, lastName } = req.body;
-      
-      if (!username || !password || !email || !firstName || !lastName) {
+      if (!carId || !pickupDate || !returnDate) {
         return res.status(400).json({ message: "Missing required fields" });
       }
       
-      const user = await storage.createUser({
-        username,
-        password,
-        email,
-        firstName,
-        lastName,
-        phone: req.body.phone || ""
-      });
+      const car = await storage.getCarById(parseInt(carId));
       
-      // Set as admin
-      const admin = await storage.updateUser(user.id, { role: "admin" });
-      
-      if (!admin) {
-        return res.status(500).json({ message: "Failed to create admin" });
+      if (!car) {
+        return res.status(404).json({ message: "Car not found" });
       }
       
-      res.status(201).json({ message: "Admin created successfully" });
+      const carBookings = await storage.getBookingsByCarId(parseInt(carId));
+      const requestedPickup = new Date(pickupDate);
+      const requestedReturn = new Date(returnDate);
+      
+      const isOverlapping = carBookings.some(booking => {
+        const bookingPickup = new Date(booking.pickupDate);
+        const bookingReturn = new Date(booking.returnDate);
+        
+        return (
+          (requestedPickup >= bookingPickup && requestedPickup <= bookingReturn) ||
+          (requestedReturn >= bookingPickup && requestedReturn <= bookingReturn) ||
+          (requestedPickup <= bookingPickup && requestedReturn >= bookingReturn)
+        );
+      });
+      
+      res.json({ available: !isOverlapping });
     } catch (error) {
-      next(error);
+      res.status(500).json({ message: "Error checking availability" });
     }
   });
 

@@ -1,98 +1,119 @@
-import { pgTable, text, serial, integer, boolean, timestamp, primaryKey, real } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, doublePrecision } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// User model
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
-  email: text("email").notNull().unique(),
-  firstName: text("first_name").notNull(),
-  lastName: text("last_name").notNull(),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  email: text("email"),
   phone: text("phone"),
-  role: text("role").default("user").notNull(),
+  address: text("address"),
+  city: text("city"),
+  state: text("state"),
+  zipCode: text("zip_code"),
+  isAdmin: boolean("is_admin").default(false),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
-  email: true,
-  firstName: true,
-  lastName: true,
-  phone: true,
-});
-
-// Car model
 export const cars = pgTable("cars", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   brand: text("brand").notNull(),
   model: text("model").notNull(),
   year: integer("year").notNull(),
-  type: text("type").notNull(), // sports, luxury, suv, convertible
-  dailyRate: real("daily_rate").notNull(),
-  imageUrl: text("image_url").notNull(),
-  description: text("description").notNull(),
-  seats: integer("seats").notNull(),
-  transmission: text("transmission").notNull(),
-  acceleration: real("acceleration"), // 0-60 time
-  engine: text("engine"),
-  features: text("features").array(),
-  available: boolean("available").default(true).notNull(),
-  rating: real("rating").default(0),
-  reviewCount: integer("review_count").default(0),
+  type: text("type").notNull(),
+  price: doublePrecision("price").notNull(),
+  horsepower: integer("horsepower"),
+  seats: integer("seats"),
+  transmission: text("transmission"),
+  fuelType: text("fuel_type"),
+  image: text("image"),
+  description: text("description"),
+  availability: boolean("availability").default(true),
+  rating: doublePrecision("rating"),
+  reviews: integer("reviews").default(0),
 });
 
-export const insertCarSchema = createInsertSchema(cars).omit({
-  id: true,
-  rating: true,
-  reviewCount: true,
-});
-
-// Booking model
 export const bookings = pgTable("bookings", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull().references(() => users.id),
-  carId: integer("car_id").notNull().references(() => cars.id),
-  pickupLocation: text("pickup_location").notNull(),
+  userId: integer("user_id").notNull(),
+  carId: integer("car_id").notNull(),
   pickupDate: timestamp("pickup_date").notNull(),
   returnDate: timestamp("return_date").notNull(),
-  totalPrice: real("total_price").notNull(),
-  status: text("status").default("pending").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  extras: text("extras").array(),
+  pickupLocation: text("pickup_location").notNull(),
+  totalPrice: doublePrecision("total_price").notNull(),
+  status: text("status").default("pending"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const insertBookingSchema = createInsertSchema(bookings).omit({
-  id: true,
-  createdAt: true,
-});
-
-// Reviews model
 export const reviews = pgTable("reviews", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull().references(() => users.id),
-  carId: integer("car_id").notNull().references(() => cars.id),
+  userId: integer("user_id").notNull(),
+  carId: integer("car_id").notNull(),
   rating: integer("rating").notNull(),
   comment: text("comment"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const insertReviewSchema = createInsertSchema(reviews).omit({
-  id: true,
-  createdAt: true,
+export const insertUserSchema = createInsertSchema(users).pick({
+  username: true,
+  password: true,
+  firstName: true,
+  lastName: true,
+  email: true,
+  phone: true,
+  address: true,
+  city: true,
+  state: true,
+  zipCode: true,
+  isAdmin: true,
 });
 
-// Export types
-export type User = typeof users.$inferSelect;
+export const insertCarSchema = createInsertSchema(cars).pick({
+  name: true,
+  brand: true,
+  model: true,
+  year: true,
+  type: true,
+  price: true,
+  horsepower: true,
+  seats: true,
+  transmission: true,
+  fuelType: true,
+  image: true,
+  description: true,
+  availability: true,
+  rating: true,
+  reviews: true,
+});
+
+export const insertBookingSchema = createInsertSchema(bookings).pick({
+  userId: true,
+  carId: true,
+  pickupDate: true,
+  returnDate: true,
+  pickupLocation: true,
+  totalPrice: true,
+  status: true,
+});
+
+export const insertReviewSchema = createInsertSchema(reviews).pick({
+  userId: true,
+  carId: true,
+  rating: true,
+  comment: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
+export type User = typeof users.$inferSelect;
 
-export type Car = typeof cars.$inferSelect;
 export type InsertCar = z.infer<typeof insertCarSchema>;
+export type Car = typeof cars.$inferSelect;
 
-export type Booking = typeof bookings.$inferSelect;
 export type InsertBooking = z.infer<typeof insertBookingSchema>;
+export type Booking = typeof bookings.$inferSelect;
 
-export type Review = typeof reviews.$inferSelect;
 export type InsertReview = z.infer<typeof insertReviewSchema>;
+export type Review = typeof reviews.$inferSelect;

@@ -6,28 +6,22 @@ import NotFound from "@/pages/not-found";
 import HomePage from "@/pages/home-page";
 import AuthPage from "@/pages/auth-page";
 import VehiclesPage from "@/pages/vehicles-page";
-import CarDetailsPage from "@/pages/car-details-page";
+import VehicleDetailsPage from "@/pages/vehicle-details-page";
 import DashboardPage from "@/pages/dashboard-page";
 import AdminPage from "@/pages/admin-page";
-import { AuthProvider } from "./hooks/use-auth";
-import { ProtectedRoute } from "./lib/protected-route";
-import { useEffect } from "react";
+import { ProtectedRoute } from "@/lib/protected-route";
+import { AuthProvider } from "@/hooks/use-auth";
+import { CartProvider } from "@/context/cart-context";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 function Router() {
-  // Set default page background color
-  useEffect(() => {
-    document.body.classList.add("bg-offwhite");
-    return () => {
-      document.body.classList.remove("bg-offwhite");
-    };
-  }, []);
-
   return (
     <Switch>
       <Route path="/" component={HomePage} />
       <Route path="/auth" component={AuthPage} />
       <Route path="/vehicles" component={VehiclesPage} />
-      <Route path="/car/:id" component={CarDetailsPage} />
+      <Route path="/vehicles/:id" component={VehicleDetailsPage} />
       <ProtectedRoute path="/dashboard" component={DashboardPage} />
       <ProtectedRoute path="/admin" component={AdminPage} />
       <Route component={NotFound} />
@@ -39,8 +33,16 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <Router />
-        <Toaster />
+        <CartProvider>
+          <div className="flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-grow">
+              <Router />
+            </main>
+            <Footer />
+          </div>
+          <Toaster />
+        </CartProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

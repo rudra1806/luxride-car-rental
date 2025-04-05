@@ -30,12 +30,12 @@ async function comparePasswords(supplied: string, stored: string) {
 
 export function setupAuth(app: Express) {
   const sessionSettings: session.SessionOptions = {
-    secret: process.env.SESSION_SECRET || "luxdrive-secret-key",
+    secret: process.env.SESSION_SECRET || "luxeride-secret-key",
     resave: false,
     saveUninitialized: false,
     store: storage.sessionStore,
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     }
   };
 
@@ -46,45 +46,54 @@ export function setupAuth(app: Express) {
 
   passport.use(
     new LocalStrategy(async (username, password, done) => {
-      const user = await storage.getUserByUsername(username);
-      if (!user || !(await comparePasswords(password, user.password))) {
-        return done(null, false);
-      } else {
-        return done(null, user);
+      try {
+        const user = await storage.getUserByUsername(username);
+        if (!user || !(await comparePasswords(password, user.password))) {
+          return done(null, false);
+        } else {
+          return done(null, user);
+        }
+      } catch (error) {
+        return done(error);
       }
     }),
   );
 
   passport.serializeUser((user, done) => done(null, user.id));
   passport.deserializeUser(async (id: number, done) => {
-    const user = await storage.getUser(id);
-    done(null, user);
+    try {
+      const user = await storage.getUser(id);
+      done(null, user);
+    } catch (error) {
+      done(error);
+    }
   });
 
   app.post("/api/register", async (req, res, next) => {
     try {
-      const { username, email } = req.body;
+      const { username, password, email, firstName, lastName } = req.body;
       
-      const existingUsername = await storage.getUserByUsername(username);
-      if (existingUsername) {
+      if (!username || !password) {
+        return res.status(400).json({ message: "Username and password are required" });
+      }
+      
+      const existingUser = await storage.getUserByUsername(username);
+      if (existingUser) {
         return res.status(400).json({ message: "Username already exists" });
       }
-      
-      const existingEmail = await storage.getUserByEmail(email);
-      if (existingEmail) {
-        return res.status(400).json({ message: "Email already exists" });
-      }
-      
-      const hashedPassword = await hashPassword(req.body.password);
-      
+
       const user = await storage.createUser({
-        ...req.body,
-        password: hashedPassword,
+        username,
+        password: await hashPassword(password),
+        email,
+        firstName,
+        lastName,
+        isAdmin: false
       });
 
       req.login(user, (err) => {
         if (err) return next(err);
-        // Remove password from response
+        // Don't send password in response
         const { password, ...userWithoutPassword } = user;
         res.status(201).json(userWithoutPassword);
       });
@@ -95,7 +104,7 @@ export function setupAuth(app: Express) {
 
   app.post("/api/login", passport.authenticate("local"), (req, res) => {
     if (req.user) {
-      // Remove password from response
+      // Don't send password in response
       const { password, ...userWithoutPassword } = req.user;
       res.status(200).json(userWithoutPassword);
     }
@@ -110,13 +119,26 @@ export function setupAuth(app: Express) {
 
   app.get("/api/user", (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
-    
-    // Remove password from response
-    if (req.user) {
-      const { password, ...userWithoutPassword } = req.user;
-      res.json(userWithoutPassword);
-    } else {
-      res.sendStatus(401);
-    }
+    // Don't send password in response
+    const { password, ...userWithoutPassword } = req.user;
+    res.json(userWithoutPassword);
   });
+
+  // Create admin user if it doesn't exist
+  createAdminUser();
+}
+
+async function createAdminUser() {
+  const admin = await storage.getUserByUsername("admin");
+  if (!admin) {
+    await storage.createUser({
+      username: "admin",
+      password: await hashPassword("admin123"),
+      firstName: "Admin",
+      lastName: "User",
+      email: "admin@luxeride.com",
+      isAdmin: true
+    });
+    console.log("Admin user created");
+  }
 }
