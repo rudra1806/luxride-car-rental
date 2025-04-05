@@ -149,25 +149,14 @@ const BookingForm = ({ car, initialLocation, initialPickupDate, initialReturnDat
         days,
       });
 
-      // Create the booking
-      const bookingData = {
-        carId: car.id,
-        pickupDate: values.pickupDate.toISOString(),
-        returnDate: values.returnDate.toISOString(),
-        pickupLocation: values.pickupLocation,
-        totalPrice,
-      };
-
-      const res = await apiRequest('POST', '/api/bookings', bookingData);
-      const data = await res.json();
-
+      // Move to the payment confirmation page
       toast({
-        title: "Booking Successful",
-        description: `You have successfully booked the ${car.name}`,
+        title: "Proceeding to Payment",
+        description: `Confirm your booking details and complete the payment`,
       });
 
-      // Redirect to dashboard
-      setLocation('/dashboard');
+      // Redirect to payment confirmation page
+      setLocation('/payment-confirmation');
     } catch (error) {
       console.error('Error booking car:', error);
       toast({
