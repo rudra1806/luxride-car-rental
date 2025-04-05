@@ -56,7 +56,7 @@ const DashboardPage = () => {
               </div>
               <div className="bg-white/10 p-4 rounded-lg">
                 <p className="text-sm text-gray-300">Member Since</p>
-                <h3 className="text-2xl font-bold">{new Date().getFullYear()}</h3>
+                <h3 className="text-2xl font-bold">Member</h3>
               </div>
             </div>
           </CardContent>
