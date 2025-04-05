@@ -223,7 +223,7 @@ const CarManagement = () => {
       fuelType: car.fuelType || 'Premium',
       image: car.image || '',
       description: car.description || '',
-      availability: car.availability,
+      availability: car.availability === null ? undefined : car.availability,
     });
     
     setIsDialogOpen(true);

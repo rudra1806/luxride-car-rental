@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'wouter';
+import { useSearch } from '@/context/search-context';
 import { 
   Select, 
   SelectContent, 
@@ -23,11 +24,15 @@ import { cn } from '@/lib/utils';
 
 const HeroSection = () => {
   const [_, setLocation] = useLocation();
+  const { setSearchParams } = useSearch();
   const [location, setPickupLocation] = useState<string>('');
   const [pickupDate, setPickupDate] = useState<Date>();
   const [returnDate, setReturnDate] = useState<Date>();
 
   const handleSearch = () => {
+    // Store search parameters in context
+    setSearchParams(location, pickupDate, returnDate);
+    
     // Build the search query
     const searchParams = new URLSearchParams();
     if (location) searchParams.set('location', location);
@@ -112,25 +117,25 @@ const HeroSection = () => {
                         <SelectContent className="max-h-[300px] overflow-y-auto bg-[#0F172A] border border-[#EAB308]/20 text-white">
                           <SelectGroup>
                             <SelectLabel className="text-[#EAB308] font-medium text-sm">Major Cities</SelectLabel>
-                            <SelectItem value="mumbai" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
+                            <SelectItem value="Mumbai" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
                               <div className="flex items-center py-1">
                                 <span className="mr-2">🏙️</span>
                                 <span className="font-medium">Mumbai</span>
                               </div>
                             </SelectItem>
-                            <SelectItem value="delhi" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
+                            <SelectItem value="Delhi" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
                               <div className="flex items-center py-1">
                                 <span className="mr-2">🏛️</span>
                                 <span className="font-medium">New Delhi</span>
                               </div>
                             </SelectItem>
-                            <SelectItem value="bangalore" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
+                            <SelectItem value="Bangalore" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
                               <div className="flex items-center py-1">
                                 <span className="mr-2">💻</span>
                                 <span className="font-medium">Bangalore</span>
                               </div>
                             </SelectItem>
-                            <SelectItem value="chennai" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
+                            <SelectItem value="Chennai" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
                               <div className="flex items-center py-1">
                                 <span className="mr-2">🌊</span>
                                 <span className="font-medium">Chennai</span>
@@ -140,25 +145,25 @@ const HeroSection = () => {
                           <SelectSeparator className="bg-white/10" />
                           <SelectGroup>
                             <SelectLabel className="text-[#EAB308] font-medium text-sm">Popular Destinations</SelectLabel>
-                            <SelectItem value="ahmedabad" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
+                            <SelectItem value="Ahmedabad" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
                               <div className="flex items-center py-1">
                                 <span className="mr-2">🏯</span>
                                 <span className="font-medium">Ahmedabad</span>
                               </div>
                             </SelectItem>
-                            <SelectItem value="hyderabad" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
+                            <SelectItem value="Hyderabad" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
                               <div className="flex items-center py-1">
                                 <span className="mr-2">🍲</span>
                                 <span className="font-medium">Hyderabad</span>
                               </div>
                             </SelectItem>
-                            <SelectItem value="jaipur" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
+                            <SelectItem value="Jaipur" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
                               <div className="flex items-center py-1">
                                 <span className="mr-2">🏰</span>
                                 <span className="font-medium">Jaipur</span>
                               </div>
                             </SelectItem>
-                            <SelectItem value="kolkata" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
+                            <SelectItem value="Kolkata" className="hover:bg-[#EAB308]/10 focus:bg-[#EAB308]/10">
                               <div className="flex items-center py-1">
                                 <span className="mr-2">🌉</span>
                                 <span className="font-medium">Kolkata</span>

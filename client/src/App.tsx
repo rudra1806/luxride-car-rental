@@ -14,6 +14,7 @@ import ContactPage from "@/pages/contact-page";
 import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthProvider } from "@/hooks/use-auth";
 import { CartProvider } from "@/context/cart-context";
+import { SearchProvider } from "@/context/search-context";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 
@@ -38,14 +39,16 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <CartProvider>
-          <div className="flex min-h-screen flex-col">
-            <Navbar />
-            <main className="flex-grow">
-              <Router />
-            </main>
-            <Footer />
-          </div>
-          <Toaster />
+          <SearchProvider>
+            <div className="flex min-h-screen flex-col">
+              <Navbar />
+              <main className="flex-grow">
+                <Router />
+              </main>
+              <Footer />
+            </div>
+            <Toaster />
+          </SearchProvider>
         </CartProvider>
       </AuthProvider>
     </QueryClientProvider>

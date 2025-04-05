@@ -39,6 +39,9 @@ import { Separator } from '@/components/ui/separator';
 
 interface BookingFormProps {
   car: Car;
+  initialLocation?: string;
+  initialPickupDate?: Date;
+  initialReturnDate?: Date;
 }
 
 const bookingFormSchema = z.object({
@@ -55,7 +58,7 @@ const bookingFormSchema = z.object({
 
 type BookingFormValues = z.infer<typeof bookingFormSchema>;
 
-const BookingForm = ({ car }: BookingFormProps) => {
+const BookingForm = ({ car, initialLocation, initialPickupDate, initialReturnDate }: BookingFormProps) => {
   const { user } = useAuth();
   const { addToCart, calculateTotalPrice } = useCart();
   const [_, setLocation] = useLocation();
@@ -64,11 +67,11 @@ const BookingForm = ({ car }: BookingFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isAvailable, setIsAvailable] = useState(true);
 
-  // Default values for the form
+  // Default values for the form, using initial values if provided
   const defaultValues: Partial<BookingFormValues> = {
-    pickupDate: new Date(),
-    returnDate: addDays(new Date(), 1),
-    pickupLocation: 'Ahmedabad',
+    pickupDate: initialPickupDate || new Date(),
+    returnDate: initialReturnDate || addDays(new Date(), 1),
+    pickupLocation: initialLocation || 'Ahmedabad',
   };
 
   const form = useForm<BookingFormValues>({

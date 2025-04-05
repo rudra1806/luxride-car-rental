@@ -4,15 +4,20 @@ import { Car } from '@shared/schema';
 import VehicleCard from '@/components/vehicles/vehicle-card';
 import VehicleFilters from '@/components/vehicles/vehicle-filters';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useSearch } from 'wouter';
+import { useSearch as useWouterSearch } from 'wouter';
+import { useSearch } from '@/context/search-context';
 
 const VehiclesPage = () => {
-  const search = useSearch();
-  const searchParams = new URLSearchParams(search);
+  // Get URL search parameters
+  const searchQuery = useWouterSearch();
+  const searchParams = new URLSearchParams(searchQuery);
   const locationParam = searchParams.get('location');
   const pickupParam = searchParams.get('pickup');
   const returnParam = searchParams.get('return');
   const typeParam = searchParams.get('type');
+  
+  // Get search context
+  const { location, pickupDate, returnDate, setSearchParams } = useSearch();
 
   const { data: cars, isLoading } = useQuery<Car[]>({
     queryKey: ['/api/cars'],
@@ -34,8 +39,15 @@ const VehiclesPage = () => {
       // e.g., for date availability, location, etc.
       
       setFilteredCars(filtered);
+      
+      // Store search parameters in context for use in vehicle details page
+      if (locationParam) {
+        const pickupDate = pickupParam ? new Date(pickupParam) : undefined;
+        const returnDate = returnParam ? new Date(returnParam) : undefined;
+        setSearchParams(locationParam, pickupDate, returnDate);
+      }
     }
-  }, [cars, typeParam, locationParam, pickupParam, returnParam]);
+  }, [cars, typeParam, locationParam, pickupParam, returnParam, setSearchParams]);
 
   const handleFilterChange = (filtered: Car[]) => {
     setFilteredCars(filtered);

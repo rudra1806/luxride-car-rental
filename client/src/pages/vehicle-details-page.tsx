@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'wouter';
 import { Car } from '@shared/schema';
+import { useSearch } from '@/context/search-context';
 import ImageCarousel from '@/components/vehicle-detail/image-carousel';
 import SpecsSection from '@/components/vehicle-detail/specs-section';
 import BookingForm from '@/components/vehicle-detail/booking-form';
@@ -12,6 +13,7 @@ import { ArrowLeft } from 'lucide-react';
 const VehicleDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const carId = parseInt(id);
+  const { location, pickupDate, returnDate } = useSearch();
 
   const { data: car, isLoading, isError } = useQuery<Car>({
     queryKey: [`/api/cars/${carId}`],
@@ -105,7 +107,12 @@ const VehicleDetailsPage = () => {
                 <SpecsSection car={car} />
               </div>
               <div>
-                <BookingForm car={car} />
+                <BookingForm 
+                  car={car} 
+                  initialLocation={location} 
+                  initialPickupDate={pickupDate} 
+                  initialReturnDate={returnDate} 
+                />
               </div>
             </div>
             

@@ -49,11 +49,17 @@ const VehicleCard = ({ car }: VehicleCardProps) => {
     <div className="bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300">
       <Link href={`/vehicles/${car.id}`}>
         <div className="relative overflow-hidden h-60">
-          <img 
-            src={car.image} 
-            alt={car.name} 
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+          {car.image ? (
+            <img 
+              src={car.image} 
+              alt={car.name} 
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+              <span className="text-gray-400">No image available</span>
+            </div>
+          )}
           <div className="absolute top-4 right-4 bg-[#EAB308] px-3 py-1 rounded text-sm font-bold text-[#0F172A]">
             ₹{car.price}/day
           </div>
