@@ -3,6 +3,7 @@ import { Link, useLocation } from 'wouter';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { MenuIcon, X } from 'lucide-react';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const Navbar: React.FC = () => {
   const [location] = useLocation();
@@ -69,12 +70,15 @@ const Navbar: React.FC = () => {
         </div>
         
         <div className="flex items-center space-x-4">
+          <div className="hidden md:block">
+            <ThemeToggle />
+          </div>
           {user ? (
             <>
               <Link href="/dashboard" className="hidden md:inline-block text-white hover:text-[#D4AF37] transition-colors font-medium">
                 Dashboard
               </Link>
-              {user.role === 'admin' && (
+              {user.isAdmin && (
                 <Link href="/admin" className="hidden md:inline-block text-white hover:text-[#D4AF37] transition-colors font-medium">
                   Admin
                 </Link>
@@ -132,12 +136,16 @@ const Navbar: React.FC = () => {
             </Link>
             
             <div className="pt-4 flex flex-col space-y-3">
+              <div className="flex items-center pb-2">
+                <span className="text-white mr-3">Theme:</span>
+                <ThemeToggle />
+              </div>
               {user ? (
                 <>
                   <Link href="/dashboard" className="block text-white hover:text-[#D4AF37] font-medium py-2">
                     Dashboard
                   </Link>
-                  {user.role === 'admin' && (
+                  {user.isAdmin && (
                     <Link href="/admin" className="block text-white hover:text-[#D4AF37] font-medium py-2">
                       Admin
                     </Link>

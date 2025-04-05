@@ -15,11 +15,47 @@
 }
 
 :root {
+  --background: #FFFFFF;
+  --foreground: #0F172A;
+  --card: #FFFFFF;
+  --card-foreground: #0F172A;
+  --primary: #0F172A;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EAB308;
+  --secondary-foreground: #0F172A;
   --navy: #0F172A;
   --navy-light: #1E293B;
   --gold: #EAB308;
   --gold-light: #FDE68A;
   --offwhite: #F8FAFC;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --accent: #F8FAFC;
+  --accent-foreground: #0F172A;
+}
+
+.dark {
+  --background: #0F172A;
+  --foreground: #F8FAFC;
+  --card: #1E293B;
+  --card-foreground: #F8FAFC;
+  --primary: #EAB308;
+  --primary-foreground: #0F172A;
+  --secondary: #1E293B;
+  --secondary-foreground: #F8FAFC;
+  --navy: #0F172A;
+  --navy-light: #1E293B;
+  --gold: #EAB308;
+  --gold-light: #FDE68A;
+  --offwhite: #F8FAFC;
+  --muted: #334155;
+  --muted-foreground: #94A3B8;
+  --border: #334155;
+  --input: #334155;
+  --accent: #1E293B;
+  --accent-foreground: #F8FAFC;
 }
 
 .font-playfair {

@@ -14,7 +14,8 @@ import ContactPage from "@/pages/contact-page";
 import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthProvider } from "@/hooks/use-auth";
 import { CartProvider } from "@/context/cart-context";
-import Navbar from "@/components/navbar";
+import { ThemeProvider } from "@/context/theme-context";
+import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/footer";
 
 function Router() {
@@ -36,18 +37,20 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <CartProvider>
-          <div className="flex min-h-screen flex-col">
-            <Navbar />
-            <main className="flex-grow">
-              <Router />
-            </main>
-            <Footer />
-          </div>
-          <Toaster />
-        </CartProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <CartProvider>
+            <div className="flex min-h-screen flex-col">
+              <Navbar />
+              <main className="flex-grow">
+                <Router />
+              </main>
+              <Footer />
+            </div>
+            <Toaster />
+          </CartProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
