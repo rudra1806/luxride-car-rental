@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, ReactNode } from 'react';
 import { Car } from '@shared/schema';
 import { useToast } from '@/hooks/use-toast';
+import { useLocation } from 'wouter';
 
 interface CartItem {
   car: Car;
@@ -16,12 +17,14 @@ interface CartContextType {
   addToCart: (item: CartItem) => void;
   removeFromCart: () => void;
   calculateTotalPrice: (car: Car, days: number) => number;
+  proceedToCheckout: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItem, setCartItem] = useState<CartItem | null>(null);
+  const [_, navigate] = useLocation();
   const { toast } = useToast();
 
   const addToCart = (item: CartItem) => {
@@ -39,6 +42,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const calculateTotalPrice = (car: Car, days: number): number => {
     return car.price * days;
   };
+  
+  const proceedToCheckout = () => {
+    if (cartItem) {
+      navigate('/payment');
+    } else {
+      toast({
+        title: "Cart is empty",
+        description: "Please add a vehicle to your cart first.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <CartContext.Provider
@@ -47,6 +62,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         addToCart,
         removeFromCart,
         calculateTotalPrice,
+        proceedToCheckout,
       }}
     >
       {children}
