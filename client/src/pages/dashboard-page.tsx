@@ -30,14 +30,14 @@ const DashboardPage = () => {
   
   const isLoading = authLoading || bookingsLoading;
   
-  // Count active bookings (those with status 'active' or 'pending')
+  // Count active bookings (those with status 'active', 'pending', or 'successful')
   const activeBookingsCount = bookings?.filter(
-    booking => booking.status === 'active' || booking.status === 'pending'
+    booking => booking.status === 'active' || booking.status === 'pending' || booking.status === 'successful'
   ).length || 0;
   
   // Find the next upcoming trip (soonest pickup date that's in the future)
   const upcomingTrip = bookings?.filter(
-    booking => new Date(booking.pickupDate) >= new Date() && booking.status !== 'cancelled'
+    booking => new Date(booking.pickupDate) >= new Date() && (booking.status === 'successful' || booking.status === 'active' || booking.status === 'pending')
   ).sort((a, b) => new Date(a.pickupDate).getTime() - new Date(b.pickupDate).getTime())[0];
 
   if (isLoading) {

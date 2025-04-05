@@ -31,27 +31,10 @@ interface BookingWithCar extends Booking {
 const BookingHistory = () => {
   const { toast } = useToast();
   
-  // Fetch user bookings
-  const { data: bookings, isLoading: bookingsLoading, isError: bookingsError } = useQuery<BookingWithCar[]>({
+  // Fetch user bookings with car details (our API already includes them)
+  const { data: bookingsWithCars, isLoading, isError } = useQuery<BookingWithCar[]>({
     queryKey: ['/api/bookings/user'],
   });
-  
-  // Fetch all cars to ensure we have car details
-  const { data: cars, isLoading: carsLoading, isError: carsError } = useQuery<Car[]>({
-    queryKey: ['/api/cars'],
-  });
-  
-  // Combine bookings with car details
-  const bookingsWithCars = bookings?.map(booking => {
-    const car = cars?.find(car => car.id === booking.carId);
-    return {
-      ...booking,
-      car
-    };
-  });
-  
-  const isLoading = bookingsLoading || carsLoading;
-  const isError = bookingsError || carsError;
 
   const handleCancelBooking = async (bookingId: number) => {
     try {
