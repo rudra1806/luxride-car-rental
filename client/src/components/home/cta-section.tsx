@@ -16,8 +16,8 @@ const CTASection = () => {
                     Browse Vehicles
                   </Button>
                 </Link>
-                <Link href="#contact">
-                  <Button variant="outline" className="text-white border-[#EAB308] hover:bg-[#0F172A]">
+                <Link href="/contact">
+                  <Button variant="outline" className="text-white border-white hover:border-[#EAB308] hover:bg-[#0F172A] hover:text-[#EAB308]">
                     Contact Us
                   </Button>
                 </Link>
@@ -26,8 +26,8 @@ const CTASection = () => {
             <div className="md:w-1/2 relative hidden md:block">
               <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] to-transparent"></div>
               <img
-                src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&auto=format&fit=crop&w=870&q=80"
-                alt="Luxury car on the road"
+                src="https://images.unsplash.com/photo-1618447525610-9e21b69083fd?q=80&w=2942"
+                alt="Luxury supercar on display"
                 className="h-full w-full object-cover"
               />
             </div>
