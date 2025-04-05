@@ -90,8 +90,9 @@ const PaymentConfirmationPage = () => {
     }
   };
 
-  const gst = totalPrice * 0.18;
-  const grandTotal = totalPrice + gst;
+  // The total price already includes GST (tax-inclusive pricing)
+  const gstAmount = Math.round(totalPrice * 0.18 / 1.18); // Calculating the GST component from the total
+  const basePrice = totalPrice - gstAmount;
 
   const formatDate = (date: Date) => format(date, 'dd MMM yyyy');
 
@@ -290,16 +291,16 @@ const PaymentConfirmationPage = () => {
               
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Subtotal</span>
-                  <span className="font-medium">{formatCurrency(totalPrice)}</span>
+                  <span className="text-gray-600">Base Rental Price</span>
+                  <span className="font-medium">{formatCurrency(basePrice)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">GST (18%)</span>
-                  <span className="font-medium">{formatCurrency(gst)}</span>
+                  <span className="font-medium">{formatCurrency(gstAmount)}</span>
                 </div>
                 <div className="flex justify-between text-lg font-semibold mt-4">
-                  <span>Total Amount</span>
-                  <span>{formatCurrency(grandTotal)}</span>
+                  <span>Total Amount (GST Incl.)</span>
+                  <span>{formatCurrency(totalPrice)}</span>
                 </div>
               </div>
             </CardContent>

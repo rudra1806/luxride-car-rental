@@ -164,7 +164,7 @@ const BookingHistory = () => {
                       : 'Pending'}
                   </Badge>
                 </TableCell>
-                <TableCell>₹{booking.totalPrice.toLocaleString('en-IN')}</TableCell>
+                <TableCell>₹{booking.totalPrice.toLocaleString('en-IN')} <span className="text-xs text-gray-500">(GST incl.)</span></TableCell>
                 <TableCell>
                   {booking.status !== 'cancelled' && (
                     <Button

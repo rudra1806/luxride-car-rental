@@ -176,12 +176,13 @@ const BookingForm = ({ car, initialLocation, initialPickupDate, initialReturnDat
       
       <div className="flex items-center justify-between mb-6">
         <div>
-          <span className="text-sm text-gray-500">Price per day</span>
+          <span className="text-sm text-gray-500">Price per day (GST incl.)</span>
           <div className="text-3xl font-semibold text-[#0F172A]">₹{car.price}</div>
         </div>
         <div className="text-right">
           <span className="text-sm text-gray-500">Total for {days} day{days !== 1 ? 's' : ''}</span>
           <div className="text-3xl font-semibold text-[#0F172A]">₹{car.price * days}</div>
+          <div className="text-xs text-gray-500">GST included</div>
         </div>
       </div>
       

@@ -40,6 +40,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const calculateTotalPrice = (car: Car, days: number): number => {
+    // The car.price already includes GST, so just multiply by days
     return car.price * days;
   };
   

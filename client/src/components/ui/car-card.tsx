@@ -27,6 +27,7 @@ const CarCard: React.FC<CarCardProps> = ({ car, onViewDetails }) => {
           />
           <div className="absolute top-0 right-0 bg-[#D4AF37] text-[#0F1A2A] font-bold py-1 px-3 m-3 rounded">
             ₹{car.price}<span className="text-xs font-normal">/day</span>
+            <div className="text-xs font-normal mt-1">GST included</div>
           </div>
         </div>
         <div className="p-6">
