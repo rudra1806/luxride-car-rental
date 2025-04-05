@@ -68,7 +68,7 @@ const BookingForm = ({ car }: BookingFormProps) => {
   const defaultValues: Partial<BookingFormValues> = {
     pickupDate: new Date(),
     returnDate: addDays(new Date(), 1),
-    pickupLocation: 'new-york',
+    pickupLocation: 'Miami',
   };
 
   const form = useForm<BookingFormValues>({
@@ -149,8 +149,8 @@ const BookingForm = ({ car }: BookingFormProps) => {
       // Create the booking
       const bookingData = {
         carId: car.id,
-        pickupDate: values.pickupDate,
-        returnDate: values.returnDate,
+        pickupDate: values.pickupDate.toISOString(),
+        returnDate: values.returnDate.toISOString(),
         pickupLocation: values.pickupLocation,
         totalPrice,
       };
@@ -208,10 +208,10 @@ const BookingForm = ({ car }: BookingFormProps) => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="new-york">New York City</SelectItem>
-                    <SelectItem value="los-angeles">Los Angeles</SelectItem>
-                    <SelectItem value="miami">Miami</SelectItem>
-                    <SelectItem value="chicago">Chicago</SelectItem>
+                    <SelectItem value="Miami">Miami</SelectItem>
+                    <SelectItem value="New York City">New York City</SelectItem>
+                    <SelectItem value="Los Angeles">Los Angeles</SelectItem>
+                    <SelectItem value="Chicago">Chicago</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -290,10 +290,11 @@ const BookingForm = ({ car }: BookingFormProps) => {
                         mode="single"
                         selected={field.value}
                         onSelect={field.onChange}
-                        disabled={(date) => 
-                          date < new Date() || 
-                          (pickupDate && date < pickupDate)
-                        }
+                        disabled={(date) => {
+                          const isPastDate = date < new Date();
+                          const isBeforePickup = pickupDate ? date < pickupDate : false;
+                          return isPastDate || isBeforePickup;
+                        }}
                         initialFocus
                       />
                     </PopoverContent>

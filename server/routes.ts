@@ -137,7 +137,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = req.user!.id;
       const bookingData = { ...req.body, userId };
       
-      const validatedBooking = insertBookingSchema.parse(bookingData);
+      try {
+        var validatedBooking = insertBookingSchema.parse(bookingData);
+      } catch (error) {
+        console.error("Booking validation error:", error);
+        if (error instanceof z.ZodError) {
+          return res.status(400).json({ message: "Invalid booking data", errors: error.errors });
+        }
+        return res.status(500).json({ message: "Error validating booking data" });
+      }
       
       // Check if car is available for the requested dates
       const carBookings = await storage.getBookingsByCarId(validatedBooking.carId);
