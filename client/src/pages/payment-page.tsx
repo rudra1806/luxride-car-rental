@@ -77,7 +77,8 @@ const PaymentPage = () => {
         pickupDate: cartItem.pickupDate,
         returnDate: cartItem.returnDate,
         pickupLocation: cartItem.pickupLocation,
-        totalPrice: totalAmount
+        totalPrice: totalAmount,
+        status: 'successful' // Set the status as successful directly
       };
       
       const response = await fetch('/api/bookings', {
@@ -102,7 +103,7 @@ const PaymentPage = () => {
         variant: "default",
       });
       
-      // Redirect to dashboard
+      // Redirect to dashboard immediately
       setLocation('/dashboard');
     } catch (error) {
       console.error('Error creating booking:', error);

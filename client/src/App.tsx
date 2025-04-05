@@ -12,7 +12,6 @@ import AdminPage from "@/pages/admin-page";
 import AboutPage from "@/pages/about-page";
 import ContactPage from "@/pages/contact-page";
 import PaymentConfirmationPage from "@/pages/payment-confirmation-page";
-import BookingSuccessPage from "@/pages/booking-success-page";
 import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthProvider } from "@/hooks/use-auth";
 import { CartProvider } from "@/context/cart-context";
@@ -32,7 +31,7 @@ function Router() {
       <ProtectedRoute path="/dashboard" component={DashboardPage} />
       <ProtectedRoute path="/admin" component={AdminPage} />
       <ProtectedRoute path="/payment-confirmation" component={PaymentConfirmationPage} />
-      <ProtectedRoute path="/booking-success/:id" component={BookingSuccessPage} />
+      {/* Removed booking success page route */}
       <Route component={NotFound} />
     </Switch>
   );
