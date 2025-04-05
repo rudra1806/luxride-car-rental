@@ -210,37 +210,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Error updating booking" });
     }
   });
-  
-  // Add a PATCH endpoint specifically for updating booking status
-  app.patch("/api/bookings/:id", isAuthenticated, async (req, res) => {
-    try {
-      const id = parseInt(req.params.id);
-      const userId = req.user!.id;
-      
-      // Get the booking to check ownership
-      const booking = await storage.getBookingById(id);
-      
-      if (!booking) {
-        return res.status(404).json({ message: "Booking not found" });
-      }
-      
-      // Only allow admin or booking owner to update status
-      if (booking.userId !== userId && !req.user!.isAdmin) {
-        return res.status(403).json({ message: "Forbidden - You do not own this booking" });
-      }
-      
-      // Only allow updating the status field
-      const { status } = req.body;
-      if (status === undefined) {
-        return res.status(400).json({ message: "Status field is required" });
-      }
-      
-      const updatedBooking = await storage.updateBooking(id, { status });
-      res.json(updatedBooking);
-    } catch (error) {
-      res.status(500).json({ message: "Error updating booking status" });
-    }
-  });
 
   app.delete("/api/bookings/:id", isAuthenticated, async (req, res) => {
     try {
