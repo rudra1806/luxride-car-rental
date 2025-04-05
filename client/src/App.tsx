@@ -23,21 +23,23 @@ import LoadingBar from "@/components/layout/loading-bar";
 
 function Router() {
   return (
-    <PageTransition>
-      <Switch>
-        <Route path="/" component={HomePage} />
-        <Route path="/auth" component={AuthPage} />
-        <Route path="/vehicles" component={VehiclesPage} />
-        <Route path="/vehicles/:id" component={VehicleDetailsPage} />
-        <Route path="/about" component={AboutPage} />
-        <Route path="/contact" component={ContactPage} />
-        <ProtectedRoute path="/dashboard" component={DashboardPage} />
-        <ProtectedRoute path="/admin" component={AdminPage} />
-        <ProtectedRoute path="/payment-confirmation" component={PaymentConfirmationPage} />
-        {/* Removed booking success page route */}
-        <Route component={NotFound} />
-      </Switch>
-    </PageTransition>
+    <div className="relative">
+      <PageTransition>
+        <Switch>
+          <Route path="/" component={HomePage} />
+          <Route path="/auth" component={AuthPage} />
+          <Route path="/vehicles" component={VehiclesPage} />
+          <Route path="/vehicles/:id" component={VehicleDetailsPage} />
+          <Route path="/about" component={AboutPage} />
+          <Route path="/contact" component={ContactPage} />
+          <ProtectedRoute path="/dashboard" component={DashboardPage} />
+          <ProtectedRoute path="/admin" component={AdminPage} />
+          <ProtectedRoute path="/payment-confirmation" component={PaymentConfirmationPage} />
+          {/* Removed booking success page route */}
+          <Route component={NotFound} />
+        </Switch>
+      </PageTransition>
+    </div>
   );
 }
 
