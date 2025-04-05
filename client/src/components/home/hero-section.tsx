@@ -35,14 +35,14 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative h-screen">
+    <section className="relative min-h-screen pt-32 pb-48">
       <div 
         className="absolute inset-0 bg-cover bg-center before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[rgba(15,23,42,0.7)] before:to-[rgba(15,23,42,0.8)]" 
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=2070')" }}
       >
       </div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
-        <div className="animate-[fadeIn_0.5s_ease-out]">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col">
+        <div className="animate-[fadeIn_0.5s_ease-out] mb-20 mt-10">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-['Playfair_Display'] leading-tight max-w-2xl">
             Experience Luxury on <span className="text-[#EAB308]">Your Terms</span>
           </h1>
@@ -64,7 +64,7 @@ const HeroSection = () => {
         </div>
         
         {/* Search Bar */}
-        <div className="absolute bottom-36 left-0 right-0 max-w-5xl mx-auto px-4 animate-[slideUp_0.5s_ease-out] z-10">
+        <div className="max-w-5xl mx-auto px-4 animate-[slideUp_0.5s_ease-out] z-10 mt-10 w-full">
           <div className="bg-white rounded-lg shadow-xl overflow-hidden">
             <div className="p-5">
               <h2 className="text-2xl font-['Playfair_Display'] font-semibold text-[#0F172A] mb-4">Find Your Perfect Ride</h2>
