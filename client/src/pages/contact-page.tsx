@@ -62,16 +62,43 @@ const ContactPage = () => {
       {/* Hero Section */}
       <section className="relative py-20 bg-[#0F172A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-['Playfair_Display'] leading-tight">
+          <div className="text-center py-16">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-['Playfair_Display'] leading-tight mb-4">
               Contact <span className="text-[#EAB308]">Us</span>
             </h1>
-            <p className="mt-4 max-w-3xl mx-auto text-xl text-gray-300">
+            <p className="max-w-3xl mx-auto text-xl text-gray-300 mb-12">
               Have questions or need assistance? We're here to help you with your luxury car rental experience.
             </p>
+            
+            {/* Contact Info Badges */}
+            <div className="flex flex-wrap justify-center gap-8 mt-8">
+              <div className="flex items-center">
+                <div className="h-10 w-10 rounded-full flex items-center justify-center bg-[#EAB308]/20 mr-3">
+                  <Phone className="h-5 w-5 text-[#EAB308]" />
+                </div>
+                <span className="text-white">+91 79 4890 1234</span>
+              </div>
+              
+              <div className="flex items-center">
+                <div className="h-10 w-10 rounded-full flex items-center justify-center bg-[#EAB308]/20 mr-3">
+                  <Mail className="h-5 w-5 text-[#EAB308]" />
+                </div>
+                <span className="text-white">info@luxride.com</span>
+              </div>
+              
+              <div className="flex items-center">
+                <div className="h-10 w-10 rounded-full flex items-center justify-center bg-[#EAB308]/20 mr-3">
+                  <MapPin className="h-5 w-5 text-[#EAB308]" />
+                </div>
+                <span className="text-white">Ahmedabad, India</span>
+              </div>
+            </div>
           </div>
         </div>
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1580274455191-1c62238fa333?auto=format&fit=crop&q=80&w=2070')] bg-cover bg-center opacity-20"></div>
+        
+        {/* Bottom shadow gradient */}
+        <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent"></div>
       </section>
 
       {/* Contact Information */}

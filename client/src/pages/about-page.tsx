@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { CalendarDays, MapPin, Award, Shield, Users, Clock } from "lucide-react";
+import { CalendarDays, MapPin, Award, Shield, Users, Clock, Star } from "lucide-react";
 
 const AboutPage = () => {
   return (
@@ -8,16 +8,43 @@ const AboutPage = () => {
       {/* Hero Section */}
       <section className="relative py-20 bg-[#0F172A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-['Playfair_Display'] leading-tight">
+          <div className="text-center py-16">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-['Playfair_Display'] leading-tight mb-4">
               About <span className="text-[#EAB308]">LuxRide</span>
             </h1>
-            <p className="mt-4 max-w-3xl mx-auto text-xl text-gray-300">
-              Experience the ultimate in premium car rentals with service that exceeds expectations.
+            <p className="max-w-3xl mx-auto text-xl text-gray-300 mb-12">
+              Redefining luxury car rentals in India since 2015
             </p>
+            
+            {/* Feature badges */}
+            <div className="flex flex-wrap justify-center gap-8 mt-8">
+              <div className="flex items-center">
+                <div className="h-10 w-10 rounded-full flex items-center justify-center bg-[#EAB308]/20 mr-3">
+                  <Shield className="h-5 w-5 text-[#EAB308]" />
+                </div>
+                <span className="text-white">Premium Insurance</span>
+              </div>
+              
+              <div className="flex items-center">
+                <div className="h-10 w-10 rounded-full flex items-center justify-center bg-[#EAB308]/20 mr-3">
+                  <Award className="h-5 w-5 text-[#EAB308]" />
+                </div>
+                <span className="text-white">Award-Winning Service</span>
+              </div>
+              
+              <div className="flex items-center">
+                <div className="h-10 w-10 rounded-full flex items-center justify-center bg-[#EAB308]/20 mr-3">
+                  <Star className="h-5 w-5 text-[#EAB308]" />
+                </div>
+                <span className="text-white">5-Star Experience</span>
+              </div>
+            </div>
           </div>
         </div>
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1617469767053-bfd6c6fdd3e5?auto=format&fit=crop&q=80&w=2070')] bg-cover bg-center opacity-20"></div>
+        
+        {/* Bottom shadow gradient */}
+        <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent"></div>
       </section>
 
       {/* Our Story */}

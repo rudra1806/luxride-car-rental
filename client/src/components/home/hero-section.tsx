@@ -77,14 +77,14 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen bg-[#0C1323] overflow-hidden">
-      {/* Premium Car Background - More visible but still subtle */}
+      {/* Premium Car Background - More visible and prominent */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: "url('https://images.unsplash.com/photo-1549399542-7e8f2e928464?q=80&w=2974')",
+          backgroundImage: "url('https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=2940')",
           backgroundPosition: "right center",
-          backgroundSize: "60%",
-          filter: "brightness(0.6)"
+          backgroundSize: "75%",
+          filter: "brightness(0.65) contrast(1.1)"
         }}
       />
       
