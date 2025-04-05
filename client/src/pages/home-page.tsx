@@ -23,38 +23,44 @@ const HomePage = () => {
       <FeaturesSection />
 
       {/* Featured Vehicles Section */}
-      <section id="vehicles" className="py-16">
+      <section id="vehicles" className="py-24 bg-[#0F172A]/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
             <div>
-              <h2 className="text-3xl font-bold text-[#0F172A] font-playfair mb-2">Featured Vehicles</h2>
-              <div className="w-20 h-1 bg-[#EAB308]"></div>
-              <p className="mt-4 text-lg text-gray-600 max-w-2xl">Discover our handpicked selection of premium vehicles</p>
+              <h2 className="text-4xl font-bold text-[#0F172A] font-['Playfair_Display'] mb-3">
+                Featured <span className="text-[#EAB308]">Vehicles</span>
+              </h2>
+              <div className="w-24 h-1 bg-[#EAB308] mb-5"></div>
+              <p className="text-xl text-gray-600 max-w-2xl">
+                Discover our handpicked selection of premium vehicles for your next adventure
+              </p>
             </div>
             
-            <div className="mt-4 md:mt-0 flex flex-wrap gap-2">
-              <Link href="/vehicles">
-                <Button className="bg-[#0F172A] hover:bg-[#1E293B]">All</Button>
-              </Link>
-              <Link href="/vehicles?type=SUV">
-                <Button variant="outline">SUVs</Button>
-              </Link>
-              <Link href="/vehicles?type=Sports">
-                <Button variant="outline">Sports</Button>
-              </Link>
-              <Link href="/vehicles?type=Luxury">
-                <Button variant="outline">Luxury</Button>
-              </Link>
-              <Link href="/vehicles?type=Electric">
-                <Button variant="outline">Electric</Button>
-              </Link>
+            <div className="mt-8 md:mt-0">
+              <div className="inline-flex flex-wrap gap-2 p-1 bg-[#F8FAFC] rounded-lg shadow-md">
+                <Link href="/vehicles">
+                  <Button className="bg-[#0F172A] hover:bg-[#1E293B] font-medium">All</Button>
+                </Link>
+                <Link href="/vehicles?type=SUV">
+                  <Button variant="ghost" className="hover:bg-[#EAB308]/10 hover:text-[#0F172A]">SUVs</Button>
+                </Link>
+                <Link href="/vehicles?type=Sports">
+                  <Button variant="ghost" className="hover:bg-[#EAB308]/10 hover:text-[#0F172A]">Sports</Button>
+                </Link>
+                <Link href="/vehicles?type=Luxury">
+                  <Button variant="ghost" className="hover:bg-[#EAB308]/10 hover:text-[#0F172A]">Luxury</Button>
+                </Link>
+                <Link href="/vehicles?type=Electric">
+                  <Button variant="ghost" className="hover:bg-[#EAB308]/10 hover:text-[#0F172A]">Electric</Button>
+                </Link>
+              </div>
             </div>
           </div>
           
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden">
+                <div key={i} className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
                   <Skeleton className="h-60 w-full" />
                   <div className="p-6">
                     <Skeleton className="h-6 w-3/4 mb-2" />
@@ -75,17 +81,32 @@ const HomePage = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredCars.map((car) => (
-                <VehicleCard key={car.id} car={car} />
+              {featuredCars.map((car, index) => (
+                <div 
+                  key={car.id} 
+                  className="transform transition-all duration-300 hover:-translate-y-2"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <VehicleCard car={car} />
+                </div>
               ))}
             </div>
           )}
           
-          <div className="mt-12 text-center">
+          <div className="mt-16 text-center">
             <Link href="/vehicles">
-              <Button variant="outline" className="border-[#0F172A] text-[#0F172A] hover:bg-[#0F172A] hover:text-white">
+              <Button 
+                variant="outline" 
+                className="border-[#0F172A] text-[#0F172A] hover:bg-[#0F172A] hover:text-white px-8 py-6 rounded-full text-lg font-medium group transition-all duration-300"
+              >
                 View All Vehicles
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Button>

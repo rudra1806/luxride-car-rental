@@ -35,28 +35,34 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen pt-32 pb-48">
+    <section className="relative min-h-[90vh] bg-[#0F172A]">
+      {/* Background with overlay */}
       <div 
-        className="absolute inset-0 bg-cover bg-center before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[rgba(15,23,42,0.7)] before:to-[rgba(15,23,42,0.8)]" 
+        className="absolute inset-0 bg-cover bg-center bg-fixed" 
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=2070')" }}
       >
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/90 to-[#0F172A]/70"></div>
       </div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col">
-        <div className="animate-[fadeIn_0.5s_ease-out] mb-20 mt-10">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-['Playfair_Display'] leading-tight max-w-2xl">
-            Experience Luxury on <span className="text-[#EAB308]">Your Terms</span>
+      
+      {/* Content container */}
+      <div className="relative h-full flex flex-col items-center justify-center pt-20 pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Hero text content */}
+        <div className="w-full max-w-3xl mx-auto text-center animate-[fadeIn_0.8s_ease-out] mb-12">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white font-['Playfair_Display'] leading-tight mb-6">
+            Experience Luxury on <br/>
+            <span className="text-[#EAB308] drop-shadow-lg">Your Terms</span>
           </h1>
-          <p className="mt-6 max-w-2xl text-xl text-gray-200 font-['Inter']">
+          <p className="mt-6 text-xl md:text-2xl text-gray-100 font-['Inter'] max-w-2xl mx-auto">
             Rent premium vehicles for any occasion. Elevate your journey with our exclusive fleet of luxury cars.
           </p>
-          <div className="mt-10">
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link href="/vehicles">
-              <Button size="lg" className="bg-[#EAB308] hover:bg-[#FDE68A] text-[#0F172A] hover:text-[#0F172A]">
+              <Button size="lg" className="bg-[#EAB308] hover:bg-[#FDE68A] text-[#0F172A] hover:text-[#0F172A] font-semibold text-lg px-8 shadow-lg">
                 Browse Our Fleet
               </Button>
             </Link>
             <Link href="#how-it-works">
-              <Button size="lg" variant="outline" className="ml-4 border-[#EAB308] text-white hover:bg-[#1E293B] hover:text-white">
+              <Button size="lg" variant="outline" className="border-[#EAB308] text-white hover:bg-[#EAB308]/20 hover:text-white font-semibold text-lg px-8">
                 Learn More
               </Button>
             </Link>
@@ -64,19 +70,21 @@ const HeroSection = () => {
         </div>
         
         {/* Search Bar */}
-        <div className="max-w-5xl mx-auto px-4 animate-[slideUp_0.5s_ease-out] z-10 mt-10 w-full">
-          <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-            <div className="p-5">
-              <h2 className="text-2xl font-['Playfair_Display'] font-semibold text-[#0F172A] mb-4">Find Your Perfect Ride</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="w-full max-w-5xl mx-auto animate-[slideUp_0.5s_ease-out_0.3s] z-10 mt-6">
+          <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden border border-gray-100">
+            <div className="p-7">
+              <h2 className="text-2xl md:text-3xl font-['Playfair_Display'] font-semibold text-[#0F172A] mb-5 text-center">
+                Find Your Perfect Ride
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <MapIcon className="h-4 w-4 text-gray-400" />
+                      <MapIcon className="h-5 w-5 text-gray-400" />
                     </div>
                     <Select onValueChange={setPickupLocation}>
-                      <SelectTrigger className="pl-10 w-full">
+                      <SelectTrigger className="pl-10 w-full h-12 border-gray-300 focus:ring-[#EAB308] focus:border-[#EAB308]">
                         <SelectValue placeholder="Select location" />
                       </SelectTrigger>
                       <SelectContent>
@@ -90,18 +98,18 @@ const HeroSection = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Pickup Date</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Pickup Date</label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-full pl-10 text-left font-normal",
+                          "w-full h-12 pl-10 text-left font-normal border-gray-300",
                           !pickupDate && "text-muted-foreground"
                         )}
                       >
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <CalendarIcon className="h-4 w-4 text-gray-400" />
+                          <CalendarIcon className="h-5 w-5 text-gray-400" />
                         </div>
                         {pickupDate ? (
                           format(pickupDate, "PPP")
@@ -123,18 +131,18 @@ const HeroSection = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Return Date</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Return Date</label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-full pl-10 text-left font-normal",
+                          "w-full h-12 pl-10 text-left font-normal border-gray-300",
                           !returnDate && "text-muted-foreground"
                         )}
                       >
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <CalendarIcon className="h-4 w-4 text-gray-400" />
+                          <CalendarIcon className="h-5 w-5 text-gray-400" />
                         </div>
                         {returnDate ? (
                           format(returnDate, "PPP")
@@ -160,12 +168,12 @@ const HeroSection = () => {
                 </div>
               </div>
               
-              <div className="mt-4 flex justify-end">
+              <div className="mt-6 flex justify-center">
                 <Button 
                   onClick={handleSearch}
-                  className="bg-[#0F172A] hover:bg-[#1E293B]"
+                  className="bg-[#0F172A] hover:bg-[#1E293B] text-white h-12 px-8 text-lg font-medium rounded-full shadow-lg"
                 >
-                  <span className="mr-2">🔍</span> Search Available Cars
+                  Search Available Cars
                 </Button>
               </div>
             </div>
