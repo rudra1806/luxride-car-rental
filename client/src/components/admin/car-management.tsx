@@ -307,7 +307,7 @@ const CarManagement = () => {
                         <TableCell>{car.brand}</TableCell>
                         <TableCell>{car.type}</TableCell>
                         <TableCell>{car.year}</TableCell>
-                        <TableCell>${car.price}</TableCell>
+                        <TableCell>₹{car.price}</TableCell>
                         <TableCell>
                           {car.availability ? (
                             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
@@ -465,7 +465,7 @@ const CarManagement = () => {
                   name="price"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Price per Day ($)</FormLabel>
+                      <FormLabel>Price per Day (₹)</FormLabel>
                       <FormControl>
                         <Input type="number" min="0" step="0.01" {...field} />
                       </FormControl>

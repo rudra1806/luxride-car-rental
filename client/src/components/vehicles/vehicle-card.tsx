@@ -55,7 +55,7 @@ const VehicleCard = ({ car }: VehicleCardProps) => {
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute top-4 right-4 bg-[#EAB308] px-3 py-1 rounded text-sm font-bold text-[#0F172A]">
-            ${car.price}/day
+            ₹{car.price}/day
           </div>
           {car.fuelType === 'Electric' && (
             <div className="absolute bottom-4 left-4 bg-green-600 px-2 py-1 rounded text-xs font-bold text-white">

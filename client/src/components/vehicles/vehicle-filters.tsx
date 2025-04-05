@@ -160,7 +160,7 @@ const VehicleFilters = ({ cars, onFilterChange }: VehicleFiltersProps) => {
 
               {/* Price Range */}
               <div>
-                <h3 className="font-medium mb-2">Price Range ($/day)</h3>
+                <h3 className="font-medium mb-2">Price Range (₹/day)</h3>
                 <Slider
                   defaultValue={[minPrice, maxPrice]}
                   value={priceRange}
@@ -171,8 +171,8 @@ const VehicleFilters = ({ cars, onFilterChange }: VehicleFiltersProps) => {
                   className="mt-6"
                 />
                 <div className="flex justify-between mt-2">
-                  <span>${priceRange[0]}</span>
-                  <span>${priceRange[1]}</span>
+                  <span>₹{priceRange[0]}</span>
+                  <span>₹{priceRange[1]}</span>
                 </div>
               </div>
 
