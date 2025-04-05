@@ -31,9 +31,27 @@ interface BookingWithCar extends Booking {
 const BookingHistory = () => {
   const { toast } = useToast();
   
-  const { data: bookings, isLoading, isError } = useQuery<BookingWithCar[]>({
+  // Fetch user bookings
+  const { data: bookings, isLoading: bookingsLoading, isError: bookingsError } = useQuery<BookingWithCar[]>({
     queryKey: ['/api/bookings/user'],
   });
+  
+  // Fetch all cars to ensure we have car details
+  const { data: cars, isLoading: carsLoading, isError: carsError } = useQuery<Car[]>({
+    queryKey: ['/api/cars'],
+  });
+  
+  // Combine bookings with car details
+  const bookingsWithCars = bookings?.map(booking => {
+    const car = cars?.find(car => car.id === booking.carId);
+    return {
+      ...booking,
+      car
+    };
+  });
+  
+  const isLoading = bookingsLoading || carsLoading;
+  const isError = bookingsError || carsError;
 
   const handleCancelBooking = async (bookingId: number) => {
     try {
@@ -89,7 +107,7 @@ const BookingHistory = () => {
     );
   }
 
-  if (!bookings || bookings.length === 0) {
+  if (!bookingsWithCars || bookingsWithCars.length === 0) {
     return (
       <Card>
         <CardHeader>
@@ -127,10 +145,10 @@ const BookingHistory = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {bookings.map((booking) => (
+            {(bookingsWithCars || []).map((booking) => (
               <TableRow key={booking.id}>
                 <TableCell className="font-medium">
-                  {booking.car?.name || `Car #${booking.carId}`}
+                  {booking.car ? `${booking.car.brand} ${booking.car.name}` : `Car #${booking.carId}`}
                 </TableCell>
                 <TableCell>
                   {format(new Date(booking.pickupDate), 'MMM d, yyyy')} - 
@@ -165,7 +183,7 @@ const BookingHistory = () => {
                 </TableCell>
                 <TableCell>₹{booking.totalPrice.toLocaleString('en-IN')}</TableCell>
                 <TableCell>
-                  {booking.status === 'pending' && (
+                  {booking.status !== 'cancelled' && (
                     <Button
                       variant="destructive"
                       size="sm"
