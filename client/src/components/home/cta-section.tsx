@@ -16,8 +16,8 @@ const CTASection = () => {
                     Browse Vehicles
                   </Button>
                 </Link>
-                <Link href="#contact">
-                  <Button variant="outline" className="text-white border-[#EAB308] hover:bg-[#0F172A]">
+                <Link href="/contact">
+                  <Button variant="outline" className="text-white border-white bg-transparent hover:bg-white hover:text-[#0F172A] font-medium transition-colors">
                     Contact Us
                   </Button>
                 </Link>
