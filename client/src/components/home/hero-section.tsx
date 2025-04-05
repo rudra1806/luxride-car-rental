@@ -77,20 +77,20 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen bg-[#0C1323] overflow-hidden">
-      {/* Premium Car Background - More visible and prominent */}
+      {/* Premium Car Background - Full width with visibility control */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: "url('https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=2940')",
-          backgroundPosition: "right center",
-          backgroundSize: "75%",
-          filter: "brightness(0.65) contrast(1.1)"
+          backgroundImage: "url('https://images.unsplash.com/photo-1614200179396-2bdb77ebf81b?q=80&w=2832')",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          filter: "brightness(0.5) contrast(1.2)"
         }}
       />
       
-      {/* Dynamic Overlay with Gradient */}
+      {/* Dynamic Overlay with Gradient to ensure text readability */}
       <motion.div 
-        className="absolute inset-0 bg-gradient-to-r from-[#0C1323] via-[#0C1323]/90 to-transparent"
+        className="absolute inset-0 bg-gradient-to-r from-[#0C1323]/90 to-[#0C1323]/60"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2 }}
