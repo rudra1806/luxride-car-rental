@@ -138,7 +138,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const bookingData = { ...req.body, userId };
       
       try {
+        console.log("Booking data received:", JSON.stringify(bookingData, null, 2));
         var validatedBooking = insertBookingSchema.parse(bookingData);
+        
+        // Convert date strings to Date objects for storage
+        if (typeof validatedBooking.pickupDate === 'string') {
+          validatedBooking.pickupDate = new Date(validatedBooking.pickupDate);
+        }
+        
+        if (typeof validatedBooking.returnDate === 'string') {
+          validatedBooking.returnDate = new Date(validatedBooking.returnDate);
+        }
       } catch (error) {
         console.error("Booking validation error:", error);
         if (error instanceof z.ZodError) {

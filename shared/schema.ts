@@ -89,14 +89,15 @@ export const insertCarSchema = createInsertSchema(cars).pick({
   reviews: true,
 });
 
-export const insertBookingSchema = createInsertSchema(bookings).pick({
-  userId: true,
-  carId: true,
-  pickupDate: true,
-  returnDate: true,
-  pickupLocation: true,
-  totalPrice: true,
-  status: true,
+// Custom schema for bookings to handle date strings from client
+export const insertBookingSchema = z.object({
+  userId: z.number(),
+  carId: z.number(),
+  pickupDate: z.string().or(z.date()),  // Accept either string or date
+  returnDate: z.string().or(z.date()),  // Accept either string or date
+  pickupLocation: z.string(),
+  totalPrice: z.number(),
+  status: z.string().optional().default("pending"),
 });
 
 export const insertReviewSchema = createInsertSchema(reviews).pick({
