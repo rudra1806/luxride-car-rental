@@ -66,7 +66,7 @@ const AdminPage = () => {
               </div>
               <div className="bg-white/10 p-4 rounded-lg">
                 <p className="text-sm text-gray-300">Revenue (Monthly)</p>
-                <h3 className="text-2xl font-bold">$...</h3>
+                <h3 className="text-2xl font-bold">₹...</h3>
               </div>
             </div>
           </CardContent>

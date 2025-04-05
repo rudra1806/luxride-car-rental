@@ -62,7 +62,7 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
     if (!car) return 0;
     
     const days = differenceInDays(returnDate, pickupDate);
-    const baseRate = car.dailyRate * days;
+    const baseRate = car.price * days;
     
     let extras = 0;
     if (selectedExtras.insurance) extras += 25 * days;
@@ -138,7 +138,7 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
                     <div className="flex justify-between items-start">
                       <h2 className="text-3xl font-bold font-playfair">{car.name}</h2>
                       <div className="bg-[#D4AF37] text-[#0F1A2A] font-bold py-1 px-3 rounded">
-                        ${car.dailyRate}<span className="text-xs font-normal">/day</span>
+                        ₹{car.price}<span className="text-xs font-normal">/day</span>
                       </div>
                     </div>
                     
@@ -313,7 +313,7 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
                               }
                               className="h-4 w-4 text-[#D4AF37]"
                             />
-                            <label htmlFor="insurance" className="ml-2 text-sm">Premium Insurance ($25/day)</label>
+                            <label htmlFor="insurance" className="ml-2 text-sm">Premium Insurance (₹25/day)</label>
                           </div>
                           <div className="flex items-center">
                             <Checkbox 
@@ -324,7 +324,7 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
                               }
                               className="h-4 w-4 text-[#D4AF37]"
                             />
-                            <label htmlFor="gps" className="ml-2 text-sm">GPS Navigation ($10/day)</label>
+                            <label htmlFor="gps" className="ml-2 text-sm">GPS Navigation (₹10/day)</label>
                           </div>
                           <div className="flex items-center">
                             <Checkbox 
@@ -335,7 +335,7 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
                               }
                               className="h-4 w-4 text-[#D4AF37]"
                             />
-                            <label htmlFor="child-seat" className="ml-2 text-sm">Child Seat ($5/day)</label>
+                            <label htmlFor="child-seat" className="ml-2 text-sm">Child Seat (₹5/day)</label>
                           </div>
                         </div>
                       </div>
@@ -343,19 +343,19 @@ const CarDetailModal: React.FC<CarDetailModalProps> = ({ car, isOpen, onClose })
                       <div className="border-t border-gray-200 pt-4 mb-4">
                         <div className="flex justify-between mb-2">
                           <span>Base Rate ({differenceInDays(returnDate, pickupDate)} days)</span>
-                          <span className="font-medium">${pricing.baseRate.toFixed(2)}</span>
+                          <span className="font-medium">₹{pricing.baseRate.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between mb-2">
                           <span>Extras</span>
-                          <span className="font-medium">${pricing.extras.toFixed(2)}</span>
+                          <span className="font-medium">₹{pricing.extras.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between mb-2">
                           <span>Taxes & Fees</span>
-                          <span className="font-medium">${pricing.taxesAndFees.toFixed(2)}</span>
+                          <span className="font-medium">₹{pricing.taxesAndFees.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between mt-4 pt-4 border-t border-gray-200">
                           <span className="font-bold">Total</span>
-                          <span className="font-bold">${pricing.total.toFixed(2)}</span>
+                          <span className="font-bold">₹{pricing.total.toFixed(2)}</span>
                         </div>
                       </div>
                       

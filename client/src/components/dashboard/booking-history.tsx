@@ -152,7 +152,7 @@ const BookingHistory = () => {
                     {booking.status}
                   </Badge>
                 </TableCell>
-                <TableCell>${booking.totalPrice}</TableCell>
+                <TableCell>₹{booking.totalPrice}</TableCell>
                 <TableCell>
                   {booking.status === 'pending' && (
                     <Button

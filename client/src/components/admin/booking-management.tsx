@@ -228,7 +228,7 @@ const BookingManagement = () => {
                             </SelectContent>
                           </Select>
                         </TableCell>
-                        <TableCell>${booking.totalPrice}</TableCell>
+                        <TableCell>₹{booking.totalPrice}</TableCell>
                         <TableCell>
                           <Button
                             variant="destructive"
