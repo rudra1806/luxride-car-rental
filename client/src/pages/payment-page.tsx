@@ -92,6 +92,9 @@ const PaymentPage = () => {
         const text = await response.text();
         throw new Error(`${response.status}: ${text || response.statusText}`);
       }
+
+      // Get the booking data from the response
+      const bookingResponse = await response.json();
       
       // Clear cart item
       removeFromCart();
@@ -103,8 +106,11 @@ const PaymentPage = () => {
         variant: "default",
       });
       
-      // Redirect to dashboard immediately
-      setLocation('/dashboard');
+      // Wait a moment for the booking to process
+      setTimeout(() => {
+        // Redirect to dashboard immediately
+        setLocation('/dashboard');
+      }, 500);
     } catch (error) {
       console.error('Error creating booking:', error);
       toast({

@@ -52,14 +52,15 @@ const PaymentConfirmationPage = () => {
     setIsSubmitting(true);
 
     try {
-      // Create the booking
+      // Create the booking with status successful
       const bookingData = {
         carId: car.id,
         userId: user.id,
         pickupDate,
         returnDate,
         pickupLocation,
-        totalPrice
+        totalPrice,
+        status: 'successful' // Set status as successful directly
       };
 
       const response = await apiRequest('POST', '/api/bookings', bookingData);
@@ -76,8 +77,8 @@ const PaymentConfirmationPage = () => {
         variant: "default"
       });
 
-      // Navigate to the booking success page showing completion status
-      navigate(`/booking-success/${booking.id}`);
+      // Navigate directly to the dashboard without going through booking success page
+      navigate('/dashboard');
     } catch (error) {
       console.error('Error creating booking:', error);
       toast({
