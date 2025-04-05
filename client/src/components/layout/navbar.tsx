@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
-import { MenuIcon, X } from 'lucide-react';
+import { MenuIcon, X, Search, User } from 'lucide-react';
+import Logo from '@/components/ui/logo';
 
 const Navbar: React.FC = () => {
   const [location] = useLocation();
@@ -36,129 +37,185 @@ const Navbar: React.FC = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
   
+  // For homepage with transparent background on top
   const navbarClasses = scrolled || location !== '/' 
-    ? 'bg-[#0F1A2A] shadow-md' 
-    : '';
+    ? 'bg-white shadow-md' 
+    : 'bg-transparent';
 
+  const textColorClass = (scrolled || location !== '/') 
+    ? 'text-gray-800' 
+    : 'text-white';
+
+  const activeClass = (path: string) => {
+    return location === path 
+      ? 'text-[#F59E0B] font-medium' 
+      : `${textColorClass} hover:text-[#F59E0B]`;
+  };
+  
   return (
-    <header className="fixed w-full z-50 transition-all duration-300">
-      <nav className={`container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center ${navbarClasses}`}>
-        <div className="flex items-center">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold font-playfair text-white">LuxDrive</span>
-          </Link>
-        </div>
-        
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          <Link href="/" className={`text-white hover:text-[#D4AF37] transition-colors font-medium ${location === '/' ? 'text-[#D4AF37]' : ''}`}>
-            Home
-          </Link>
-          <Link href="/vehicles" className={`text-white hover:text-[#D4AF37] transition-colors font-medium ${location === '/vehicles' ? 'text-[#D4AF37]' : ''}`}>
-            Vehicles
-          </Link>
-          <Link href="#" className="text-white hover:text-[#D4AF37] transition-colors font-medium">
-            Services
-          </Link>
-          <Link href="#" className="text-white hover:text-[#D4AF37] transition-colors font-medium">
-            About
-          </Link>
-          <Link href="#" className="text-white hover:text-[#D4AF37] transition-colors font-medium">
-            Contact
-          </Link>
-        </div>
-        
-        <div className="flex items-center space-x-4">
-          {user ? (
-            <>
-              <Link href="/dashboard" className="hidden md:inline-block text-white hover:text-[#D4AF37] transition-colors font-medium">
-                Dashboard
-              </Link>
-              {user.role === 'admin' && (
-                <Link href="/admin" className="hidden md:inline-block text-white hover:text-[#D4AF37] transition-colors font-medium">
-                  Admin
+    <header className={`fixed w-full z-50 transition-all duration-300 ${navbarClasses}`}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <nav className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <div className="flex items-center">
+            <Logo 
+              size="md"
+              color="#F59E0B"
+              textColor={(scrolled || location !== '/') ? '#111827' : '#FFFFFF'}
+            />
+          </div>
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            <Link href="/">
+              <a className={`${activeClass('/')} transition-colors duration-200`}>
+                Home
+              </a>
+            </Link>
+            <Link href="/vehicles">
+              <a className={`${activeClass('/vehicles')} transition-colors duration-200`}>
+                Our Fleet
+              </a>
+            </Link>
+            <Link href="/about">
+              <a className={`${activeClass('/about')} transition-colors duration-200`}>
+                About
+              </a>
+            </Link>
+            <Link href="/contact">
+              <a className={`${activeClass('/contact')} transition-colors duration-200`}>
+                Contact
+              </a>
+            </Link>
+          </div>
+          
+          {/* Right Side */}
+          <div className="flex items-center space-x-4">
+            {/* Search Icon */}
+            <button className={`${textColorClass} focus:outline-none hidden md:flex`}>
+              <Search className="h-5 w-5" />
+            </button>
+            
+            {/* User Section */}
+            {user ? (
+              <div className="hidden md:flex items-center space-x-4">
+                <Link href="/dashboard">
+                  <a className="flex items-center space-x-1">
+                    <User className={`h-5 w-5 ${textColorClass}`} />
+                    <span className={`${textColorClass} font-medium`}>Account</span>
+                  </a>
                 </Link>
-              )}
-              <Button 
-                onClick={handleLogout} 
-                variant="ghost" 
-                className="hidden md:inline-block text-white hover:text-[#D4AF37] transition-colors font-medium"
-              >
-                Logout
-              </Button>
-            </>
-          ) : (
-            <>
-              <Link href="/auth" className="hidden md:inline-block text-white hover:text-[#D4AF37] transition-colors font-medium">
-                Sign In
-              </Link>
-              <Link href="/auth" className="hidden md:inline-block bg-[#D4AF37] hover:bg-[#E4BF47] text-[#0F1A2A] font-medium py-2 px-6 rounded-md transition-colors">
-                Register
-              </Link>
-            </>
-          )}
-          <button 
-            onClick={toggleMobileMenu} 
-            className="md:hidden text-white focus:outline-none"
-            aria-label="Toggle mobile menu"
-          >
-            {mobileMenuOpen ? (
-              <X className="h-6 w-6" />
+                
+                {user.isAdmin && (
+                  <Link href="/admin">
+                    <a className={`${textColorClass} hover:text-[#F59E0B] transition-colors font-medium`}>
+                      Admin
+                    </a>
+                  </Link>
+                )}
+                
+                <Button 
+                  onClick={handleLogout} 
+                  variant="ghost" 
+                  className={`${textColorClass} hover:text-[#F59E0B] transition-colors font-medium p-0`}
+                >
+                  Logout
+                </Button>
+              </div>
             ) : (
-              <MenuIcon className="h-6 w-6" />
+              <div className="hidden md:flex items-center space-x-4">
+                <Link href="/auth">
+                  <a className="flex items-center space-x-1">
+                    <User className={`h-5 w-5 ${textColorClass}`} />
+                    <span className={`${textColorClass} font-medium`}>Account</span>
+                  </a>
+                </Link>
+                
+                <Link href="/auth">
+                  <a className="bg-[#F59E0B] hover:bg-[#F59E0B]/90 text-white font-medium py-2 px-6 rounded transition-colors">
+                    Book Now
+                  </a>
+                </Link>
+              </div>
             )}
-          </button>
-        </div>
-      </nav>
+            
+            {/* Mobile Menu Button */}
+            <button 
+              onClick={toggleMobileMenu} 
+              className="md:hidden focus:outline-none"
+              aria-label="Toggle mobile menu"
+            >
+              {mobileMenuOpen ? (
+                <X className={`h-6 w-6 ${textColorClass}`} />
+              ) : (
+                <MenuIcon className={`h-6 w-6 ${textColorClass}`} />
+              )}
+            </button>
+          </div>
+        </nav>
+      </div>
       
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#0F1A2A]">
-          <div className="px-6 py-4 space-y-3">
-            <Link href="/" className="block text-white hover:text-[#D4AF37] font-medium py-2">
-              Home
+        <div className="md:hidden bg-white border-t shadow-lg">
+          <div className="container mx-auto px-4 py-3 space-y-2">
+            <Link href="/">
+              <a className={`block py-2 ${location === '/' ? 'text-[#F59E0B] font-medium' : 'text-gray-800'}`}>
+                Home
+              </a>
             </Link>
-            <Link href="/vehicles" className="block text-white hover:text-[#D4AF37] font-medium py-2">
-              Vehicles
+            <Link href="/vehicles">
+              <a className={`block py-2 ${location === '/vehicles' ? 'text-[#F59E0B] font-medium' : 'text-gray-800'}`}>
+                Our Fleet
+              </a>
             </Link>
-            <Link href="#" className="block text-white hover:text-[#D4AF37] font-medium py-2">
-              Services
+            <Link href="/about">
+              <a className={`block py-2 ${location === '/about' ? 'text-[#F59E0B] font-medium' : 'text-gray-800'}`}>
+                About
+              </a>
             </Link>
-            <Link href="#" className="block text-white hover:text-[#D4AF37] font-medium py-2">
-              About
-            </Link>
-            <Link href="#" className="block text-white hover:text-[#D4AF37] font-medium py-2">
-              Contact
+            <Link href="/contact">
+              <a className={`block py-2 ${location === '/contact' ? 'text-[#F59E0B] font-medium' : 'text-gray-800'}`}>
+                Contact
+              </a>
             </Link>
             
-            <div className="pt-4 flex flex-col space-y-3">
+            <div className="pt-2 border-t">
               {user ? (
                 <>
-                  <Link href="/dashboard" className="block text-white hover:text-[#D4AF37] font-medium py-2">
-                    Dashboard
+                  <Link href="/dashboard">
+                    <a className="block py-2 text-gray-800">
+                      Account
+                    </a>
                   </Link>
-                  {user.role === 'admin' && (
-                    <Link href="/admin" className="block text-white hover:text-[#D4AF37] font-medium py-2">
-                      Admin
+                  {user.isAdmin && (
+                    <Link href="/admin">
+                      <a className="block py-2 text-gray-800">
+                        Admin
+                      </a>
                     </Link>
                   )}
                   <Button 
                     onClick={handleLogout} 
                     variant="ghost" 
-                    className="justify-start p-0 h-auto text-white hover:text-[#D4AF37] font-medium py-2"
+                    className="w-full justify-start p-0 h-auto text-gray-800 py-2"
                   >
                     Logout
                   </Button>
                 </>
               ) : (
-                <>
-                  <Link href="/auth" className="inline-block text-white hover:text-[#D4AF37] transition-colors font-medium">
-                    Sign In
+                <div className="flex flex-col space-y-2">
+                  <Link href="/auth">
+                    <a className="block py-2 text-gray-800">
+                      Sign In / Register
+                    </a>
                   </Link>
-                  <Link href="/auth" className="inline-block bg-[#D4AF37] hover:bg-[#E4BF47] text-[#0F1A2A] font-medium py-2 px-6 rounded-md transition-colors text-center">
-                    Register
+                  <Link href="/vehicles">
+                    <a className="bg-[#F59E0B] text-white font-medium py-2 px-4 rounded text-center">
+                      Book Now
+                    </a>
                   </Link>
-                </>
+                </div>
               )}
             </div>
           </div>
