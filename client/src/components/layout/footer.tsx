@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold font-playfair mb-4">LuxDrive</h3>
+            <h3 className="text-xl font-bold font-playfair mb-4">LuxRide</h3>
             <p className="text-white/70 mb-4">
               Premium car rental services for those who appreciate the finer things in life.
             </p>
@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center">
                 <i className="fas fa-envelope mr-3 text-[#D4AF37]"></i>
-                <span>info@luxdrive.com</span>
+                <span>info@luxride.com</span>
               </li>
               <li className="flex items-center">
                 <i className="fas fa-clock mr-3 text-[#D4AF37]"></i>
@@ -76,7 +76,7 @@ const Footer: React.FC = () => {
         
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-white/70 text-sm">
-            &copy; {currentYear} LuxDrive. All rights reserved.
+            &copy; {currentYear} LuxRide. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0">
             <ul className="flex space-x-6 text-sm text-white/70">

@@ -45,7 +45,7 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center">
-              <span className="text-[#EAB308] font-['Playfair_Display'] text-2xl font-bold">LuxeRide</span>
+              <span className="text-[#EAB308] font-['Playfair_Display'] text-2xl font-bold">LuxRide</span>
             </Link>
             <div className="hidden md:ml-6 md:flex md:space-x-8">
               <Link href="/" className={`text-white hover:text-[#EAB308] px-3 py-2 text-sm font-medium transition-colors duration-200 ${location === '/' ? 'text-[#EAB308]' : ''}`}>

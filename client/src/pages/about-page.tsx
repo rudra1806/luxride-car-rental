@@ -10,7 +10,7 @@ const AboutPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-['Playfair_Display'] leading-tight">
-              About <span className="text-[#EAB308]">LuxeWheel</span>
+              About <span className="text-[#EAB308]">LuxRide</span>
             </h1>
             <p className="mt-4 max-w-3xl mx-auto text-xl text-gray-300">
               Experience the ultimate in premium car rentals with service that exceeds expectations.
@@ -30,7 +30,7 @@ const AboutPage = () => {
               </h2>
               <div className="space-y-6 text-gray-700">
                 <p>
-                  Founded in 2015, LuxeWheel began with a vision to transform the luxury car rental experience. What started as a small collection of premium vehicles has grown into one of the most prestigious fleets in the country.
+                  Founded in 2015, LuxRide began with a vision to transform the luxury car rental experience. What started as a small collection of premium vehicles has grown into one of the most prestigious fleets in the country.
                 </p>
                 <p>
                   Our founder, a passionate car enthusiast, recognized a gap in the market for truly exceptional rental experiences that went beyond just handing over keys. The idea was simple: provide access to extraordinary vehicles with extraordinary service.
@@ -59,7 +59,7 @@ const AboutPage = () => {
               Our Core Values
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The principles that guide everything we do at LuxeWheel
+              The principles that guide everything we do at LuxRide
             </p>
           </div>
 
@@ -108,7 +108,7 @@ const AboutPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold font-['Playfair_Display'] text-[#0F172A] mb-4">
-              Why Choose LuxeWheel
+              Why Choose LuxRide
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Experience the difference of premium car rental service

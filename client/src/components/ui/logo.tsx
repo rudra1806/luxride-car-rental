@@ -56,7 +56,7 @@ export const Logo: React.FC<LogoProps> = ({
           }}
         >
           <span style={{color: textColor}}>Lux</span>
-          <span style={{ color }}>Drive</span>
+          <span style={{ color }}>Ride</span>
         </span>
       </a>
     </Link>
