@@ -14,6 +14,18 @@
   }
 }
 
+@keyframes shine {
+  to {
+    left: 125%;
+  }
+}
+
+@layer utilities {
+  .animate-shine {
+    animation: shine 1.5s linear infinite;
+  }
+}
+
 :root {
   --navy: #0F172A;
   --navy-light: #1E293B;

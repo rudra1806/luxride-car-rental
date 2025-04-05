@@ -3,7 +3,10 @@ import { Link, useLocation } from 'wouter';
 import { 
   Select, 
   SelectContent, 
+  SelectGroup,
   SelectItem, 
+  SelectLabel,
+  SelectSeparator,
   SelectTrigger, 
   SelectValue 
 } from '@/components/ui/select';
@@ -78,38 +81,91 @@ const HeroSection = () => {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <span className="flex items-center">
+                      <MapIcon className="h-4 w-4 text-[#EAB308] mr-1" />
+                      <span>Pickup Location</span>
+                    </span>
+                  </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <MapIcon className="h-5 w-5 text-gray-400" />
+                      <MapIcon className="h-5 w-5 text-[#EAB308]" />
                     </div>
                     <Select onValueChange={setPickupLocation}>
-                      <SelectTrigger className="pl-10 w-full h-12 border-gray-300 focus:ring-[#EAB308] focus:border-[#EAB308]">
+                      <SelectTrigger className="pl-10 w-full h-12 bg-white/90 backdrop-blur-sm border-gray-300 hover:border-[#EAB308] focus:ring-[#EAB308] focus:border-[#EAB308] shadow-sm rounded-lg">
                         <SelectValue placeholder="Select location" />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="new-york">New York City</SelectItem>
-                        <SelectItem value="los-angeles">Los Angeles</SelectItem>
-                        <SelectItem value="miami">Miami</SelectItem>
-                        <SelectItem value="chicago">Chicago</SelectItem>
+                      <SelectContent className="max-h-[300px] overflow-y-auto">
+                        <SelectGroup>
+                          <SelectLabel className="text-[#EAB308] font-medium">Major Cities</SelectLabel>
+                          <SelectItem value="mumbai" className="hover:bg-[#EAB308]/10">
+                            <div className="flex items-center">
+                              <span className="mr-2">🏙️</span> Mumbai
+                            </div>
+                          </SelectItem>
+                          <SelectItem value="delhi" className="hover:bg-[#EAB308]/10">
+                            <div className="flex items-center">
+                              <span className="mr-2">🏛️</span> New Delhi
+                            </div>
+                          </SelectItem>
+                          <SelectItem value="bangalore" className="hover:bg-[#EAB308]/10">
+                            <div className="flex items-center">
+                              <span className="mr-2">💻</span> Bangalore
+                            </div>
+                          </SelectItem>
+                          <SelectItem value="chennai" className="hover:bg-[#EAB308]/10">
+                            <div className="flex items-center">
+                              <span className="mr-2">🌊</span> Chennai
+                            </div>
+                          </SelectItem>
+                        </SelectGroup>
+                        <SelectSeparator />
+                        <SelectGroup>
+                          <SelectLabel className="text-[#EAB308] font-medium">Popular Destinations</SelectLabel>
+                          <SelectItem value="ahmedabad" className="hover:bg-[#EAB308]/10">
+                            <div className="flex items-center">
+                              <span className="mr-2">🏯</span> Ahmedabad
+                            </div>
+                          </SelectItem>
+                          <SelectItem value="hyderabad" className="hover:bg-[#EAB308]/10">
+                            <div className="flex items-center">
+                              <span className="mr-2">🍲</span> Hyderabad
+                            </div>
+                          </SelectItem>
+                          <SelectItem value="jaipur" className="hover:bg-[#EAB308]/10">
+                            <div className="flex items-center">
+                              <span className="mr-2">🏰</span> Jaipur
+                            </div>
+                          </SelectItem>
+                          <SelectItem value="kolkata" className="hover:bg-[#EAB308]/10">
+                            <div className="flex items-center">
+                              <span className="mr-2">🌉</span> Kolkata
+                            </div>
+                          </SelectItem>
+                        </SelectGroup>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Pickup Date</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <span className="flex items-center">
+                      <CalendarIcon className="h-4 w-4 text-[#EAB308] mr-1" />
+                      <span>Pickup Date</span>
+                    </span>
+                  </label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-full h-12 pl-10 text-left font-normal border-gray-300",
+                          "w-full h-12 pl-10 text-left font-normal border-gray-300 hover:border-[#EAB308] focus:ring-[#EAB308] focus:border-[#EAB308] shadow-sm rounded-lg",
                           !pickupDate && "text-muted-foreground"
                         )}
                       >
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <CalendarIcon className="h-5 w-5 text-gray-400" />
+                          <CalendarIcon className="h-5 w-5 text-[#EAB308]" />
                         </div>
                         {pickupDate ? (
                           format(pickupDate, "PPP")
@@ -118,31 +174,37 @@ const HeroSection = () => {
                         )}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent className="w-auto p-0 shadow-lg rounded-lg border-[#EAB308]/20" align="start">
                       <Calendar
                         mode="single"
                         selected={pickupDate}
                         onSelect={setPickupDate}
                         disabled={(date) => date < new Date()}
                         initialFocus
+                        className="rounded-lg"
                       />
                     </PopoverContent>
                   </Popover>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Return Date</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <span className="flex items-center">
+                      <CalendarIcon className="h-4 w-4 text-[#EAB308] mr-1" />
+                      <span>Return Date</span>
+                    </span>
+                  </label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-full h-12 pl-10 text-left font-normal border-gray-300",
+                          "w-full h-12 pl-10 text-left font-normal border-gray-300 hover:border-[#EAB308] focus:ring-[#EAB308] focus:border-[#EAB308] shadow-sm rounded-lg",
                           !returnDate && "text-muted-foreground"
                         )}
                       >
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <CalendarIcon className="h-5 w-5 text-gray-400" />
+                          <CalendarIcon className="h-5 w-5 text-[#EAB308]" />
                         </div>
                         {returnDate ? (
                           format(returnDate, "PPP")
@@ -151,7 +213,7 @@ const HeroSection = () => {
                         )}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent className="w-auto p-0 shadow-lg rounded-lg border-[#EAB308]/20" align="start">
                       <Calendar
                         mode="single"
                         selected={returnDate}
@@ -162,18 +224,23 @@ const HeroSection = () => {
                           return isPastDate || isBeforePickup;
                         }}
                         initialFocus
+                        className="rounded-lg"
                       />
                     </PopoverContent>
                   </Popover>
                 </div>
               </div>
               
-              <div className="mt-6 flex justify-center">
+              <div className="mt-8 flex justify-center">
                 <Button 
                   onClick={handleSearch}
-                  className="bg-[#0F172A] hover:bg-[#1E293B] text-white h-12 px-8 text-lg font-medium rounded-full shadow-lg"
+                  className="relative bg-gradient-to-r from-[#0F172A] to-[#1E293B] hover:from-[#1E293B] hover:to-[#0F172A] text-white h-14 px-10 text-lg font-medium rounded-full shadow-xl overflow-hidden group transition-all duration-300"
                 >
-                  Search Available Cars
+                  <span className="relative z-10 flex items-center">
+                    <span>Search Available Cars</span>
+                    <MapIcon className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                  </span>
+                  <span className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine" />
                 </Button>
               </div>
             </div>
