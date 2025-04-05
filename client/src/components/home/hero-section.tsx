@@ -64,7 +64,7 @@ const HeroSection = () => {
         </div>
         
         {/* Search Bar */}
-        <div className="absolute bottom-24 left-0 right-0 max-w-5xl mx-auto px-4 animate-[slideUp_0.5s_ease-out]">
+        <div className="absolute bottom-36 left-0 right-0 max-w-5xl mx-auto px-4 animate-[slideUp_0.5s_ease-out] z-10">
           <div className="bg-white rounded-lg shadow-xl overflow-hidden">
             <div className="p-5">
               <h2 className="text-2xl font-['Playfair_Display'] font-semibold text-[#0F172A] mb-4">Find Your Perfect Ride</h2>
@@ -148,10 +148,11 @@ const HeroSection = () => {
                         mode="single"
                         selected={returnDate}
                         onSelect={setReturnDate}
-                        disabled={(date) => 
-                          date < new Date() || 
-                          (pickupDate && date < pickupDate)
-                        }
+                        disabled={(date) => {
+                          const isPastDate = date < new Date();
+                          const isBeforePickup = pickupDate ? date < pickupDate : false;
+                          return isPastDate || isBeforePickup;
+                        }}
                         initialFocus
                       />
                     </PopoverContent>
