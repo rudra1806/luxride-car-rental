@@ -23,6 +23,13 @@ const BookingSuccessPage = () => {
         const response = await apiRequest('GET', `/api/bookings/${id}`);
         const bookingData = await response.json();
         setBooking(bookingData);
+
+        // Set status to completed
+        if (bookingData && bookingData.id) {
+          await apiRequest('PATCH', `/api/bookings/${id}`, {
+            status: 'completed'
+          });
+        }
       } catch (error) {
         console.error('Error fetching booking:', error);
       } finally {
@@ -31,6 +38,13 @@ const BookingSuccessPage = () => {
     };
 
     fetchBooking();
+
+    // Add automatic redirect to dashboard after 5 seconds
+    const redirectTimer = setTimeout(() => {
+      navigate('/dashboard');
+    }, 5000);
+
+    return () => clearTimeout(redirectTimer);
   }, [id]);
 
   if (loading) {
@@ -74,6 +88,9 @@ const BookingSuccessPage = () => {
         <h1 className="text-3xl font-bold mb-4 font-['Playfair_Display']">Booking Confirmed!</h1>
         <p className="text-gray-600 text-lg">
           Your reservation has been successfully confirmed. A confirmation email has been sent to your registered email address.
+        </p>
+        <p className="text-gray-500 mt-2">
+          Redirecting to dashboard in 5 seconds...
         </p>
       </div>
 
