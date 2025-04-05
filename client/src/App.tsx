@@ -11,8 +11,7 @@ import DashboardPage from "@/pages/dashboard-page";
 import AdminPage from "@/pages/admin-page";
 import AboutPage from "@/pages/about-page";
 import ContactPage from "@/pages/contact-page";
-import PaymentConfirmationPage from "@/pages/payment-confirmation-page";
-import BookingSuccessPage from "@/pages/booking-success-page";
+// Payment flow now redirects directly to dashboard
 import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthProvider } from "@/hooks/use-auth";
 import { CartProvider } from "@/context/cart-context";
@@ -31,8 +30,7 @@ function Router() {
       <Route path="/contact" component={ContactPage} />
       <ProtectedRoute path="/dashboard" component={DashboardPage} />
       <ProtectedRoute path="/admin" component={AdminPage} />
-      <ProtectedRoute path="/payment-confirmation" component={PaymentConfirmationPage} />
-      <ProtectedRoute path="/booking-success/:id" component={BookingSuccessPage} />
+      {/* Booking flow now directly redirects to dashboard */}
       <Route component={NotFound} />
     </Switch>
   );
