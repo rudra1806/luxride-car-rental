@@ -141,15 +141,27 @@ const BookingHistory = () => {
                   <Badge
                     variant={
                       booking.status === 'completed'
-                        ? 'outline'
+                        ? 'success'
                         : booking.status === 'active'
                         ? 'default'
                         : booking.status === 'cancelled'
                         ? 'destructive'
                         : 'secondary'
                     }
+                    className={
+                      booking.status === 'completed'
+                        ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                        : booking.status === 'active'
+                        ? 'bg-blue-100 text-blue-800 hover:bg-blue-200'
+                        : booking.status === 'cancelled'
+                        ? 'bg-red-100 text-red-800 hover:bg-red-200'
+                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                    }
                   >
-                    {booking.status}
+                    {booking.status === 'completed' ? 'Completed' : 
+                     booking.status === 'active' ? 'Active' : 
+                     booking.status === 'cancelled' ? 'Cancelled' : 
+                     booking.status === 'pending' ? 'Pending' : booking.status}
                   </Badge>
                 </TableCell>
                 <TableCell>₹{booking.totalPrice.toLocaleString('en-IN')}</TableCell>

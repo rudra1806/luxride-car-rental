@@ -27,10 +27,10 @@ const PaymentPage = () => {
   const [paymentMethod, setPaymentMethod] = useState('credit-card');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
-    cardName: '',
-    cardNumber: '',
-    expiryDate: '',
-    cvv: '',
+    cardName: 'John Smith',
+    cardNumber: '1234 5678 9012 3456',
+    expiryDate: 'MM/YY',
+    cvv: '123',
     upiId: ''
   });
   const [bookingId, setBookingId] = useState<string>(`BOOKING-${Math.floor(Math.random() * 1000000000000)}`);
@@ -98,7 +98,7 @@ const PaymentPage = () => {
       // Show success message
       toast({
         title: "Booking Confirmed!",
-        description: "Your car has been successfully booked.",
+        description: "Your car has been successfully booked. You can view it in your dashboard.",
         variant: "default",
       });
       
@@ -121,94 +121,83 @@ const PaymentPage = () => {
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen pt-20 pb-10 px-4">
+    <div className="bg-white min-h-screen pt-20 pb-10 px-4">
       <div className="max-w-6xl mx-auto mt-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Complete Your Reservation</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-8 border-b pb-4">Complete Your Reservation</h1>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Payment Form */}
           <div className="lg:col-span-2">
-            <Card className="shadow-sm">
-              <CardHeader>
-                <CardTitle>Payment Information</CardTitle>
-                <CardDescription>Please provide your payment details to confirm your booking</CardDescription>
-              </CardHeader>
-              <CardContent>
+            <div className="border rounded-md overflow-hidden">
+              <div className="p-6 border-b">
+                <h2 className="text-xl font-semibold text-gray-900">Payment Information</h2>
+                <p className="text-sm text-gray-500 mt-1">Please provide your payment details to confirm your booking</p>
+              </div>
+              
+              <div className="p-6">
                 <form onSubmit={handleSubmit}>
                   <RadioGroup
                     defaultValue="credit-card"
-                    className="grid grid-cols-3 gap-4 mb-6"
+                    className="grid grid-cols-3 gap-2 mb-6"
                     value={paymentMethod}
                     onValueChange={setPaymentMethod}
                   >
-                    <div className={`border rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer transition-all ${paymentMethod === 'credit-card' ? 'border-[#F59E0B] bg-orange-50' : 'border-gray-200'}`}>
-                      <RadioGroupItem value="credit-card" id="credit-card" className="sr-only" />
-                      <CreditCardIcon className={`h-6 w-6 mb-2 ${paymentMethod === 'credit-card' ? 'text-[#F59E0B]' : 'text-gray-500'}`} />
-                      <Label htmlFor="credit-card" className={`font-medium ${paymentMethod === 'credit-card' ? 'text-[#F59E0B]' : 'text-gray-700'}`}>Credit Card</Label>
+                    <div className={`border rounded-md p-4 flex items-center justify-center cursor-pointer transition-all ${paymentMethod === 'credit-card' ? 'border-amber-500 bg-amber-50' : 'border-gray-200'}`}>
+                      <CreditCardIcon className="h-5 w-5 mr-2 text-gray-700" />
+                      <span className="font-medium text-gray-800">Credit Card</span>
                     </div>
-                    <div className={`border rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer transition-all ${paymentMethod === 'upi' ? 'border-[#F59E0B] bg-orange-50' : 'border-gray-200'}`}>
-                      <RadioGroupItem value="upi" id="upi" className="sr-only" />
-                      <svg className={`h-6 w-6 mb-2 ${paymentMethod === 'upi' ? 'text-[#F59E0B]' : 'text-gray-500'}`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M17 12H14L12 16L10 12H7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      <Label htmlFor="upi" className={`font-medium ${paymentMethod === 'upi' ? 'text-[#F59E0B]' : 'text-gray-700'}`}>UPI</Label>
+                    <div className={`border rounded-md p-4 flex items-center justify-center cursor-pointer transition-all ${paymentMethod === 'upi' ? 'border-amber-500 bg-amber-50' : 'border-gray-200'}`}>
+                      <span className="font-medium text-gray-800">UPI</span>
                     </div>
-                    <div className={`border rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer transition-all ${paymentMethod === 'net-banking' ? 'border-[#F59E0B] bg-orange-50' : 'border-gray-200'}`}>
-                      <RadioGroupItem value="net-banking" id="net-banking" className="sr-only" />
-                      <svg className={`h-6 w-6 mb-2 ${paymentMethod === 'net-banking' ? 'text-[#F59E0B]' : 'text-gray-500'}`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 7V17H20V7H4Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M4 9H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M8 13H10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      <Label htmlFor="net-banking" className={`font-medium ${paymentMethod === 'net-banking' ? 'text-[#F59E0B]' : 'text-gray-700'}`}>Net Banking</Label>
+                    <div className={`border rounded-md p-4 flex items-center justify-center cursor-pointer transition-all ${paymentMethod === 'net-banking' ? 'border-amber-500 bg-amber-50' : 'border-gray-200'}`}>
+                      <span className="font-medium text-gray-800">Net Banking</span>
                     </div>
                   </RadioGroup>
                   
                   {paymentMethod === 'credit-card' && (
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                       <div>
-                        <Label htmlFor="cardName">Name on Card</Label>
+                        <Label htmlFor="cardName" className="text-gray-700">Name on Card</Label>
                         <Input
                           id="cardName"
                           name="cardName"
                           value={formData.cardName}
                           onChange={handleInputChange}
-                          placeholder="John Smith"
+                          className="mt-1 border-gray-300"
                           required
                         />
                       </div>
                       <div>
-                        <Label htmlFor="cardNumber">Card Number</Label>
+                        <Label htmlFor="cardNumber" className="text-gray-700">Card Number</Label>
                         <Input
                           id="cardNumber"
                           name="cardNumber"
                           value={formData.cardNumber}
                           onChange={handleInputChange}
-                          placeholder="1234 5678 9012 3456"
+                          className="mt-1 border-gray-300"
                           required
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <Label htmlFor="expiryDate">Expiry Date</Label>
+                          <Label htmlFor="expiryDate" className="text-gray-700">Expiry Date</Label>
                           <Input
                             id="expiryDate"
                             name="expiryDate"
                             value={formData.expiryDate}
                             onChange={handleInputChange}
-                            placeholder="MM/YY"
+                            className="mt-1 border-gray-300"
                             required
                           />
                         </div>
                         <div>
-                          <Label htmlFor="cvv">CVV</Label>
+                          <Label htmlFor="cvv" className="text-gray-700">CVV</Label>
                           <Input
                             id="cvv"
                             name="cvv"
                             value={formData.cvv}
                             onChange={handleInputChange}
-                            placeholder="123"
+                            className="mt-1 border-gray-300"
                             required
                           />
                         </div>
@@ -219,13 +208,14 @@ const PaymentPage = () => {
                   {paymentMethod === 'upi' && (
                     <div className="space-y-4">
                       <div>
-                        <Label htmlFor="upiId">UPI ID</Label>
+                        <Label htmlFor="upiId" className="text-gray-700">UPI ID</Label>
                         <Input
                           id="upiId"
                           name="upiId"
                           value={formData.upiId}
                           onChange={handleInputChange}
                           placeholder="yourname@upi"
+                          className="mt-1 border-gray-300"
                           required
                         />
                       </div>
@@ -242,79 +232,91 @@ const PaymentPage = () => {
                   
                   <Button 
                     type="submit" 
-                    className="w-full mt-6 bg-[#F59E0B] hover:bg-[#F59E0B]/90 text-white font-semibold py-3"
+                    className="w-full mt-8 bg-amber-500 hover:bg-amber-600 text-white font-medium py-2.5 rounded-md"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? 'Processing...' : 'Complete Reservation'}
                   </Button>
                 </form>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
           
           {/* Right Column - Reservation Summary */}
           <div>
-            <Card className="shadow-sm">
-              <CardHeader>
-                <CardTitle>Reservation Summary</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
+            <div className="border rounded-md overflow-hidden">
+              <div className="p-6 border-b">
+                <h2 className="text-xl font-semibold text-gray-900">Reservation Summary</h2>
+              </div>
+              
+              <div className="p-6">
+                <div className="mb-4">
                   <h3 className="text-lg font-semibold text-gray-900">{cartItem.car.brand} {cartItem.car.name}</h3>
                   <p className="text-sm text-gray-500">Booking ID: {bookingId}</p>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <p className="text-gray-600">Pickup Location</p>
-                  <p className="text-right font-medium">{cartItem.pickupLocation}</p>
+                <div className="space-y-2 mb-4">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Pickup Location</span>
+                    <span className="font-medium text-gray-900">{cartItem.pickupLocation}</span>
+                  </div>
                   
-                  <p className="text-gray-600">Pickup Date</p>
-                  <p className="text-right font-medium">{format(new Date(cartItem.pickupDate), 'dd MMM yyyy')}</p>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Pickup Date</span>
+                    <span className="font-medium text-gray-900">{format(new Date(cartItem.pickupDate), 'dd MMM yyyy')}</span>
+                  </div>
                   
-                  <p className="text-gray-600">Return Date</p>
-                  <p className="text-right font-medium">{format(new Date(cartItem.returnDate), 'dd MMM yyyy')}</p>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Return Date</span>
+                    <span className="font-medium text-gray-900">{format(new Date(cartItem.returnDate), 'dd MMM yyyy')}</span>
+                  </div>
                   
-                  <p className="text-gray-600">Rental Duration</p>
-                  <p className="text-right font-medium">{days} days</p>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Rental Duration</span>
+                    <span className="font-medium text-gray-900">{days} days</span>
+                  </div>
                 </div>
                 
-                <Separator className="my-2" />
+                <Separator className="my-4" />
                 
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <p className="text-gray-600">Subtotal</p>
-                  <p className="text-right font-medium">₹{subtotal.toLocaleString()}</p>
+                <div className="space-y-2 mb-4">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Subtotal</span>
+                    <span className="font-medium text-gray-900">₹{subtotal.toLocaleString()}</span>
+                  </div>
                   
-                  <p className="text-gray-600">GST (18%)</p>
-                  <p className="text-right font-medium">₹{gst.toLocaleString()}</p>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">GST (18%)</span>
+                    <span className="font-medium text-gray-900">₹{gst.toLocaleString()}</span>
+                  </div>
                 </div>
                 
-                <Separator className="my-2" />
+                <Separator className="my-4" />
                 
-                <div className="grid grid-cols-2 gap-2 text-lg font-bold">
-                  <p>Total Amount</p>
-                  <p className="text-right">₹{totalAmount.toLocaleString()}</p>
+                <div className="flex justify-between text-lg">
+                  <span className="font-bold text-gray-900">Total Amount</span>
+                  <span className="font-bold text-gray-900">₹{totalAmount.toLocaleString()}</span>
                 </div>
-              </CardContent>
-              <CardFooter className="bg-gray-50 border-t">
-                <div className="w-full">
-                  <h3 className="font-semibold mb-3">Cancellation Policy</h3>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li className="flex items-start">
-                      <AlertCircleIcon className="h-4 w-4 text-amber-500 mr-2 mt-0.5" />
-                      <span>Free cancellation up to 48 hours before pickup</span>
-                    </li>
-                    <li className="flex items-start">
-                      <AlertCircleIcon className="h-4 w-4 text-amber-500 mr-2 mt-0.5" />
-                      <span>50% charge for cancellations within 24-48 hours</span>
-                    </li>
-                    <li className="flex items-start">
-                      <AlertCircleIcon className="h-4 w-4 text-amber-500 mr-2 mt-0.5" />
-                      <span>No refund for cancellations less than 24 hours</span>
-                    </li>
-                  </ul>
-                </div>
-              </CardFooter>
-            </Card>
+              </div>
+              
+              <div className="p-6 bg-gray-50 border-t">
+                <h3 className="font-semibold mb-3">Cancellation Policy</h3>
+                <ul className="text-sm text-gray-600 space-y-2">
+                  <li className="flex items-start">
+                    <AlertCircleIcon className="h-4 w-4 text-amber-500 mr-2 mt-0.5" />
+                    <span>Free cancellation up to 48 hours before pickup</span>
+                  </li>
+                  <li className="flex items-start">
+                    <AlertCircleIcon className="h-4 w-4 text-amber-500 mr-2 mt-0.5" />
+                    <span>50% charge for cancellations within 24-48 hours</span>
+                  </li>
+                  <li className="flex items-start">
+                    <AlertCircleIcon className="h-4 w-4 text-amber-500 mr-2 mt-0.5" />
+                    <span>No refund for cancellations less than 24 hours</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
