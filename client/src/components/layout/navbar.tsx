@@ -39,12 +39,10 @@ const Navbar: React.FC = () => {
   
   // For homepage with transparent background on top
   const navbarClasses = scrolled || location !== '/' 
-    ? 'bg-white shadow-md' 
+    ? 'bg-[#0C1323] shadow-lg' 
     : 'bg-transparent';
 
-  const textColorClass = (scrolled || location !== '/') 
-    ? 'text-gray-800' 
-    : 'text-white';
+  const textColorClass = 'text-white';
 
   const activeClass = (path: string) => {
     return location === path 
@@ -61,12 +59,12 @@ const Navbar: React.FC = () => {
             <Logo 
               size="md"
               color="#F59E0B"
-              textColor={(scrolled || location !== '/') ? '#111827' : '#FFFFFF'}
+              textColor="#FFFFFF"
             />
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-10">
             <Link href="/">
               <a className={`${activeClass('/')} transition-colors duration-200`}>
                 Home
@@ -131,8 +129,8 @@ const Navbar: React.FC = () => {
                   </a>
                 </Link>
                 
-                <Link href="/auth">
-                  <a className="bg-[#F59E0B] hover:bg-[#F59E0B]/90 text-white font-medium py-2 px-6 rounded transition-colors">
+                <Link href="/vehicles">
+                  <a className="bg-[#F59E0B] hover:bg-[#F59E0B]/90 text-[#0C1323] font-semibold py-2 px-6 rounded transition-colors">
                     Book Now
                   </a>
                 </Link>
@@ -157,40 +155,40 @@ const Navbar: React.FC = () => {
       
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t shadow-lg">
+        <div className="md:hidden bg-[#0C1323] border-t border-white/10 shadow-lg">
           <div className="container mx-auto px-4 py-3 space-y-2">
             <Link href="/">
-              <a className={`block py-2 ${location === '/' ? 'text-[#F59E0B] font-medium' : 'text-gray-800'}`}>
+              <a className={`block py-2 ${location === '/' ? 'text-[#F59E0B] font-medium' : 'text-white'}`}>
                 Home
               </a>
             </Link>
             <Link href="/vehicles">
-              <a className={`block py-2 ${location === '/vehicles' ? 'text-[#F59E0B] font-medium' : 'text-gray-800'}`}>
+              <a className={`block py-2 ${location === '/vehicles' ? 'text-[#F59E0B] font-medium' : 'text-white'}`}>
                 Our Fleet
               </a>
             </Link>
             <Link href="/about">
-              <a className={`block py-2 ${location === '/about' ? 'text-[#F59E0B] font-medium' : 'text-gray-800'}`}>
+              <a className={`block py-2 ${location === '/about' ? 'text-[#F59E0B] font-medium' : 'text-white'}`}>
                 About
               </a>
             </Link>
             <Link href="/contact">
-              <a className={`block py-2 ${location === '/contact' ? 'text-[#F59E0B] font-medium' : 'text-gray-800'}`}>
+              <a className={`block py-2 ${location === '/contact' ? 'text-[#F59E0B] font-medium' : 'text-white'}`}>
                 Contact
               </a>
             </Link>
             
-            <div className="pt-2 border-t">
+            <div className="pt-2 border-t border-white/10">
               {user ? (
                 <>
                   <Link href="/dashboard">
-                    <a className="block py-2 text-gray-800">
+                    <a className="block py-2 text-white">
                       Account
                     </a>
                   </Link>
                   {user.isAdmin && (
                     <Link href="/admin">
-                      <a className="block py-2 text-gray-800">
+                      <a className="block py-2 text-white">
                         Admin
                       </a>
                     </Link>
@@ -198,7 +196,7 @@ const Navbar: React.FC = () => {
                   <Button 
                     onClick={handleLogout} 
                     variant="ghost" 
-                    className="w-full justify-start p-0 h-auto text-gray-800 py-2"
+                    className="w-full justify-start p-0 h-auto text-white py-2"
                   >
                     Logout
                   </Button>
@@ -206,12 +204,12 @@ const Navbar: React.FC = () => {
               ) : (
                 <div className="flex flex-col space-y-2">
                   <Link href="/auth">
-                    <a className="block py-2 text-gray-800">
+                    <a className="block py-2 text-white">
                       Sign In / Register
                     </a>
                   </Link>
                   <Link href="/vehicles">
-                    <a className="bg-[#F59E0B] text-white font-medium py-2 px-4 rounded text-center">
+                    <a className="bg-[#F59E0B] text-[#0C1323] font-medium py-2 px-4 rounded text-center">
                       Book Now
                     </a>
                   </Link>

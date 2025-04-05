@@ -34,23 +34,18 @@ export const Logo: React.FC<LogoProps> = ({
           xmlns="http://www.w3.org/2000/svg"
         >
           <path 
-            d="M21.5 11L19 6.5H5L2.5 11L4 16.5H20L21.5 11Z" 
+            d="M16.5 6H12.5L9.5 12H5.5L4 14.5H9L12 8.5H16L17.5 6Z" 
+            fill={color}
+          />
+          <path 
+            d="M8 6H2.5L6 18H11.5L8 6Z" 
             fill={color} 
+            fillOpacity="0.6"
           />
           <path 
-            d="M19 17.5C19 18.3284 18.3284 19 17.5 19C16.6716 19 16 18.3284 16 17.5C16 16.6716 16.6716 16 17.5 16C18.3284 16 19 16.6716 19 17.5Z" 
-            fill="#111827" 
-          />
-          <path 
-            d="M8 17.5C8 18.3284 7.32843 19 6.5 19C5.67157 19 5 18.3284 5 17.5C5 16.6716 5.67157 16 6.5 16C7.32843 16 8 16.6716 8 17.5Z" 
-            fill="#111827" 
-          />
-          <path 
-            d="M22 11H2M19 7H5L2.5 11L4 17H20L21.5 11L19 7Z" 
-            stroke="#111827" 
-            strokeWidth="1.5" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
+            d="M16 6H21.5L18 18H12.5L16 6Z" 
+            fill={color} 
+            fillOpacity="0.8"
           />
         </svg>
         <span 
@@ -60,8 +55,8 @@ export const Logo: React.FC<LogoProps> = ({
             color: textColor 
           }}
         >
-          <span>Luxe</span>
-          <span style={{ color }}>Wheel</span>
+          <span style={{color: textColor}}>Lux</span>
+          <span style={{ color }}>Drive</span>
         </span>
       </a>
     </Link>
