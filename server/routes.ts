@@ -177,9 +177,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Car is not available for the selected dates" });
       }
       
-      // Set status to completed for the payment flow
-      validatedBooking.status = "completed";
-      
       const booking = await storage.createBooking(validatedBooking);
       res.status(201).json(booking);
     } catch (error) {
