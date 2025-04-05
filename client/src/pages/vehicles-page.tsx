@@ -48,7 +48,8 @@ const VehiclesPage = () => {
       }
     }
   }, [cars, typeParam, locationParam, pickupParam, returnParam, setSearchParams]);
-
+  
+  // This function will be called by the filter component
   const handleFilterChange = (filtered: Car[]) => {
     setFilteredCars(filtered);
   };

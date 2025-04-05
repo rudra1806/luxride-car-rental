@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Accordion,
@@ -10,6 +10,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Car } from '@shared/schema';
+import { useLocation } from 'wouter';
 
 interface VehicleFiltersProps {
   cars: Car[];
@@ -21,6 +22,7 @@ const VehicleFilters = ({ cars, onFilterChange }: VehicleFiltersProps) => {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
   const [activeFilter, setActiveFilter] = useState<string>('all');
+  const [_, setLocation] = useLocation();
 
   // Extract unique types and brands from cars
   const types = Array.from(new Set(cars.map(car => car.type)));
@@ -30,29 +32,75 @@ const VehicleFilters = ({ cars, onFilterChange }: VehicleFiltersProps) => {
   const minPrice = Math.min(...cars.map(car => car.price));
   const maxPrice = Math.max(...cars.map(car => car.price));
 
+  // Initialize from URL if type parameter exists
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const typeParam = urlParams.get('type');
+    
+    if (typeParam) {
+      const matchedType = types.find(t => t.toLowerCase() === typeParam.toLowerCase());
+      if (matchedType) {
+        setActiveFilter(matchedType);
+        
+        // Also set the checkbox in the advanced filters section
+        setSelectedTypes([matchedType]);
+        
+        // Apply the filter
+        const filtered = cars.filter(car => car.type === matchedType);
+        onFilterChange(filtered);
+      }
+    }
+  }, [types, cars, onFilterChange]);
+
   const handleFilterClick = (filter: string) => {
     setActiveFilter(filter);
     
+    // Update URL
+    const currentUrl = new URL(window.location.href);
+    const searchParams = currentUrl.searchParams;
+    
     if (filter === 'all') {
+      searchParams.delete('type');
       onFilterChange(cars);
-      return;
+    } else {
+      searchParams.set('type', filter);
+      const filtered = cars.filter(car => car.type === filter);
+      onFilterChange(filtered);
     }
     
-    const filtered = cars.filter(car => car.type === filter);
-    onFilterChange(filtered);
+    // Update the URL without reloading the page
+    const newUrl = `/vehicles?${searchParams.toString()}`;
+    setLocation(newUrl);
   };
 
   const applyFilters = () => {
     let filtered = [...cars];
     
+    // Update URL
+    const currentUrl = new URL(window.location.href);
+    const searchParams = currentUrl.searchParams;
+    
     // Filter by types if any selected
     if (selectedTypes.length > 0) {
       filtered = filtered.filter(car => selectedTypes.includes(car.type));
+      
+      // Set type in URL if only one type is selected
+      if (selectedTypes.length === 1) {
+        searchParams.set('type', selectedTypes[0]);
+        setActiveFilter(selectedTypes[0]); // Update the active filter button
+      } else {
+        // Multiple types selected - advanced filter mode
+        searchParams.delete('type');
+        setActiveFilter('all');
+      }
+    } else {
+      searchParams.delete('type');
     }
     
     // Filter by brands if any selected
     if (selectedBrands.length > 0) {
       filtered = filtered.filter(car => selectedBrands.includes(car.brand));
+      // We could add brand to URL parameters if needed
     }
     
     // Filter by price range
@@ -60,7 +108,12 @@ const VehicleFilters = ({ cars, onFilterChange }: VehicleFiltersProps) => {
       car => car.price >= priceRange[0] && car.price <= priceRange[1]
     );
     
+    // Apply filters
     onFilterChange(filtered);
+    
+    // Update URL without page refresh
+    const newUrl = `/vehicles?${searchParams.toString()}`;
+    setLocation(newUrl);
   };
 
   const handleTypeChange = (type: string, checked: boolean) => {
@@ -89,6 +142,15 @@ const VehicleFilters = ({ cars, onFilterChange }: VehicleFiltersProps) => {
     setPriceRange([minPrice, maxPrice]);
     setActiveFilter('all');
     onFilterChange(cars);
+    
+    // Reset URL by removing the type parameter
+    const currentUrl = new URL(window.location.href);
+    const searchParams = currentUrl.searchParams;
+    searchParams.delete('type');
+    
+    // Preserve other parameters if they exist
+    const newUrl = `/vehicles?${searchParams.toString()}`;
+    setLocation(newUrl);
   };
 
   return (

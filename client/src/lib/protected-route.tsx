@@ -2,6 +2,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { Loader2 } from "lucide-react";
 import { Redirect, Route } from "wouter";
 
+// Create a modified Route that uses children instead of component
 export function ProtectedRoute({
   path,
   component: Component,
@@ -38,5 +39,10 @@ export function ProtectedRoute({
     );
   }
 
-  return <Route path={path} component={Component} />;
+  // Use a child component pattern instead of component prop
+  return (
+    <Route path={path}>
+      <Component />
+    </Route>
+  );
 }
