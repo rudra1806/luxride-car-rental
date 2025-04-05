@@ -24,45 +24,42 @@ export const Logo: React.FC<LogoProps> = ({
   const { icon, text } = getSize();
 
   return (
-    <div className="flex items-center gap-2 cursor-pointer">
-      <Link href="/">
-        <div className="flex items-center gap-2">
-          <svg 
-            width={icon} 
-            height={icon} 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg"
-            className="transition-transform duration-500 hover:scale-110"
-          >
-            <path 
-              d="M16.5 6H12.5L9.5 12H5.5L4 14.5H9L12 8.5H16L17.5 6Z" 
-              fill={color}
-            />
-            <path 
-              d="M8 6H2.5L6 18H11.5L8 6Z" 
-              fill={color} 
-              fillOpacity="0.6"
-            />
-            <path 
-              d="M16 6H21.5L18 18H12.5L16 6Z" 
-              fill={color} 
-              fillOpacity="0.8"
-            />
-          </svg>
-          <span 
-            className="font-bold tracking-tight transition-all duration-300 hover:tracking-wider" 
-            style={{ 
-              fontSize: `${text}px`,
-              color: textColor 
-            }}
-          >
-            <span style={{color: textColor}}>Lux</span>
-            <span style={{ color }} className="bg-clip-text bg-gradient-to-r from-[#F59E0B] to-[#FACC15]">Drive</span>
-          </span>
-        </div>
-      </Link>
-    </div>
+    <Link href="/">
+      <a className="flex items-center gap-2 cursor-pointer">
+        <svg 
+          width={icon} 
+          height={icon} 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path 
+            d="M16.5 6H12.5L9.5 12H5.5L4 14.5H9L12 8.5H16L17.5 6Z" 
+            fill={color}
+          />
+          <path 
+            d="M8 6H2.5L6 18H11.5L8 6Z" 
+            fill={color} 
+            fillOpacity="0.6"
+          />
+          <path 
+            d="M16 6H21.5L18 18H12.5L16 6Z" 
+            fill={color} 
+            fillOpacity="0.8"
+          />
+        </svg>
+        <span 
+          className="font-bold tracking-tight" 
+          style={{ 
+            fontSize: `${text}px`,
+            color: textColor 
+          }}
+        >
+          <span style={{color: textColor}}>Lux</span>
+          <span style={{ color }}>Drive</span>
+        </span>
+      </a>
+    </Link>
   );
 };
 

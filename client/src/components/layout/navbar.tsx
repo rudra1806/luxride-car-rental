@@ -63,43 +63,27 @@ const Navbar: React.FC = () => {
             />
           </div>
           
-          {/* Desktop Navigation with Animated Underline */}
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-10">
             <Link href="/">
-              <div className="relative group">
-                <a className={`${activeClass('/')} transition-colors duration-300 py-2`}>
-                  Home
-                </a>
-                <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-[#F59E0B] transition-all duration-300 group-hover:w-full 
-                  ${location === '/' ? 'w-full' : 'w-0'}`}></span>
-              </div>
+              <a className={`${activeClass('/')} transition-colors duration-200`}>
+                Home
+              </a>
             </Link>
             <Link href="/vehicles">
-              <div className="relative group">
-                <a className={`${activeClass('/vehicles')} transition-colors duration-300 py-2`}>
-                  Our Fleet
-                </a>
-                <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-[#F59E0B] transition-all duration-300 group-hover:w-full 
-                  ${location === '/vehicles' ? 'w-full' : 'w-0'}`}></span>
-              </div>
+              <a className={`${activeClass('/vehicles')} transition-colors duration-200`}>
+                Our Fleet
+              </a>
             </Link>
             <Link href="/about">
-              <div className="relative group">
-                <a className={`${activeClass('/about')} transition-colors duration-300 py-2`}>
-                  About
-                </a>
-                <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-[#F59E0B] transition-all duration-300 group-hover:w-full 
-                  ${location === '/about' ? 'w-full' : 'w-0'}`}></span>
-              </div>
+              <a className={`${activeClass('/about')} transition-colors duration-200`}>
+                About
+              </a>
             </Link>
             <Link href="/contact">
-              <div className="relative group">
-                <a className={`${activeClass('/contact')} transition-colors duration-300 py-2`}>
-                  Contact
-                </a>
-                <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-[#F59E0B] transition-all duration-300 group-hover:w-full 
-                  ${location === '/contact' ? 'w-full' : 'w-0'}`}></span>
-              </div>
+              <a className={`${activeClass('/contact')} transition-colors duration-200`}>
+                Contact
+              </a>
             </Link>
           </div>
           
@@ -146,13 +130,9 @@ const Navbar: React.FC = () => {
                 </Link>
                 
                 <Link href="/vehicles">
-                  <div className="relative group">
-                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#F59E0B] to-yellow-400 rounded-lg blur opacity-60 group-hover:opacity-100 transition duration-300 animate-pulse"></div>
-                    <a className="relative bg-[#F59E0B] hover:bg-[#F59E0B]/90 text-[#0C1323] font-semibold py-2 px-6 rounded transition-all duration-300 group-hover:tracking-wider overflow-hidden">
-                      Book Now
-                      <span className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine" />
-                    </a>
-                  </div>
+                  <a className="bg-[#F59E0B] hover:bg-[#F59E0B]/90 text-[#0C1323] font-semibold py-2 px-6 rounded transition-colors">
+                    Book Now
+                  </a>
                 </Link>
               </div>
             )}
@@ -173,81 +153,72 @@ const Navbar: React.FC = () => {
         </nav>
       </div>
       
-      {/* Mobile Navigation with animation */}
-      <div className={`md:hidden bg-[#0C1323] border-t border-white/10 shadow-lg overflow-hidden transition-all duration-300 ${mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="container mx-auto px-4 py-3 space-y-2">
-          <Link href="/">
-            <div className={`transform transition-all duration-300 ${mobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'} delay-100`}>
-              <a className={`block py-2 ${location === '/' ? 'text-[#F59E0B] font-medium' : 'text-white'} hover:text-[#F59E0B] transition-colors`}>
+      {/* Mobile Navigation */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-[#0C1323] border-t border-white/10 shadow-lg">
+          <div className="container mx-auto px-4 py-3 space-y-2">
+            <Link href="/">
+              <a className={`block py-2 ${location === '/' ? 'text-[#F59E0B] font-medium' : 'text-white'}`}>
                 Home
               </a>
-            </div>
-          </Link>
-          <Link href="/vehicles">
-            <div className={`transform transition-all duration-300 ${mobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'} delay-150`}>
-              <a className={`block py-2 ${location === '/vehicles' ? 'text-[#F59E0B] font-medium' : 'text-white'} hover:text-[#F59E0B] transition-colors`}>
+            </Link>
+            <Link href="/vehicles">
+              <a className={`block py-2 ${location === '/vehicles' ? 'text-[#F59E0B] font-medium' : 'text-white'}`}>
                 Our Fleet
               </a>
-            </div>
-          </Link>
-          <Link href="/about">
-            <div className={`transform transition-all duration-300 ${mobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'} delay-200`}>
-              <a className={`block py-2 ${location === '/about' ? 'text-[#F59E0B] font-medium' : 'text-white'} hover:text-[#F59E0B] transition-colors`}>
+            </Link>
+            <Link href="/about">
+              <a className={`block py-2 ${location === '/about' ? 'text-[#F59E0B] font-medium' : 'text-white'}`}>
                 About
               </a>
-            </div>
-          </Link>
-          <Link href="/contact">
-            <div className={`transform transition-all duration-300 ${mobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'} delay-300`}>
-              <a className={`block py-2 ${location === '/contact' ? 'text-[#F59E0B] font-medium' : 'text-white'} hover:text-[#F59E0B] transition-colors`}>
+            </Link>
+            <Link href="/contact">
+              <a className={`block py-2 ${location === '/contact' ? 'text-[#F59E0B] font-medium' : 'text-white'}`}>
                 Contact
               </a>
-            </div>
-          </Link>
-          
-          <div className={`pt-2 border-t border-white/10 transform transition-all duration-300 ${mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} delay-400`}>
-            {user ? (
-              <>
-                <Link href="/dashboard">
-                  <a className="block py-2 text-white hover:text-[#F59E0B] transition-colors">
-                    Account
-                  </a>
-                </Link>
-                {user.isAdmin && (
-                  <Link href="/admin">
-                    <a className="block py-2 text-white hover:text-[#F59E0B] transition-colors">
-                      Admin
+            </Link>
+            
+            <div className="pt-2 border-t border-white/10">
+              {user ? (
+                <>
+                  <Link href="/dashboard">
+                    <a className="block py-2 text-white">
+                      Account
                     </a>
                   </Link>
-                )}
-                <Button 
-                  onClick={handleLogout} 
-                  variant="ghost" 
-                  className="w-full justify-start p-0 h-auto text-white py-2 hover:text-[#F59E0B] transition-colors"
-                >
-                  Logout
-                </Button>
-              </>
-            ) : (
-              <div className="flex flex-col space-y-2">
-                <Link href="/auth">
-                  <a className="block py-2 text-white hover:text-[#F59E0B] transition-colors">
-                    Sign In / Register
-                  </a>
-                </Link>
-                <Link href="/vehicles">
-                  <div className="relative group">
-                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#F59E0B] to-yellow-400 rounded-lg blur opacity-60 group-hover:opacity-100 transition duration-300"></div>
-                    <a className="relative block py-2 px-4 bg-[#F59E0B] text-[#0C1323] font-medium rounded text-center group-hover:tracking-wider transition-all duration-300">
+                  {user.isAdmin && (
+                    <Link href="/admin">
+                      <a className="block py-2 text-white">
+                        Admin
+                      </a>
+                    </Link>
+                  )}
+                  <Button 
+                    onClick={handleLogout} 
+                    variant="ghost" 
+                    className="w-full justify-start p-0 h-auto text-white py-2"
+                  >
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <div className="flex flex-col space-y-2">
+                  <Link href="/auth">
+                    <a className="block py-2 text-white">
+                      Sign In / Register
+                    </a>
+                  </Link>
+                  <Link href="/vehicles">
+                    <a className="bg-[#F59E0B] text-[#0C1323] font-medium py-2 px-4 rounded text-center">
                       Book Now
                     </a>
-                  </div>
-                </Link>
-              </div>
-            )}
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </header>
   );
 };
