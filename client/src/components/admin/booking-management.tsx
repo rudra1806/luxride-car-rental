@@ -38,7 +38,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Loader2, Check, X, Settings } from 'lucide-react';
+import { Loader2, X } from 'lucide-react';
 import { Booking, Car, User } from '@shared/schema';
 
 interface ExtendedBooking extends Booking {
@@ -133,12 +133,12 @@ const BookingManagement = () => {
               <SelectValue placeholder="All Bookings" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Bookings</SelectItem>
-              <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="confirmed">Confirmed</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="completed">Completed</SelectItem>
-              <SelectItem value="cancelled">Cancelled</SelectItem>
+              <SelectItem value="all" key="all">All Bookings</SelectItem>
+              <SelectItem value="pending" key="pending">Pending</SelectItem>
+              <SelectItem value="confirmed" key="confirmed">Confirmed</SelectItem>
+              <SelectItem value="active" key="active">Active</SelectItem>
+              <SelectItem value="completed" key="completed">Completed</SelectItem>
+              <SelectItem value="cancelled" key="cancelled">Cancelled</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -220,11 +220,11 @@ const BookingManagement = () => {
                               </SelectValue>
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="pending">Pending</SelectItem>
-                              <SelectItem value="confirmed">Confirmed</SelectItem>
-                              <SelectItem value="active">Active</SelectItem>
-                              <SelectItem value="completed">Completed</SelectItem>
-                              <SelectItem value="cancelled">Cancelled</SelectItem>
+                              <SelectItem value="pending" key="pending">Pending</SelectItem>
+                              <SelectItem value="confirmed" key="confirmed">Confirmed</SelectItem>
+                              <SelectItem value="active" key="active">Active</SelectItem>
+                              <SelectItem value="completed" key="completed">Completed</SelectItem>
+                              <SelectItem value="cancelled" key="cancelled">Cancelled</SelectItem>
                             </SelectContent>
                           </Select>
                         </TableCell>

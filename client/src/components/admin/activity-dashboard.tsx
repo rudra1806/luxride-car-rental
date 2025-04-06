@@ -30,7 +30,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { Skeleton } from '@/components/ui/skeleton';
-import { format, subDays, differenceInDays, isWithinInterval, startOfMonth, endOfMonth, isAfter } from 'date-fns';
+import { format, subDays, startOfMonth, isAfter } from 'date-fns';
 import { formatCurrency } from '@/lib/utils';
 
 interface BookingStat {

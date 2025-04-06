@@ -37,8 +37,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Loader2, MoreHorizontal, Shield, User as UserIcon, UserX, UserCog, Mail } from 'lucide-react';
-import { format } from 'date-fns';
+import { Loader2, MoreHorizontal, Shield, User as UserIcon, UserX, Mail } from 'lucide-react';
+
 import { Badge } from '@/components/ui/badge';
 
 const UserManagement = () => {
