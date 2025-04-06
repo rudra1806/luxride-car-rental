@@ -15,7 +15,18 @@ const HomePage = () => {
     queryKey: ["/api/cars"],
   });
 
-  const featuredCars = cars?.slice(0, 6) || [];
+  // Select specific cars for featuring - higher-end models and new additions
+  const featuredCars = cars 
+    ? [
+        // Find specific cars by ID
+        cars.find(car => car.id === 2), // Lamborghini Huracan
+        cars.find(car => car.id === 7), // Rolls-Royce Ghost
+        cars.find(car => car.id === 8), // Ferrari Roma
+        cars.find(car => car.id === 9), // Bentley Continental GT
+        cars.find(car => car.id === 6), // Audi R8
+        cars.find(car => car.id === 5), // Mercedes-Benz S-Class
+      ].filter(Boolean) as Car[] // Filter out any undefined values
+    : [];
 
   return (
     <div className="min-h-screen">
@@ -41,14 +52,20 @@ const HomePage = () => {
                 <Link href="/vehicles">
                   <Button className="bg-[#0F172A] hover:bg-[#1E293B] font-medium">All</Button>
                 </Link>
-                <Link href="/vehicles?type=SUV">
-                  <Button variant="ghost" className="hover:bg-[#EAB308]/10 hover:text-[#0F172A]">SUVs</Button>
-                </Link>
                 <Link href="/vehicles?type=Sports">
                   <Button variant="ghost" className="hover:bg-[#EAB308]/10 hover:text-[#0F172A]">Sports</Button>
                 </Link>
+                <Link href="/vehicles?type=SUV">
+                  <Button variant="ghost" className="hover:bg-[#EAB308]/10 hover:text-[#0F172A]">SUVs</Button>
+                </Link>
                 <Link href="/vehicles?type=Luxury">
                   <Button variant="ghost" className="hover:bg-[#EAB308]/10 hover:text-[#0F172A]">Luxury</Button>
+                </Link>
+                <Link href="/vehicles?type=Ultra-Luxury">
+                  <Button variant="ghost" className="hover:bg-[#EAB308]/10 hover:text-[#0F172A]">Ultra-Luxury</Button>
+                </Link>
+                <Link href="/vehicles?type=Grand%20Tourer">
+                  <Button variant="ghost" className="hover:bg-[#EAB308]/10 hover:text-[#0F172A]">Grand Tourer</Button>
                 </Link>
                 <Link href="/vehicles?type=Electric">
                   <Button variant="ghost" className="hover:bg-[#EAB308]/10 hover:text-[#0F172A]">Electric</Button>

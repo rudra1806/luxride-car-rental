@@ -304,6 +304,57 @@ export class MemStorage implements IStorage {
         availability: true,
         rating: 4.2,
         reviews: 19
+      },
+      {
+        name: "Rolls-Royce Ghost",
+        brand: "Rolls-Royce",
+        model: "Ghost",
+        year: 2023,
+        type: "Ultra-Luxury",
+        price: 42999,
+        horsepower: 563,
+        seats: 5,
+        transmission: "Automatic",
+        fuelType: "Premium",
+        image: "https://images.unsplash.com/photo-1631296113969-9fb46ae1c1f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        description: "The epitome of luxury and prestige, offering an unparalleled driving experience with whisper-quiet operation.",
+        availability: true,
+        rating: 4.9,
+        reviews: 15
+      },
+      {
+        name: "Ferrari Roma",
+        brand: "Ferrari",
+        model: "Roma",
+        year: 2023,
+        type: "Sports",
+        price: 35999,
+        horsepower: 612,
+        seats: 2,
+        transmission: "Automatic",
+        fuelType: "Premium",
+        image: "https://images.unsplash.com/photo-1617654112368-307921291f42?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        description: "A stunning grand touring sports car that combines timeless Italian elegance with blistering performance.",
+        availability: true,
+        rating: 4.7,
+        reviews: 21
+      },
+      {
+        name: "Bentley Continental GT",
+        brand: "Bentley",
+        model: "Continental GT",
+        year: 2023,
+        type: "Grand Tourer",
+        price: 31999,
+        horsepower: 626,
+        seats: 4,
+        transmission: "Automatic",
+        fuelType: "Premium",
+        image: "https://images.unsplash.com/photo-1619362280286-f1f8fd5032ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        description: "Handcrafted luxury meets exhilarating performance in this iconic British grand tourer.",
+        availability: true,
+        rating: 4.8,
+        reviews: 27
       }
     ];
 
