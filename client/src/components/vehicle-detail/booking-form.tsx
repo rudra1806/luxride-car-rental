@@ -71,7 +71,7 @@ const BookingForm = ({ car, initialLocation, initialPickupDate, initialReturnDat
   const defaultValues: Partial<BookingFormValues> = {
     pickupDate: initialPickupDate || new Date(),
     returnDate: initialReturnDate || addDays(new Date(), 1),
-    pickupLocation: initialLocation || 'Ahmedabad',
+    pickupLocation: initialLocation || 'Mumbai',
   };
 
   const form = useForm<BookingFormValues>({
@@ -201,16 +201,16 @@ const BookingForm = ({ car, initialLocation, initialPickupDate, initialReturnDat
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Ahmedabad">Ahmedabad (Time Square Grande)</SelectItem>
                     <SelectItem value="Mumbai">Mumbai</SelectItem>
-                    <SelectItem value="Delhi">Delhi</SelectItem>
+                    <SelectItem value="Delhi">New Delhi</SelectItem>
                     <SelectItem value="Bangalore">Bangalore</SelectItem>
                     <SelectItem value="Chennai">Chennai</SelectItem>
-                    <SelectItem value="Hyderabad">Hyderabad</SelectItem>
                     <SelectItem value="Kolkata">Kolkata</SelectItem>
-                    <SelectItem value="Pune">Pune</SelectItem>
                     <SelectItem value="Jaipur">Jaipur</SelectItem>
-                    <SelectItem value="Chandigarh">Chandigarh</SelectItem>
+                    <SelectItem value="Goa">Goa</SelectItem>
+                    <SelectItem value="Hyderabad">Hyderabad</SelectItem>
+                    <SelectItem value="Pune">Pune</SelectItem>
+                    <SelectItem value="Ahmedabad">Ahmedabad (Time Square Grande)</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
