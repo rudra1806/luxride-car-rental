@@ -169,14 +169,29 @@ const UserManagement = () => {
                               <DropdownMenuLabel>Actions</DropdownMenuLabel>
                               <DropdownMenuItem 
                                 className="cursor-pointer flex items-center"
-                                onClick={() => window.location.href = `/admin/user/${user.id}`}
+                                onClick={() => {
+                                  toast({
+                                    title: "View Profile",
+                                    description: `Viewing profile of ${user.username}`,
+                                  });
+                                }}
                               >
                                 <UserIcon className="h-4 w-4 mr-2" />
                                 View Profile
                               </DropdownMenuItem>
                               <DropdownMenuItem 
                                 className="cursor-pointer flex items-center"
-                                onClick={() => window.location.href = `mailto:${user.email}`}
+                                onClick={() => {
+                                  if (user.email) {
+                                    window.open(`mailto:${user.email}`, '_blank');
+                                  } else {
+                                    toast({
+                                      title: "No Email",
+                                      description: "This user doesn't have an email address.",
+                                      variant: "destructive"
+                                    });
+                                  }
+                                }}
                               >
                                 <Mail className="h-4 w-4 mr-2" />
                                 Contact User

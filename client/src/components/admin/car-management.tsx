@@ -208,6 +208,7 @@ const CarManagement = () => {
   const handleEditCar = (car: Car) => {
     setSelectedCar(car);
     setIsEditMode(true);
+    setIsDialogOpen(true);
     
     // Populate form with car data
     form.reset({
