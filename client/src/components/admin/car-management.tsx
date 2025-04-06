@@ -356,7 +356,7 @@ const CarManagement = () => {
 
       {/* Add/Edit Car Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl max-h-[90vh]">
           <DialogHeader>
             <DialogTitle>
               {isEditMode ? "Edit Car" : "Add New Car"}
@@ -369,6 +369,7 @@ const CarManagement = () => {
             </DialogDescription>
           </DialogHeader>
           
+          <div className="overflow-y-auto pr-1 max-h-[calc(90vh-180px)]">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -638,6 +639,7 @@ const CarManagement = () => {
               </DialogFooter>
             </form>
           </Form>
+          </div>
         </DialogContent>
       </Dialog>
 
