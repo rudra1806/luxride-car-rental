@@ -337,6 +337,62 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // User management routes (Admin)
+  app.get("/api/users", isAdmin, async (req, res) => {
+    try {
+      // Get all users, but exclude password field
+      const users = await Promise.all((await storage.getAllUsers()).map(async (user) => {
+        const { password, ...userWithoutPassword } = user;
+        return userWithoutPassword;
+      }));
+      
+      res.json(users);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching users" });
+    }
+  });
+
+  app.get("/api/users/:id", isAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const user = await storage.getUser(id);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      // Don't send the password
+      const { password, ...userWithoutPassword } = user;
+      res.json(userWithoutPassword);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching user" });
+    }
+  });
+
+  app.put("/api/users/:id", isAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const userData = req.body;
+      
+      // Do not allow password updates through this endpoint
+      if (userData.password) {
+        delete userData.password;
+      }
+      
+      const updatedUser = await storage.updateUser(id, userData);
+      
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      // Don't send the password
+      const { password, ...userWithoutPassword } = updatedUser;
+      res.json(userWithoutPassword);
+    } catch (error) {
+      res.status(500).json({ message: "Error updating user" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

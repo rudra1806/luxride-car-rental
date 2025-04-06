@@ -451,6 +451,8 @@ const CarManagement = () => {
                           <SelectItem value="Sports">Sports</SelectItem>
                           <SelectItem value="SUV">SUV</SelectItem>
                           <SelectItem value="Luxury">Luxury</SelectItem>
+                          <SelectItem value="Ultra-Luxury">Ultra-Luxury</SelectItem>
+                          <SelectItem value="Grand Tourer">Grand Tourer</SelectItem>
                           <SelectItem value="Electric">Electric</SelectItem>
                           <SelectItem value="Convertible">Convertible</SelectItem>
                         </SelectContent>
