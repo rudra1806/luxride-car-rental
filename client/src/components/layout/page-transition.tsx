@@ -9,24 +9,21 @@ interface PageTransitionProps {
 const pageVariants = {
   initial: {
     opacity: 0,
-    y: 10,
+    y: 0,
   },
   animate: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.3,
-      ease: [0.33, 1, 0.68, 1], // Custom cubic-bezier for ultra-smooth motion
-      when: "beforeChildren",
-      staggerChildren: 0.05
+      duration: 0.2,
+      ease: "easeOut",
     }
   },
   exit: {
     opacity: 0,
     transition: {
-      duration: 0.2,
-      ease: [0.33, 1, 0.68, 1],
-      when: "afterChildren",
+      duration: 0.1,
+      ease: "easeIn",
     }
   }
 };
@@ -34,9 +31,12 @@ const pageVariants = {
 const PageTransition = ({ children }: PageTransitionProps) => {
   const [location] = useLocation();
   
-  // Scroll to top when location changes - using instant scroll to avoid conflicts
+  // Scroll to top when location changes
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto' // Using auto for better performance
+    });
   }, [location]);
 
   return (
@@ -48,6 +48,10 @@ const PageTransition = ({ children }: PageTransitionProps) => {
         exit="exit"
         variants={pageVariants}
         className="w-full will-change-transform will-change-opacity"
+        style={{
+          position: 'relative',
+          zIndex: 1,
+        }}
       >
         {children}
       </motion.div>

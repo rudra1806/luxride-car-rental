@@ -48,15 +48,15 @@ const HeroSection = () => {
     setIsLoaded(true);
   }, []);
 
-  // Animation variants
+  // Animation variants - optimized for better performance
   const fadeIn = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 0.8 } }
+    visible: { opacity: 1, transition: { duration: 0.3 } }
   };
   
   const slideUp = {
-    hidden: { y: 60, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.8, delay: 0.3 } }
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.3, delay: 0.1 } }
   };
   
   const staggerContainer = {
@@ -64,15 +64,15 @@ const HeroSection = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.8
+        staggerChildren: 0.1,
+        delayChildren: 0.2
       }
     }
   };
   
   const itemVariant = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } }
+    hidden: { y: 10, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.2 } }
   };
 
   return (
@@ -89,26 +89,11 @@ const HeroSection = () => {
       />
       
       {/* Dynamic Overlay with Gradient to ensure text readability */}
-      <motion.div 
-        className="absolute inset-0 bg-gradient-to-r from-[#0C1323]/90 to-[#0C1323]/60"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2 }}
-      >
-        {/* Gold accent lines */}
-        <motion.div 
-          className="absolute top-1/4 right-0 w-1/3 h-[1px] bg-gradient-to-r from-transparent to-[#EAB308]"
-          initial={{ width: 0, opacity: 0 }}
-          animate={{ width: "30%", opacity: 0.8 }}
-          transition={{ duration: 1.5, delay: 0.8 }}
-        />
-        <motion.div 
-          className="absolute top-2/3 right-10 w-1/4 h-[1px] bg-gradient-to-r from-transparent to-[#EAB308]"
-          initial={{ width: 0, opacity: 0 }}
-          animate={{ width: "20%", opacity: 0.6 }}
-          transition={{ duration: 1.2, delay: 1.2 }}
-        />
-      </motion.div>
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0C1323]/90 to-[#0C1323]/60">
+        {/* Gold accent lines - using simpler transform to improve performance */}
+        <div className="absolute top-1/4 right-0 w-[30%] h-[1px] bg-gradient-to-r from-transparent to-[#EAB308] opacity-80" />
+        <div className="absolute top-2/3 right-10 w-[20%] h-[1px] bg-gradient-to-r from-transparent to-[#EAB308] opacity-60" />
+      </div>
       
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 pt-28 md:pt-36 lg:pt-40 pb-16">
@@ -124,12 +109,7 @@ const HeroSection = () => {
             >
               Experience <span className="text-[#EAB308] inline-block relative">
                 <span className="relative z-10">Luxury</span>
-                <motion.span 
-                  className="absolute bottom-2 left-0 w-full h-[6px] bg-[#EAB308]/20"
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 0.8, delay: 1.5 }}
-                />
+                <span className="absolute bottom-2 left-0 w-full h-[6px] bg-[#EAB308]/20" />
               </span>
             </motion.h1>
             
@@ -282,19 +262,9 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Animated decorative elements */}
-      <motion.div 
-        className="absolute bottom-8 right-8 h-20 w-20 rounded-full border border-[#EAB308]/20"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 0.5 }}
-        transition={{ duration: 1, delay: 1.5 }}
-      />
-      <motion.div 
-        className="absolute bottom-4 right-4 h-30 w-30 rounded-full border border-[#EAB308]/10"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 0.3 }}
-        transition={{ duration: 1.2, delay: 1.8 }}
-      />
+      {/* Static decorative elements - removed animations for better performance */}
+      <div className="absolute bottom-8 right-8 h-20 w-20 rounded-full border border-[#EAB308]/20 opacity-50" />
+      <div className="absolute bottom-4 right-4 h-30 w-30 rounded-full border border-[#EAB308]/10 opacity-30" />
     </section>
   );
 };
