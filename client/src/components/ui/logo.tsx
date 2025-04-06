@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'wouter';
-import CarLogo from './car-logo';
+import logoImage from '../../assets/luxride-logo.png';
 
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg';
@@ -9,35 +9,30 @@ interface LogoProps {
 }
 
 export const Logo: React.FC<LogoProps> = ({ 
-  size = 'md', 
-  color = '#F59E0B',
-  textColor = '#FFFFFF'
+  size = 'md'
 }) => {
-  const getSize = () => {
+  // Get logo size based on the size prop
+  const getLogoHeight = () => {
     switch(size) {
-      case 'sm': return { icon: 20, text: 16 };
-      case 'lg': return { icon: 32, text: 24 };
+      case 'sm': return 24;
+      case 'lg': return 40;
       case 'md':
-      default: return { icon: 24, text: 20 };
+      default: return 32;
     }
   };
 
-  const { text } = getSize();
+  const logoHeight = getLogoHeight();
 
   return (
     <Link href="/">
-      <a className="flex items-center gap-2 cursor-pointer">
-        <CarLogo size={size} color={color} />
-        <span 
-          className="font-bold tracking-tight" 
-          style={{ 
-            fontSize: `${text}px`,
-            color: textColor 
-          }}
-        >
-          <span style={{color: textColor}}>Lux</span>
-          <span style={{ color }}>Ride</span>
-        </span>
+      <a className="flex items-center cursor-pointer">
+        <img 
+          src={logoImage} 
+          alt="LuxRide Logo" 
+          height={logoHeight} 
+          style={{ height: `${logoHeight}px` }}
+          className="object-contain"
+        />
       </a>
     </Link>
   );
