@@ -71,7 +71,7 @@ const BookingForm = ({ car, initialLocation, initialPickupDate, initialReturnDat
   const defaultValues: Partial<BookingFormValues> = {
     pickupDate: initialPickupDate || new Date(),
     returnDate: initialReturnDate || addDays(new Date(), 1),
-    pickupLocation: initialLocation || 'Mumbai',
+    pickupLocation: initialLocation || 'Ahmedabad',
   };
 
   const form = useForm<BookingFormValues>({

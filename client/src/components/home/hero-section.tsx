@@ -25,7 +25,7 @@ import { motion } from 'framer-motion';
 const HeroSection = () => {
   const [_, setLocation] = useLocation();
   const { setSearchParams } = useSearch();
-  const [pickupLocation, setPickupLocation] = useState<string>('Mumbai');
+  const [pickupLocation, setPickupLocation] = useState<string>('Ahmedabad');
   const [pickupDate, setPickupDate] = useState<Date>();
   const [returnDate, setReturnDate] = useState<Date>();
 
