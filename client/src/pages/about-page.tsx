@@ -41,7 +41,8 @@ const AboutPage = () => {
             </div>
           </div>
         </div>
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1617469767053-bfd6c6fdd3e5?auto=format&fit=crop&q=80&w=2070')] bg-cover bg-center opacity-20"></div>
+        {/* High-end luxury car background image */}
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=2070')] bg-cover bg-center opacity-20"></div>
         
         {/* Bottom shadow gradient */}
         <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent"></div>
@@ -67,12 +68,16 @@ const AboutPage = () => {
                 </p>
               </div>
             </div>
-            <div className="rounded-lg overflow-hidden shadow-xl">
+            <div className="rounded-lg overflow-hidden shadow-xl relative">
               <img 
-                src="https://images.unsplash.com/photo-1607603750941-faaf5207d08e?auto=format&fit=crop&q=80&w=2070" 
-                alt="Luxury car showroom" 
-                className="w-full h-auto object-cover"
+                src="https://images.unsplash.com/photo-1562911791-c7a97b729ec5?auto=format&fit=crop&q=80&w=2070" 
+                alt="Luxury car experience" 
+                className="w-full h-[400px] object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#0F172A]/40 to-transparent"></div>
+              <div className="absolute bottom-0 left-0 w-full p-6">
+                <div className="bg-[#EAB308]/80 text-[#0F172A] font-semibold py-2 px-4 rounded-full inline-block mb-2">EST. 2015</div>
+              </div>
             </div>
           </div>
         </div>
