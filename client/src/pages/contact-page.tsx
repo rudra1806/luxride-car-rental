@@ -83,7 +83,7 @@ const ContactPage = () => {
                 <div className="h-10 w-10 rounded-full flex items-center justify-center bg-[#EAB308]/20 mr-3">
                   <Mail className="h-5 w-5 text-[#EAB308]" />
                 </div>
-                <span className="text-white">info@luxride.com</span>
+                <span className="text-white">info@luxeride.com</span>
               </div>
               
               <div className="flex items-center">
@@ -253,9 +253,9 @@ const ContactPage = () => {
                   <div>
                     <h3 className="text-lg font-semibold text-[#0F172A]">Email Addresses</h3>
                     <p className="text-gray-600 mt-1">
-                      Reservations: bookings@luxewheel.com<br />
-                      Customer Service: support@luxewheel.com<br />
-                      General Inquiries: info@luxewheel.com
+                      Reservations: bookings@luxeride.com<br />
+                      Customer Service: support@luxeride.com<br />
+                      General Inquiries: info@luxeride.com
                     </p>
                   </div>
                 </div>
