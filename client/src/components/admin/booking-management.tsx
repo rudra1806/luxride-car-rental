@@ -128,12 +128,12 @@ const BookingManagement = () => {
         <h2 className="text-2xl font-semibold text-[#0F172A] font-playfair">Booking Management</h2>
         <div className="flex items-center space-x-2">
           <span className="text-sm text-gray-600">Filter by Status:</span>
-          <Select value={statusFilter || ''} onValueChange={(value) => setStatusFilter(value || null)}>
+          <Select value={statusFilter || 'all'} onValueChange={(value) => setStatusFilter(value === 'all' ? null : value)}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="All Bookings" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Bookings</SelectItem>
+              <SelectItem value="all">All Bookings</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
               <SelectItem value="confirmed">Confirmed</SelectItem>
               <SelectItem value="active">Active</SelectItem>
