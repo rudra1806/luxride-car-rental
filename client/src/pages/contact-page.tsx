@@ -198,20 +198,34 @@ const ContactPage = () => {
               </p>
               
               <div className="space-y-8">
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0">
-                    <div className="h-12 w-12 rounded-full bg-[#EAB308]/10 flex items-center justify-center">
-                      <MapPin className="h-6 w-6 text-[#EAB308]" />
-                    </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-[#0F172A] mb-3">Main Office</h3>
+                  <div className="rounded-lg overflow-hidden shadow-md mb-4 h-[200px]">
+                    <iframe 
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.6979157244403!2d72.5243533!3d23.045709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9b267bf77c99%3A0x5f183e3d24fde618!2sThaltej%2C%20Ahmedabad%2C%20Gujarat%20380059!5e0!3m2!1sen!2sin!4v1680651345678!5m2!1sen!2sin"
+                      width="100%" 
+                      height="100%" 
+                      style={{ border: 0 }} 
+                      allowFullScreen 
+                      loading="lazy" 
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="Main Office Location"
+                    ></iframe>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-[#0F172A]">Main Office</h3>
-                    <p className="text-gray-600 mt-1">
-                      Time Square Grande<br />
-                      PRL Colony, Thaltej<br />
-                      Ahmedabad, Gujarat 380059<br />
-                      India
-                    </p>
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-shrink-0">
+                      <div className="h-12 w-12 rounded-full bg-[#EAB308]/10 flex items-center justify-center">
+                        <MapPin className="h-6 w-6 text-[#EAB308]" />
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-gray-600">
+                        Time Square Grande<br />
+                        PRL Colony, Thaltej<br />
+                        Ahmedabad, Gujarat 380059<br />
+                        India
+                      </p>
+                    </div>
                   </div>
                 </div>
                 
@@ -270,7 +284,7 @@ const ContactPage = () => {
       {/* Map Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold font-['Playfair_Display'] text-[#0F172A] mb-4">
               Our Locations
             </h2>
@@ -279,13 +293,54 @@ const ContactPage = () => {
             </p>
           </div>
           
+          {/* Map Filters */}
+          <div className="flex justify-center mb-8">
+            <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 shadow-sm">
+              <button
+                className="inline-flex items-center gap-2 rounded-md px-4 py-2 bg-[#EAB308] text-sm text-[#0F172A] font-medium shadow-sm focus:relative"
+              >
+                <MapPin className="h-4 w-4" />
+                <span> Map View </span>
+              </button>
+
+              <button
+                className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-layers">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                  <polyline points="2 17 12 22 22 17" />
+                  <polyline points="2 12 12 17 22 12" />
+                </svg>
+                <span> Satellite </span>
+              </button>
+              
+              <button
+                className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-route">
+                  <circle cx="6" cy="19" r="3" />
+                  <circle cx="18" cy="5" r="3" />
+                  <path d="M12 19h4.5a3.5 3.5 0 0 0 0-7h-8a3.5 3.5 0 0 1 0-7H12" />
+                </svg>
+                <span> Directions </span>
+              </button>
+            </div>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="h-48 bg-gray-300 flex items-center justify-center">
-                <div className="text-gray-500 text-center px-4">
-                  <MapPin className="h-10 w-10 mx-auto mb-2" />
-                  <p>Map placeholder - Ahmedabad</p>
-                </div>
+              <div className="h-64 w-full overflow-hidden">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.6979157244403!2d72.5243533!3d23.045709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9b267bf77c99%3A0x5f183e3d24fde618!2sThaltej%2C%20Ahmedabad%2C%20Gujarat%20380059!5e0!3m2!1sen!2sin!4v1680651345678!5m2!1sen!2sin"
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="hover:opacity-90 transition-opacity"
+                  title="Ahmedabad Office Location"
+                ></iframe>
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-[#0F172A] mb-2">Ahmedabad</h3>
@@ -294,16 +349,28 @@ const ContactPage = () => {
                   PRL Colony, Thaltej<br />
                   Gujarat 380059
                 </p>
-                <p className="text-sm text-[#EAB308] font-medium">Flagship Location</p>
+                <div className="flex items-center">
+                  <div className="h-6 w-6 rounded-full bg-[#EAB308]/10 flex items-center justify-center mr-2">
+                    <MapPin className="h-3 w-3 text-[#EAB308]" />
+                  </div>
+                  <p className="text-sm text-[#EAB308] font-medium">Flagship Location</p>
+                </div>
               </div>
             </div>
             
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="h-48 bg-gray-300 flex items-center justify-center">
-                <div className="text-gray-500 text-center px-4">
-                  <MapPin className="h-10 w-10 mx-auto mb-2" />
-                  <p>Map placeholder - Mumbai</p>
-                </div>
+              <div className="h-64 w-full overflow-hidden">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.0982165326705!2d72.82969!3d19.0596397!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c91130392bd7%3A0x45c5650200160dd!2sBandra%2C%20Mumbai%2C%20Maharashtra%20400050!5e0!3m2!1sen!2sin!4v1680651416785!5m2!1sen!2sin" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="hover:opacity-90 transition-opacity"
+                  title="Mumbai Office Location"
+                ></iframe>
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-[#0F172A] mb-2">Mumbai</h3>
@@ -311,16 +378,28 @@ const ContactPage = () => {
                   Luxury Tower, Bandra<br />
                   Mumbai, Maharashtra 400050
                 </p>
-                <p className="text-sm text-gray-500">West Coast Showroom</p>
+                <div className="flex items-center">
+                  <div className="h-6 w-6 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+                    <MapPin className="h-3 w-3 text-gray-500" />
+                  </div>
+                  <p className="text-sm text-gray-500">West Coast Showroom</p>
+                </div>
               </div>
             </div>
             
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="h-48 bg-gray-300 flex items-center justify-center">
-                <div className="text-gray-500 text-center px-4">
-                  <MapPin className="h-10 w-10 mx-auto mb-2" />
-                  <p>Map placeholder - Delhi</p>
-                </div>
+              <div className="h-64 w-full overflow-hidden">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.684117999906!2d77.21632!3d28.6328934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd37b741d057%3A0xcdee88e47393c3f!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1680651456789!5m2!1sen!2sin" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="hover:opacity-90 transition-opacity"
+                  title="Delhi Office Location"
+                ></iframe>
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-[#0F172A] mb-2">Delhi</h3>
@@ -328,7 +407,12 @@ const ContactPage = () => {
                   Connaught Place<br />
                   New Delhi 110001
                 </p>
-                <p className="text-sm text-gray-500">North India Collection</p>
+                <div className="flex items-center">
+                  <div className="h-6 w-6 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+                    <MapPin className="h-3 w-3 text-gray-500" />
+                  </div>
+                  <p className="text-sm text-gray-500">North India Collection</p>
+                </div>
               </div>
             </div>
           </div>
