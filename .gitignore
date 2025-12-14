@@ -1,6 +1,33 @@
-node_modules
-dist
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# OS files
 .DS_Store
-server/public
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Replit
+.replit
+
+# Vite / tooling
 vite.config.ts.*
 *.tar.gz
+
+# Public uploads (if generated)
+server/public/
+
+# Editor configs
+.vscode/
+.idea/
