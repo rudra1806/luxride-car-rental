@@ -1,4 +1,4 @@
-# 🚗 LuxRide – Premium Car Rental Platform
+# LuxRide – Premium Car Rental Platform
 
 LuxRide is a full-stack car rental web application that replicates the experience of a real-world premium vehicle booking system.  
 The goal of this project was to build a complete, practical product with a smooth booking flow, clean UI, and proper dashboard-based management.
@@ -91,6 +91,7 @@ This project was developed as an end-to-end learning implementation, covering fr
 
 ## 📁 Project Structure (High Level)
 
+``` bash
 LuxRide/
 ├── client/ # Frontend application
 ├── server/ # Backend APIs
@@ -99,7 +100,7 @@ LuxRide/
 ├── screenshots/ # Project screenshots
 ├── README.md
 
-
+```
 ---
 
 ## 🚀 Running the Project Locally
@@ -135,7 +136,3 @@ http://localhost:5000
 - Work with relational databases using an ORM
 
 - Design a scalable and clean project structure
-
-### 📄 License
-
-- This project is created for educational and learning purposes.
