@@ -7,7 +7,7 @@ This project was developed as an end-to-end learning implementation, covering fr
 
 ---
 
-## ✨ Key Highlights
+## Key Highlights
 
 - Realistic car booking workflow
 - Separate dashboards for users and admins
@@ -17,7 +17,7 @@ This project was developed as an end-to-end learning implementation, covering fr
 
 ---
 
-## 👤 User Features
+## User Features
 
 - Browse premium cars by category
 - View detailed vehicle information
@@ -28,7 +28,7 @@ This project was developed as an end-to-end learning implementation, covering fr
 
 ---
 
-## 🛠️ Admin Features
+## Admin Features
 
 - Dedicated admin dashboard
 - View overall booking and revenue statistics
@@ -39,7 +39,7 @@ This project was developed as an end-to-end learning implementation, covering fr
 
 ---
 
-## 🖼️ Screenshots
+## Screenshots
 
 > Screenshots captured from the running application.
 
@@ -67,7 +67,7 @@ This project was developed as an end-to-end learning implementation, covering fr
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 ### Frontend
 - TypeScript
@@ -89,7 +89,7 @@ This project was developed as an end-to-end learning implementation, covering fr
 
 ---
 
-## 📁 Project Structure (High Level)
+## Project Structure (High Level)
 
 ``` bash
 LuxRide/
@@ -103,7 +103,7 @@ LuxRide/
 ```
 ---
 
-## 🚀 Running the Project Locally
+## Running the Project Locally
 
 ### Prerequisites
 - Node.js (v18 or above)
@@ -123,7 +123,7 @@ http://localhost:5000
 
 ```
 
-### 📌 Purpose of the Project
+### Purpose of the Project
 
 - LuxRide was built to:
 
@@ -136,3 +136,5 @@ http://localhost:5000
 - Work with relational databases using an ORM
 
 - Design a scalable and clean project structure
+
+*Created by **Rudra Sanandiya** . Licensed under MIT.*
